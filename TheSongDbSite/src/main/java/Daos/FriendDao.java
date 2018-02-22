@@ -27,38 +27,41 @@ public class FriendDao extends Dao implements FriendDaoInterface {
         super(databaseName, poolName);
     }
 
-    public ArrayList<Friend> listAllFriends(int userId) {
-        Connection conn = null;
+    /**
+     *
+     * @param username
+     * @return
+     */
+    @Override
+    public ArrayList<Friend> displayAllFriends(String username) {
+        Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<Friend> friends = new ArrayList<Friend>();
-
+        ArrayList<Friend> friends = new ArrayList<>();
         try {
-            conn = this.getConnection();
-            
-            UserDao userDao = new UserDao("Me");
-            User user = userDao.getDetailsById(userId);
+            con = this.getConnection();
 
-            String query = "SELECT * FROM friend WHERE userId1 = ? OR userId2 = ?";
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, userId);
-            ps.setInt(2, userId);
+            UserDao userDao = new UserDao("MyName");
+            User user = userDao.findUserByUsername(username);
+
+            String query = "SELECT * FROM friend WHERE friend1 = ? OR friend2 = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, username);
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                int friend = rs.getInt("friend1");
-                if (friend == userId) {
-                    friend = rs.getInt("friend2");
+                String friend = rs.getString("friend1");
+                if (friend.equals(username)) {
+                    friend = rs.getString("friend2");
                 }
-                
-                User userFriend = userDao.getDetailsById(friend);
-               // Friend f = new Friend(id, user, userFriend);
-               // friends.add(f);
-               
+                User userFriend = userDao.findUserByUsername(friend);
 
+                Friend f = new Friend(user, userFriend);
+                friends.add(f);
             }
         } catch (SQLException ex) {
-            System.err.println("\tA problem occured during the listAllFriends method:");
+            System.err.println("\tA problem occurred during the displayAllFriends method:");
             System.err.println("\t" + ex.getMessage());
         } finally {
             try {
@@ -68,13 +71,14 @@ public class FriendDao extends Dao implements FriendDaoInterface {
                 if (ps != null) {
                     ps.close();
                 }
-                if (conn != null) {
-                    freeConnection(conn);
+                if (con != null) {
+                    freeConnection(con);
                 }
-            } catch (SQLException ex) {
-                System.err.println("A problem occurred when closing down the listAllFriends method:\n" + ex.getMessage());
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the findFriendshipsByUsername method:\n" + e.getMessage());
             }
         }
         return friends;
     }
+
 }

@@ -17,7 +17,7 @@ public class Friend {
         
     }
     
-    private Friend(User friend1, User friend2){
+    public Friend(User friend1, User friend2){
         User tmp;
         
         if(friend1.compareTo(friend2) > 0){

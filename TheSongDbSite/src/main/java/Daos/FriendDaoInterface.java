@@ -14,5 +14,5 @@ import java.util.ArrayList;
  */
 public interface FriendDaoInterface {
     //public Friend addNewFriend();
-    //public ArrayList displayAllFriends();
+    public ArrayList<Friend> displayAllFriends(String username);
 }
