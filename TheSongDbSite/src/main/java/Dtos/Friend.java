@@ -11,17 +11,17 @@ package Dtos;
  */
 public class Friend {
     private int friendId;
-    private int userId1;
-    private int userId2;
+    private String friend1;
+    private String friend2;
     
     private Friend(){
         
     }
     
-    private Friend(int friendId, int userId1, int userId2){
+    private Friend(int friendId, String friend1, String friend2){
         this.friendId = friendId;
-        this.userId1 = userId1;
-        this.userId2 = userId2;
+        this.friend1 = friend1;
+        this.friend2 = friend2;
     }
 
     public int getFriendId() {
@@ -32,19 +32,21 @@ public class Friend {
         this.friendId = friendId;
     }
 
-    public int getUserId1() {
-        return userId1;
+    public String getFriend1() {
+        return friend1;
     }
 
-    public void setUserId1(int userId1) {
-        this.userId1 = userId1;
+    public void setFriend1(String friend1) {
+        this.friend1 = friend1;
     }
 
-    public int getUserId2() {
-        return userId2;
+    public String getFriend2() {
+        return friend2;
     }
 
-    public void setUserId2(int userId2) {
-        this.userId2 = userId2;
+    public void setFriend2(String friend2) {
+        this.friend2 = friend2;
     }
+
+    
 }
