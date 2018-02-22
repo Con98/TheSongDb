@@ -21,7 +21,7 @@
             UserDao userDao = new UserDao("myFriends");
             Object user = session.getAttribute("userName");
             String username = (String) user;
-            if (username != null || !username.equals("")) {
+            if (username != null) {
                 FriendDao friendDao = new FriendDao("myFriends");
                 ArrayList<Friend> friends = friendDao.displayAllFriends(username);
 
