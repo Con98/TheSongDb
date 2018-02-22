@@ -10,6 +10,9 @@
     <%@page import = "Dtos.User" %>
 <%@page import = "Daos.UserDao" %>
 <%@ include file="header.jsp"%>
+<%@page import="Dtos.Friend" %>
+<%@page import="Daos.FriendDao"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <title>Profile</title>
 </head>
@@ -69,6 +72,34 @@
         <td><%=loggedUser.getEmail()%></td>
     </tr>
 </table>
+    <section>
+    <div id="leftColumn">
+        <%
+            UserDao userDao = new UserDao("myFriends");
+            Object user = session.getAttribute("userName");
+            String username = (String) user;
+            if (username != null) {
+                FriendDao friendDao = new FriendDao("myFriends");
+                ArrayList<Friend> friends = friendDao.displayAllFriends(username);
+
+        %>
+        <h1><%=username%>'s Friend List</h1>
+        <table>
+            <%
+                for (Friend f : friends) {
+            %>
+            <tr>
+                <td><%=f.getFriend2()%></td>
+                <%
+                        }
+                    } else {
+                        out.println("No Friends Found");
+                    }
+                %>
+            </tr>
+        </table>
+    </div>
+    </section>
     <%
         }
     %>
