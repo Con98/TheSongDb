@@ -26,10 +26,17 @@ SET time_zone = "+00:00";
 -- Table structure for table `friend`
 --
 
+<<<<<<< HEAD
+CREATE TABLE friend (
+  friendId int(11) NOT NULL,
+  friend1 varchar(30) NOT NULL,
+  friend2 varchar(30) NOT NULL
+=======
 CREATE TABLE `friend` (
   `friendId` int(11) NOT NULL,
   `friend1` varchar(30) NOT NULL,
   `friend2` varchar(30) NOT NULL
+>>>>>>> 582c445a295cf22dc62853880c1300c4b33caecf
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -77,10 +84,17 @@ INSERT INTO `users` (`UserId`, `firstName`, `surName`, `userName`, `email`, `pas
 --
 -- Indexes for table `friend`
 --
+<<<<<<< HEAD
+ALTER TABLE friend
+  ADD PRIMARY KEY (friendId),
+  ADD KEY friend1 (friend1),
+  ADD KEY friend2 (friend2);
+=======
 ALTER TABLE `friend`
   ADD PRIMARY KEY (`friendId`),
   ADD KEY `friend1` (`friend1`),
   ADD KEY `friend2` (`friend2`);
+>>>>>>> 582c445a295cf22dc62853880c1300c4b33caecf
 
 --
 -- Indexes for table `message`
@@ -129,6 +143,12 @@ ALTER TABLE `friend`
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`fromId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE,
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`toId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE;
+  
+  
+ALTER TABLE friend
+  ADD PRIMARY KEY (friendId),
+  ADD KEY friend1 (friend1),
+  ADD KEY friend2 (friend2);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
