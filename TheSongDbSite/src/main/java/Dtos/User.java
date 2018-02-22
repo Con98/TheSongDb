@@ -212,5 +212,10 @@ public class User {
         }
         return true;
     }
+    
+    public int compareTo(Object o){
+        User u = (User) o;
+        return this.userName.compareTo(userName);
+    }
 
 }
