@@ -170,6 +170,7 @@ public class UserDao extends Dao implements UserDaoInterface {
         return u;
     }
     
+    @Override
     public User getDetailsById(int userId) {
         User u = new User();
         boolean found = false;
@@ -253,4 +254,59 @@ public class UserDao extends Dao implements UserDaoInterface {
         }
         return hashPassword;
     }
+    
+    @Override
+    public User findUserByUsername(String uname){
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        User u = null;
+        try {
+            con = this.getConnection();
+            
+            String query = "SELECT * FROM users WHERE userName = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, uname);
+            
+            rs = ps.executeQuery();
+            if (rs.next()) 
+            {
+                String firstName = rs.getString("firstName");
+                String surName = rs.getString("surName");
+                String userName = rs.getString("userName");
+                String email = rs.getString("email");
+                boolean type = rs.getBoolean("type");
+                String password = rs.getString("password");
+                u = new User(firstName, surName, userName, email, type, password);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.err.println("\tA problem occurred during the findUserByUsername method:");
+            System.err.println("\t"+e.getMessage());
+        } 
+        finally 
+        {
+            try 
+            {
+                if (rs != null) 
+                {
+                    rs.close();
+                }
+                if (ps != null) 
+                {
+                    ps.close();
+                }
+                if (con != null) 
+                {
+                    freeConnection(con);
+                }
+            } 
+            catch (SQLException e) 
+            {
+                System.err.println("A problem occurred when closing down the findUserByUsername method:\n" + e.getMessage());
+            }
+        }
+        return u;     // u may be null 
+    } 
 }

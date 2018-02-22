@@ -88,4 +88,6 @@ public interface UserDaoInterface {
 //    
 //    public boolean editUser(int userId, String firstName, String surName, String email, String password);
     public User getDetailsById(int id);
+    
+     public User findUserByUsername(String uname);
 }
