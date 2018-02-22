@@ -3,13 +3,13 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2018 at 02:34 PM
+-- Generation Time: Feb 22, 2018 at 01:52 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
+ 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,9 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `friend` (
   `friendId` int(11) NOT NULL,
-  `userId1` int(11) NOT NULL,
-  `userId2` int(11) NOT NULL,
-  `acceptanceDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `friend1` varchar(30) NOT NULL,
+  `friend2` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -65,6 +64,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`UserId`, `firstName`, `surName`, `userName`, `email`, `password`, `isAdmin`) VALUES
+(1, 'Emmet', 'Mc Eneaney', 'Emmet_Mc', 'emmetmceneaney@gmail.com', '62a6f90071b5314d0f0b3fe4c5974df357c37bcd166a81063901d5c0855065c3', 0);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -73,8 +79,8 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `friend`
   ADD PRIMARY KEY (`friendId`),
-  ADD KEY `userId1` (`userId1`),
-  ADD KEY `userId2` (`userId2`);
+  ADD KEY `friend1` (`friend1`),
+  ADD KEY `friend2` (`friend2`);
 
 --
 -- Indexes for table `message`
@@ -97,11 +103,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `friend`
---
-ALTER TABLE `friend`
-  MODIFY `friendId` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
@@ -110,7 +111,7 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `UserId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
@@ -119,8 +120,8 @@ ALTER TABLE `users`
 -- Constraints for table `friend`
 --
 ALTER TABLE `friend`
-  ADD CONSTRAINT `friend_ibfk_1` FOREIGN KEY (`userId1`) REFERENCES `users` (`UserId`) ON DELETE CASCADE,
-  ADD CONSTRAINT `friend_ibfk_2` FOREIGN KEY (`userId2`) REFERENCES `users` (`UserId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `friend_ibfk_1` FOREIGN KEY (`friend1`) REFERENCES `users` (`userName`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friend_ibfk_2` FOREIGN KEY (`friend2`) REFERENCES `users` (`userName`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `message`

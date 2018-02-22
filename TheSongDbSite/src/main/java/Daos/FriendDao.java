@@ -80,5 +80,105 @@ public class FriendDao extends Dao implements FriendDaoInterface {
         }
         return friends;
     }
-
+    
+    /**
+     *
+     * @param username1
+     * @param username2
+     * @return
+     */
+    @Override
+    public int addFriendship(String username1, String username2){
+        Connection con = null;
+        PreparedStatement ps = null;
+        int rowsAffected = 0;
+        
+        try{
+            con = this.getConnection();
+            
+            String query = "INSERT INTO friend(friend1, friend2) VALUES (?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setString(1, username1);
+            ps.setString(2, username2);
+            
+            rowsAffected = ps.executeUpdate();
+        }
+        catch (SQLException ex){
+            System.err.println("\tA problem occurred during the addFriendship method:");
+            System.err.println("\t"+ex.getMessage());
+            rowsAffected = 0;
+        } 
+        finally 
+        {
+            try 
+            {
+                if (ps != null) 
+                {
+                    ps.close();
+                }
+                if (con != null) 
+                {
+                    freeConnection(con);
+                }
+            } 
+            catch (SQLException e) 
+            {
+                System.err.println("A problem occurred when closing down the addFriendship method:\n" + e.getMessage());
+            }
+        }
+        return rowsAffected;
+    }
+    
+    /**
+     *
+     * @param username1
+     * @param username2
+     * @return
+     */
+    @Override
+    public boolean removeFriendship(String username1, String username2){
+        Connection con = null;
+        PreparedStatement ps = null;
+        boolean removed = false;
+        
+        try{
+            con = this.getConnection();
+            
+            String query = "DELETE FROM friend WHERE (friend1 = ? AND friend2 = ?) OR (friend1 = ? AND friend2 = ?)";
+            ps = con.prepareStatement(query);
+            ps.setString(1, username1);
+            ps.setString(2, username2);
+            ps.setString(3, username2);
+            ps.setString(4, username1);
+            
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 0){
+                removed = true;
+            }
+        } catch (SQLException ex){
+            System.err.println("\tA problem occurred during the removeFriendship method:");
+            System.err.println("\t"+ex.getMessage());
+            removed = false;
+        }
+        
+        finally 
+        {
+            try 
+            {
+                if (ps != null) 
+                {
+                    ps.close();
+                }
+                if (con != null) 
+                {
+                    freeConnection(con);
+                }
+            } 
+            catch (SQLException ex) 
+            {
+                System.err.println("A problem occurred during closing down the removeFriendship method:\n" + ex.getMessage());
+            }
+        }
+        return removed;
+    }
 }

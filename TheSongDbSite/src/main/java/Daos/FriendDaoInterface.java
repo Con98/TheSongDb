@@ -15,4 +15,6 @@ import java.util.ArrayList;
 public interface FriendDaoInterface {
     //public Friend addNewFriend();
     public ArrayList<Friend> displayAllFriends(String username);
+    public int addFriendship(String username1, String username2);
+    public boolean removeFriendship(String username1, String username2);
 }
