@@ -9,13 +9,30 @@ package Daos;
  *
  * @author Thomas
  */
+import static Daos.Dao.freeConnection;
+import Dtos.Friend;
+import Dtos.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
-public class MessageDao {
+public class MessageDao extends Dao implements MessageDaoInterface {
+    
+    public MessageDao(String databaseName) {
+        super(databaseName);
+    }
+
+    public MessageDao(String databaseName, String poolName) {
+        super(databaseName, poolName);
+    }
+    
     public static String encrypt(String key, String initVector, String value) {
         try {
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
@@ -50,6 +67,42 @@ public class MessageDao {
         }
 
         return null;
+    }
+    
+    public boolean sendMessage(String fromId, String toId, String subjectLine, String messageContent){
+        Connection con = null;
+        PreparedStatement ps = null;
+        int rs = 0;
+        boolean succeeded = false;
+        try {
+            con = this.getConnection();
+            String query = "INSERT INTO `message`(`messageId`, `fromId`, `toId`, `subjectLine`, `messageContent`) VALUES (null,?,?,?,?)";
+            ps = con.prepareStatement(query);
+            ps.setString(1, fromId);
+            ps.setString(2, toId);
+            ps.setString(3, subjectLine);
+            ps.setString(4, messageContent);
+
+            rs = ps.executeUpdate();
+            if (rs == 1) {
+                succeeded = true;
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the sendMessage method:");
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the sendMessage method:\n" + e.getMessage());
+            }
+        }
+        return succeeded;
     }
 
     public static void main(String[] args) {

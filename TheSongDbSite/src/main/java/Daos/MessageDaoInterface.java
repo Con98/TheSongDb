@@ -26,4 +26,5 @@ public interface MessageDaoInterface {
      * Matches the toId to the user who is chosen to receive the message
      */
     //public Message createMessage();
+    public boolean sendMessage(String fromId, String toId, String subjectLine, String messageContent);
 }

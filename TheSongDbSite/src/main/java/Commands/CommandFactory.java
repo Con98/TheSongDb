@@ -53,6 +53,8 @@ public class CommandFactory {
                 case "changeLanguage":
                     command = new ChangeLanguageCommand();
                     break;
+                case "sendMessage":
+                    command = new SendMessageCommand();
 //                case "search":
 //                    command = new SearchCommand();
 //                    break;

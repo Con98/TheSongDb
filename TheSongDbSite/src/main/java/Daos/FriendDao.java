@@ -41,7 +41,7 @@ public class FriendDao extends Dao implements FriendDaoInterface {
         try {
             con = this.getConnection();
 
-            UserDao userDao = new UserDao("MyName");
+            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             User user = userDao.findUserByUsername(username);
 
             String query = "SELECT * FROM friend WHERE friend1 = ? OR friend2 = ?";

@@ -40,9 +40,8 @@
 
                 %>
                 <a class="navbar-brand" href="index.jsp">TheSongDb</a>
-                <%
-                    }
-                    %>
+                <%                    }
+                %>
             </div>
             <ul class="nav navbar-nav">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Friends<span class="caret"></span></a>
@@ -53,10 +52,10 @@
                     </ul>
                 </li>
                 <li><a href="#">Music</a></li>
+                <li><a href="sendMessage.jsp">Send message</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <%
-                    
                     if (logName != null) {
                         User user = (User) logName;
                         session.setAttribute("userId", user.getUserId());
@@ -72,28 +71,26 @@
                 %>
                 <li><a href="register.jsp"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                 <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <%
-                        }
+                    <%                        }
                     %>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-asterisk"></span> Settings <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <%
-                    
-                    if (logName != null) {
-                        User user = (User) logName;
-                        session.setAttribute("userId", user.getUserId());
-                        int userId = user.getUserId();
-                %>
+                            if (logName != null) {
+                                User user = (User) logName;
+                                session.setAttribute("userId", user.getUserId());
+                                int userId = user.getUserId();
+                        %>
 
-                <li><a href="FrontController?action=logout">Logout</a></li>
+                        <li><a href="FrontController?action=logout">Logout</a></li>
 
-                <%
-                } else{
-                %>
+                        <%
+                        } else {
+                        %>
                         <li><a href="#">Page 1-2</a></li>
                         <li><a href="#">Page 1-3</a></li>
-                        <% 
-}
+                            <%
+                                }
                             %>
                     </ul>
                 </li>

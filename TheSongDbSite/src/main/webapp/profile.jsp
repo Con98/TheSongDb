@@ -75,11 +75,11 @@
     <section>
     <div id="leftColumn">
         <%
-            UserDao userDao = new UserDao("myFriends");
+            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             Object user = session.getAttribute("userName");
             String username = (String) user;
             if (username != null) {
-                FriendDao friendDao = new FriendDao("myFriends");
+                FriendDao friendDao = new FriendDao("TheSongDb", "jdbc/TheSongDb");
                 ArrayList<Friend> friends = friendDao.displayAllFriends(username);
 
         %>

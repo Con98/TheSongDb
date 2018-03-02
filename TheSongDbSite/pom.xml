@@ -22,16 +22,22 @@
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>5.1.6</version>
-</dependency>
-<dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+        </dependency>
+        <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.6</version>
             <type>jar</type>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-i18n/commons-i18n -->
+        <dependency>
+            <groupId>commons-i18n</groupId>
+            <artifactId>commons-i18n</artifactId>
+            <version>0.5</version>
         </dependency>
     </dependencies>
 

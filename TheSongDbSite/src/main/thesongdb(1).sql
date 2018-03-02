@@ -20,23 +20,18 @@ SET time_zone = "+00:00";
 -- Database: `thesongdb`
 --
 
+CREATE DATABASE thesongdb;
+USE thesongdb;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `friend`
 --
 
-<<<<<<< HEAD
-CREATE TABLE friend (
-  friendId int(11) NOT NULL,
-  friend1 varchar(30) NOT NULL,
-  friend2 varchar(30) NOT NULL
-=======
 CREATE TABLE `friend` (
   `friendId` int(11) NOT NULL,
   `friend1` varchar(30) NOT NULL,
   `friend2` varchar(30) NOT NULL
->>>>>>> 582c445a295cf22dc62853880c1300c4b33caecf
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -80,21 +75,6 @@ INSERT INTO `users` (`UserId`, `firstName`, `surName`, `userName`, `email`, `pas
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `friend`
---
-<<<<<<< HEAD
-ALTER TABLE friend
-  ADD PRIMARY KEY (friendId),
-  ADD KEY friend1 (friend1),
-  ADD KEY friend2 (friend2);
-=======
-ALTER TABLE `friend`
-  ADD PRIMARY KEY (`friendId`),
-  ADD KEY `friend1` (`friend1`),
-  ADD KEY `friend2` (`friend2`);
->>>>>>> 582c445a295cf22dc62853880c1300c4b33caecf
 
 --
 -- Indexes for table `message`
