@@ -24,7 +24,7 @@ public class SendMessageCommand implements Command {
         String toId = request.getParameter("toId");
         String subjectLine = request.getParameter("subjectLine");
         String messageContent = request.getParameter("messageContent");
-        if (toId != null && toId != null) {
+        if (toId != null && fromId != null && subjectLine != null && messageContent != null) {
 
             MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
             boolean sent = messageDao.sendMessage(fromId, toId, subjectLine, messageContent);

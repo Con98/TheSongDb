@@ -15,10 +15,15 @@
 
     </head>
     <body>
-        <%            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
-            User loggedUser = (User) session.getAttribute("login");
+
+        <%  
+            try {
+                UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
+                User loggedUser = (User) session.getAttribute("login");
+                String userName = loggedUser.getUserName();
+                int userId = loggedUser.getUserId();
         %>
-        <h1 ><%= loggedUser.getUserName() %> is sending a message</h1>
+        <h1><%=userName%> is sending a message</h1>
         <div style="width: 50%; text-align: center;">
             <form class="form-horizontal" action="FrontController" method="post">
                 <div class="form-group">
@@ -44,9 +49,14 @@
                 </div>
                 <br>
 
-                <input type="hidden" name="fromId" value="<% loggedUser.getUserId(); %>"/>
+                <input type="hidden" name="fromId" value="<%= userId%>"/>
+                <input type="hidden" name="action" value="sendMessage"/>
             </form>
         </div>
+        <% } catch (NullPointerException ex) {
+                //Display an error message to the log
+                System.out.println("An error occured when trying to send a message: " + ex.getMessage());
+            }%>
     </body>
     <script
 </html>

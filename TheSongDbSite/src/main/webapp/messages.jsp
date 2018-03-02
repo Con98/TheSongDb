@@ -16,7 +16,6 @@ and open the template in the editor.
     </head>
     
     <body>
-        <h2>Welcome to TheSongDb</h2>
-        <h3>Please login or register to get started</h3>
+        <h2>Messages</h2>
     </body>
 </html>
