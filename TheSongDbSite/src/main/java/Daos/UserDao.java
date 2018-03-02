@@ -191,9 +191,9 @@ public class UserDao extends Dao implements UserDaoInterface {
                 u.setSurName(rs.getString("surName"));
                 u.setUserName(rs.getString("userName"));
                 u.setEmail(rs.getString("email"));
-                if (rs.getInt("type") == 0) {
+                if (rs.getInt("isAdmin") == 0) {
                     u.setType(false);
-                } else if (rs.getInt("type") == 1) {
+                } else if (rs.getInt("isAdmin") == 1) {
                     u.setType(true);
                 }
                 u.setPassword(rs.getString("password"));

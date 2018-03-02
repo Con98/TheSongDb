@@ -1,15 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2018 at 01:52 PM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 7.0.3
+-- Generation Time: Mar 02, 2018 at 06:21 PM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
- 
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -19,9 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `thesongdb`
 --
-
 CREATE DATABASE thesongdb;
 USE thesongdb;
+
 -- --------------------------------------------------------
 
 --
@@ -33,6 +35,14 @@ CREATE TABLE `friend` (
   `friend1` varchar(30) NOT NULL,
   `friend2` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `friend`
+--
+
+INSERT INTO `friend` (`friendId`, `friend1`, `friend2`) VALUES
+(1, 'Emmet_Mc', 'test'),
+(2, 'test', 'Emmet_Mc');
 
 -- --------------------------------------------------------
 
@@ -48,6 +58,13 @@ CREATE TABLE `message` (
   `subjectLine` varchar(50) NOT NULL,
   `messageContent` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`messageId`, `fromId`, `toId`, `sentOn`, `subjectLine`, `messageContent`) VALUES
+(3, 2, 1, '2018-03-02 13:46:51', 'test sub', 'test mesg');
 
 -- --------------------------------------------------------
 
@@ -70,11 +87,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserId`, `firstName`, `surName`, `userName`, `email`, `password`, `isAdmin`) VALUES
-(1, 'Emmet', 'Mc Eneaney', 'Emmet_Mc', 'emmetmceneaney@gmail.com', '62a6f90071b5314d0f0b3fe4c5974df357c37bcd166a81063901d5c0855065c3', 0);
+(1, 'Emmet', 'Mc Eneaney', 'Emmet_Mc', 'emmetmceneaney@gmail.com', '62a6f90071b5314d0f0b3fe4c5974df357c37bcd166a81063901d5c0855065c3', 0),
+(2, 'test', 'test', 'test', 'test@test.test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `friend`
+--
+ALTER TABLE `friend`
+  ADD PRIMARY KEY (`friendId`),
+  ADD KEY `friend1` (`friend1`),
+  ADD KEY `friend2` (`friend2`);
 
 --
 -- Indexes for table `message`
@@ -97,15 +123,23 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `friend`
+--
+ALTER TABLE `friend`
+  MODIFY `friendId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `messageId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `messageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `UserId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- Constraints for dumped tables
 --
@@ -123,12 +157,7 @@ ALTER TABLE `friend`
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`fromId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE,
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`toId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE;
-  
-  
-ALTER TABLE friend
-  ADD PRIMARY KEY (friendId),
-  ADD KEY friend1 (friend1),
-  ADD KEY friend2 (friend2);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

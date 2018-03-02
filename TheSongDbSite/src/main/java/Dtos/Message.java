@@ -13,6 +13,7 @@ public class Message {
     private int messageId;
     private int fromId;
     private int toId;
+    private String sentOn;
     private String subjectLine;
     private String messageContent;
     
@@ -36,6 +37,14 @@ public class Message {
             this.messageId = messageId;
             this.fromId = fromId;
             this.toId = toId;
+            this.subjectLine = subjectLine;
+            this.messageContent = messageContent;
+        }
+        public Message(int messageId, int fromId, int toId, String sentOn, String subjectLine, String messageContent){
+            this.messageId = messageId;
+            this.fromId = fromId;
+            this.toId = toId;
+            this.sentOn = sentOn;
             this.subjectLine = subjectLine;
             this.messageContent = messageContent;
         }
@@ -79,4 +88,18 @@ public class Message {
     public void setMessageContent(String messageContent) {
         this.messageContent = messageContent;
     }
+
+    public String getSentOn() {
+        return sentOn;
+    }
+
+    public void setSentOn(String sentOn) {
+        this.sentOn = sentOn;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" + "messageId=" + messageId + ", fromId=" + fromId + ", toId=" + toId + ", sentOn=" + sentOn + ", subjectLine=" + subjectLine + ", messageContent=" + messageContent + '}';
+    }
+    
 }

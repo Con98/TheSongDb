@@ -29,7 +29,7 @@ public class SendMessageCommand implements Command {
             MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
             boolean sent = messageDao.sendMessage(fromId, toId, subjectLine, messageContent);
             if(sent){
-            forwardToJsp = "messages.jsp";
+            forwardToJsp = "profile.jsp";
             }
             else{
                 forwardToJsp = "sendMessage.jsp";

@@ -11,6 +11,7 @@ package Daos;
  */
 import static Daos.Dao.freeConnection;
 import Dtos.Friend;
+import Dtos.Message;
 import Dtos.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,6 +70,7 @@ public class MessageDao extends Dao implements MessageDaoInterface {
         return null;
     }
     
+    @Override
     public boolean sendMessage(String fromId, String toId, String subjectLine, String messageContent){
         Connection con = null;
         PreparedStatement ps = null;
@@ -103,6 +105,137 @@ public class MessageDao extends Dao implements MessageDaoInterface {
             }
         }
         return succeeded;
+    }
+    
+    @Override
+    public ArrayList<Message> displayAllMessages(int userId) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<Message> messages = new ArrayList<>();
+        try {
+            con = this.getConnection();
+
+            String query = "SELECT * FROM message WHERE fromId = ? OR toId = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setInt(2, userId);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int messageId = rs.getInt("messageId");
+                int fromId = rs.getInt("fromId");
+                int toId = rs.getInt("toId");
+                String sentOn = rs.getString("sentOn");
+                String subjectLine = rs.getString("subjectLine");
+                String messageContent = rs.getString("messageContent");
+                
+
+                Message m = new Message(messageId, fromId, toId, sentOn, subjectLine, messageContent);
+                messages.add(m);
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the displayAllMessages method:");
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the displayAllMessages method:\n" + e.getMessage());
+            }
+        }
+        return messages;
+    }
+    
+    @Override
+    public Message findMessageById(String inputMessId) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Message m = new Message();
+        try {
+            con = this.getConnection();
+
+            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
+
+            String query = "SELECT * FROM message WHERE messageId = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, inputMessId);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int messageId = rs.getInt("messageId");
+                int fromId = rs.getInt("fromId");
+                int toId = rs.getInt("toId");
+                String sentOn = rs.getString("sentOn");
+                String subjectLine = rs.getString("subjectLine");
+                String messageContent = rs.getString("messageContent");
+                
+
+                m = new Message(messageId, fromId, toId, sentOn, subjectLine, messageContent);
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the displayAllMessages method:");
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the displayAllMessages method:\n" + e.getMessage());
+            }
+        }
+        return m;
+    }
+    
+    @Override
+    public boolean deleteMessage(Message m) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int rs = 0;
+        boolean deleted = false;
+        try {
+            con = this.getConnection();
+
+            String query = "DELETE FROM `message` WHERE `messageId` = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, m.getMessageId());
+
+            rs = ps.executeUpdate();
+            if(rs==1){
+                deleted=true;
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the displayAllMessages method:");
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the displayAllMessages method:\n" + e.getMessage());
+            }
+        }
+        return deleted;
     }
 
     public static void main(String[] args) {

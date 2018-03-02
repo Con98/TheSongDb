@@ -27,4 +27,7 @@ public interface MessageDaoInterface {
      */
     //public Message createMessage();
     public boolean sendMessage(String fromId, String toId, String subjectLine, String messageContent);
+    public ArrayList<Message> displayAllMessages(int userId);
+    public Message findMessageById(String messageId);
+    public boolean deleteMessage(Message m);
 }
