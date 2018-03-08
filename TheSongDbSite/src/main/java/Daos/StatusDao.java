@@ -13,6 +13,7 @@ import static Daos.Dao.freeConnection;
 import Dtos.Friend;
 import Dtos.Message;
 import Dtos.User;
+import Dtos.Status;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,13 +25,13 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
-public class MessageDao extends Dao implements MessageDaoInterface {
+public class StatusDao extends Dao implements StatusDaoInterface {
     
-    public MessageDao(String databaseName) {
+    public StatusDao(String databaseName) {
         super(databaseName);
     }
 
-    public MessageDao(String databaseName, String poolName) {
+    public StatusDao(String databaseName, String poolName) {
         super(databaseName, poolName);
     }
     
@@ -71,26 +72,24 @@ public class MessageDao extends Dao implements MessageDaoInterface {
     }
     
     @Override
-    public boolean sendMessage(String fromId, String toId, String subjectLine, String messageContent){
+    public boolean sendStatus(String userId, String statusContent){
         Connection con = null;
         PreparedStatement ps = null;
         int rs = 0;
         boolean succeeded = false;
         try {
             con = this.getConnection();
-            String query = "INSERT INTO `message`(`messageId`, `fromId`, `toId`, `subjectLine`, `messageContent`) VALUES (null,?,?,?,?)";
+            String query = "INSERT INTO `status`(`statusId`, `userId`, `messageContent`) VALUES (null,?,?)";
             ps = con.prepareStatement(query);
-            ps.setString(1, fromId);
-            ps.setString(2, toId);
-            ps.setString(3, subjectLine);
-            ps.setString(4, messageContent);
+            ps.setString(1, userId);
+            ps.setString(2, statusContent);
 
             rs = ps.executeUpdate();
             if (rs == 1) {
                 succeeded = true;
             }
         } catch (SQLException ex) {
-            System.err.println("\tA problem occurred during the sendMessage method:");
+            System.err.println("\tA problem occurred during the sendStatus method:");
             System.err.println("\t" + ex.getMessage());
         } finally {
             try {
@@ -101,41 +100,38 @@ public class MessageDao extends Dao implements MessageDaoInterface {
                     freeConnection(con);
                 }
             } catch (SQLException e) {
-                System.err.println("A problem occurred when closing down the sendMessage method:\n" + e.getMessage());
+                System.err.println("A problem occurred when closing down the sendStatus method:\n" + e.getMessage());
             }
         }
         return succeeded;
     }
     
     @Override
-    public ArrayList<Message> displayAllMessages(int userId) {
+    public ArrayList<Status> displayOwnStatuses(int userLoggedIn) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<Message> messages = new ArrayList<>();
+        ArrayList<Status> statuses = new ArrayList<>();
         try {
             con = this.getConnection();
 
-            String query = "SELECT * FROM message WHERE fromId = ? OR toId = ?";
+            String query = "SELECT * FROM status WHERE userId = ?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, userId);
-            ps.setInt(2, userId);
+            ps.setInt(1, userLoggedIn);
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                int messageId = rs.getInt("messageId");
-                int fromId = rs.getInt("fromId");
-                int toId = rs.getInt("toId");
+                int statusId = rs.getInt("statusId");
+                int userId = rs.getInt("userId");
                 String sentOn = rs.getString("sentOn");
-                String subjectLine = rs.getString("subjectLine");
-                String messageContent = rs.getString("messageContent");
+                String statusContent = rs.getString("statusContent");
                 
 
-                Message m = new Message(messageId, fromId, toId, sentOn, subjectLine, messageContent);
-                messages.add(m);
+                Status s = new Status(statusId, userId, sentOn, statusContent);
+                statuses.add(s);
             }
         } catch (SQLException ex) {
-            System.err.println("\tA problem occurred during the displayAllMessages method:");
+            System.err.println("\tA problem occurred during the displayOwnStatuses method:");
             System.err.println("\t" + ex.getMessage());
         } finally {
             try {
@@ -149,41 +145,38 @@ public class MessageDao extends Dao implements MessageDaoInterface {
                     freeConnection(con);
                 }
             } catch (SQLException e) {
-                System.err.println("A problem occurred when closing down the displayAllMessages method:\n" + e.getMessage());
+                System.err.println("A problem occurred when closing down the displayOwnStatuses method:\n" + e.getMessage());
             }
         }
-        return messages;
+        return statuses;
     }
     
     @Override
-    public Message findMessageById(String inputMessId) {
+    public ArrayList<Status> displayStatuses(int userLoggedIn) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Message m = new Message();
+        ArrayList<Status> statuses = new ArrayList<>();
         try {
             con = this.getConnection();
 
-            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
-
-            String query = "SELECT * FROM message WHERE messageId = ?";
+            String query = "SELECT * FROM status WHERE userId = ?";
             ps = con.prepareStatement(query);
-            ps.setString(1, inputMessId);
+            ps.setInt(1, userLoggedIn);
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                int messageId = rs.getInt("messageId");
-                int fromId = rs.getInt("fromId");
-                int toId = rs.getInt("toId");
+                int statusId = rs.getInt("statusId");
+                int userId = rs.getInt("userId");
                 String sentOn = rs.getString("sentOn");
-                String subjectLine = rs.getString("subjectLine");
-                String messageContent = rs.getString("messageContent");
+                String statusContent = rs.getString("statusContent");
                 
 
-                m = new Message(messageId, fromId, toId, sentOn, subjectLine, messageContent);
+                Status s = new Status(statusId, userId, sentOn, statusContent);
+                statuses.add(s);
             }
         } catch (SQLException ex) {
-            System.err.println("\tA problem occurred during the findMessageById method:");
+            System.err.println("\tA problem occurred during the displayOwnStatuses method:");
             System.err.println("\t" + ex.getMessage());
         } finally {
             try {
@@ -197,14 +190,57 @@ public class MessageDao extends Dao implements MessageDaoInterface {
                     freeConnection(con);
                 }
             } catch (SQLException e) {
-                System.err.println("A problem occurred when closing down the findMessageById method:\n" + e.getMessage());
+                System.err.println("A problem occurred when closing down the displayOwnStatuses method:\n" + e.getMessage());
             }
         }
-        return m;
+        return statuses;
     }
     
     @Override
-    public boolean deleteMessage(Message m) {
+    public Status findStatusById(String inputStatId) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Status s = new Status();
+        try {
+            con = this.getConnection();
+
+            String query = "SELECT * FROM status WHERE statusId = ?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, inputStatId);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int statusId = rs.getInt("statusId");
+                int userId = rs.getInt("userId");
+                String sentOn = rs.getString("sentOn");
+                String statusContent = rs.getString("statusContent");
+
+                s = new Status(statusId, userId, sentOn, statusContent);
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the findStatusById method:");
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the findStatusById method:\n" + e.getMessage());
+            }
+        }
+        return s;
+    }
+    
+    @Override
+    public boolean deleteStatus(Status s) {
         Connection con = null;
         PreparedStatement ps = null;
         int rs = 0;
@@ -212,16 +248,16 @@ public class MessageDao extends Dao implements MessageDaoInterface {
         try {
             con = this.getConnection();
 
-            String query = "DELETE FROM `message` WHERE `messageId` = ?";
+            String query = "DELETE FROM `status` WHERE `statusId` = ?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, m.getMessageId());
+            ps.setInt(1, s.getStatusId());
 
             rs = ps.executeUpdate();
             if(rs==1){
                 deleted=true;
             }
         } catch (SQLException ex) {
-            System.err.println("\tA problem occurred during the deleteMessage method:");
+            System.err.println("\tA problem occurred during the deleteStatus method:");
             System.err.println("\t" + ex.getMessage());
         } finally {
             try {
@@ -232,20 +268,12 @@ public class MessageDao extends Dao implements MessageDaoInterface {
                     freeConnection(con);
                 }
             } catch (SQLException e) {
-                System.err.println("A problem occurred when closing down the deleteMessage method:\n" + e.getMessage());
+                System.err.println("A problem occurred when closing down the deleteStatus method:\n" + e.getMessage());
             }
         }
         return deleted;
     }
 
     public static void main(String[] args) {
-        String key = "Bar12345Bar12345"; // 128 bit key
-        String initVector = "RandomInitVector"; // 16 bytes IV
-        String message = "The password is 157892";
-        String eMessage = encrypt(key, initVector, message);
-        String dMessage = decrypt(key, initVector, eMessage);
-        
-        System.out.println("Encrypted message: " + eMessage);
-        System.out.println("Original message: " + dMessage);
     }
 }

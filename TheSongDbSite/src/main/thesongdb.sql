@@ -60,6 +60,17 @@ CREATE TABLE `message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `message`
+--
+
+CREATE TABLE `status` (
+  `statusId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `sentOn` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `statusContent` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Dumping data for table `message`
 --
 
@@ -109,6 +120,14 @@ ALTER TABLE `message`
   ADD PRIMARY KEY (`messageId`),
   ADD KEY `fromId` (`fromId`),
   ADD KEY `toId` (`toId`);
+  
+  --
+-- Indexes for table `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`statusId`),
+  ADD KEY `userId` (`userId`),
+
 
 --
 -- Indexes for table `users`
@@ -133,6 +152,12 @@ ALTER TABLE `friend`
 --
 ALTER TABLE `message`
   MODIFY `messageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  
+  --
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `status`
+  MODIFY `statusId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -157,6 +182,12 @@ ALTER TABLE `friend`
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`fromId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE,
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`toId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE;
+  
+  --
+-- Constraints for table `message`
+--
+ALTER TABLE `status`
+  ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE,
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
