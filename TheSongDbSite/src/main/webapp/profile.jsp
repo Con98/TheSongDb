@@ -76,7 +76,7 @@
         </tr>
     </table>
     <section>
-        <div id="leftColumn">
+        <div id="rightColumn">
             <%
                 UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
                 Object user = session.getAttribute("userName");
@@ -104,45 +104,7 @@
 
                 %>
             </table>
-            <h1><%= loggedUser.getUserName()%>'s messages</h1>
-            <%
-                MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
-                ArrayList<Message> messages = messageDao.displayAllMessages(loggedUser.getUserId());
-                if (!messages.isEmpty()) { %>
-            <table border="1">
-                <tr>
-                    <th>Sender</th>
-                    <th>Receiver</th>
-                    <th>Date sent</th>
-                    <th>Subject</th>
-                    <th>Message</th>
-                    <th>Delete</th>
-                </tr>
-
-                <%
-                    for (Message m : messages) {
-                        User sender = userDao.getDetailsById(m.getFromId());
-                        User receiver = userDao.getDetailsById(m.getToId());
-
-
-                %>
-                <tr>
-                    <td><%= sender.getUserName()%></td>
-                    <td><%= receiver.getUserName()%></td>
-                    <td><%= m.getSentOn()%></td>
-                    <td><%= m.getSubjectLine()%></td>
-                    <td><%= m.getMessageContent()%></td>
-                    <td><a href="deleteMessage.jsp?id=<%=m.getMessageId()%>">Delete</a></td>
-                </tr>
-                <%
-                    }
-                %>
-
-            </table>
-            <% } else {
-                    out.println("No messages found");
-                }%>
-                <h1><%= loggedUser.getUserName()%>'s statuses</h1>
+            <h1><%= loggedUser.getUserName()%>'s statuses</h1>
             <%
                 StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
                 ArrayList<Status> statuses = statusDao.displayOwnStatuses(loggedUser.getUserId());
@@ -172,8 +134,50 @@
                 }%>
         </div>
     </section>
-    <%
-        }
-    %>
+    <div id="leftColumn">
+        <%
+            MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
+            ArrayList<Message> messages = messageDao.displayAllMessages(loggedUser.getUserId());
+        %>
+
+        <h1><%= loggedUser.getUserName()%>'s messages</h1>
+        <table border="1">
+            <% if (!messages.isEmpty()) { %>
+            <tr>
+                <th>Sender</th>
+                <th>Receiver</th>
+                <th>Date sent</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Delete</th>
+            </tr>
+
+            <%
+                for (Message m : messages) {
+                    User sender = userDao.getDetailsById(m.getFromId());
+                    User receiver = userDao.getDetailsById(m.getToId());
+
+
+            %>
+            <tr>
+                <td><%= sender.getUserName()%></td>
+                <td><%= receiver.getUserName()%></td>
+                <td><%= m.getSentOn()%></td>
+                <td><%= m.getSubjectLine()%></td>
+                <td><%= m.getMessageContent()%></td>
+                <td><a href="deleteMessage.jsp?id=<%=m.getMessageId()%>">Delete</a></td>
+            </tr>
+            <%
+                }
+            %>
+
+        </table>
+        <% } else {
+                out.println("No messages found");
+            }%>
+        <%
+            }
+        %>
+    </div>
 </body>
 </html>
