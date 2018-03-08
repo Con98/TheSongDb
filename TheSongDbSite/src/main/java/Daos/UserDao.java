@@ -206,7 +206,8 @@ public class UserDao extends Dao implements UserDaoInterface {
         } catch (Exception e) {
             System.out.println("Exception occurred: " + e.getMessage());
 
-        } finally {
+        }
+        finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -284,7 +285,12 @@ public class UserDao extends Dao implements UserDaoInterface {
         {
             System.err.println("\tA problem occurred during the findUserByUsername method:");
             System.err.println("\t"+e.getMessage());
-        } 
+        }
+        catch (NullPointerException ex) 
+        {
+            System.err.println("\tA problem occurred during the findUserByUsername method:");
+            System.err.println("\t"+ex.getMessage());
+        }
         finally 
         {
             try 

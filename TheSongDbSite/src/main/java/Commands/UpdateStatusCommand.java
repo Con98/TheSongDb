@@ -27,7 +27,7 @@ public class UpdateStatusCommand implements Command {
             StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
             boolean sent = statusDao.sendStatus(userId, statusContent);
             if(sent){
-            forwardToJsp = "profile.jsp";
+            forwardToJsp = "home.jsp";
             }
             else{
                 forwardToJsp = "error.jsp";

@@ -248,6 +248,57 @@ public class FriendDao extends Dao implements FriendDaoInterface {
             System.err.println("\tA problem occurred during the checkFriendshipStatus method:");
             System.err.println("\t" + ex.getMessage());
             friends = null;
+        } catch (NullPointerException ex) {
+            System.err.println("\tA problem occurred during the checkFriendshipStatus method:");
+            System.err.println("\t" + ex.getMessage());
+            friends = null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException ex) {
+                System.err.println("A problem occurred when closing down the checkFriendshipStatus method:\n" + ex.getMessage());
+            }
+        }
+        return friends; //may be null
+    }
+    
+    @Override
+    public boolean checkIfFriends(String username1, String username2) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean friends = false;
+
+        try {
+            con = this.getConnection();
+
+            String query = "SELECT * FROM friend WHERE (friend1 = ? AND friend2 = ?) OR (friend1 = ? AND friend2 = ?)";
+
+            ps = con.prepareStatement(query);
+            ps.setString(1, username1);
+            ps.setString(2, username2);
+            ps.setString(3, username2);
+            ps.setString(4, username1);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                friends = true;
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the checkFriendshipStatus method:");
+            System.err.println("\t" + ex.getMessage());
+        } catch (NullPointerException ex) {
+            System.err.println("\tA problem occurred during the checkFriendshipStatus method:");
+            System.err.println("\t" + ex.getMessage());
         } finally {
             try {
                 if (rs != null) {

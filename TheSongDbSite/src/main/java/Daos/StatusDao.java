@@ -26,7 +26,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 
 public class StatusDao extends Dao implements StatusDaoInterface {
-    
+
     public StatusDao(String databaseName) {
         super(databaseName);
     }
@@ -34,7 +34,7 @@ public class StatusDao extends Dao implements StatusDaoInterface {
     public StatusDao(String databaseName, String poolName) {
         super(databaseName, poolName);
     }
-    
+
     public static String encrypt(String key, String initVector, String value) {
         try {
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
@@ -70,9 +70,9 @@ public class StatusDao extends Dao implements StatusDaoInterface {
 
         return null;
     }
-    
+
     @Override
-    public boolean sendStatus(String userId, String statusContent){
+    public boolean sendStatus(String userId, String statusContent) {
         Connection con = null;
         PreparedStatement ps = null;
         int rs = 0;
@@ -105,7 +105,7 @@ public class StatusDao extends Dao implements StatusDaoInterface {
         }
         return succeeded;
     }
-    
+
     @Override
     public ArrayList<Status> displayOwnStatuses(int userLoggedIn) {
         Connection con = null;
@@ -125,7 +125,6 @@ public class StatusDao extends Dao implements StatusDaoInterface {
                 int userId = rs.getInt("userId");
                 String sentOn = rs.getString("sentOn");
                 String statusContent = rs.getString("statusContent");
-                
 
                 Status s = new Status(statusId, userId, sentOn, statusContent);
                 statuses.add(s);
@@ -150,19 +149,21 @@ public class StatusDao extends Dao implements StatusDaoInterface {
         }
         return statuses;
     }
-    
+
     @Override
     public ArrayList<Status> displayStatuses(int userLoggedIn) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        FriendDao friendDao = new FriendDao("TheSongDb", "jdbc/TheSongDb");
+        UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
+        ArrayList<Status> allStatuses = new ArrayList<>();
         ArrayList<Status> statuses = new ArrayList<>();
         try {
             con = this.getConnection();
 
-            String query = "SELECT * FROM status WHERE userId = ?";
+            String query = "SELECT * FROM status";
             ps = con.prepareStatement(query);
-            ps.setInt(1, userLoggedIn);
 
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -170,13 +171,18 @@ public class StatusDao extends Dao implements StatusDaoInterface {
                 int userId = rs.getInt("userId");
                 String sentOn = rs.getString("sentOn");
                 String statusContent = rs.getString("statusContent");
-                
-
                 Status s = new Status(statusId, userId, sentOn, statusContent);
-                statuses.add(s);
+                allStatuses.add(s);
+            }
+            if (!allStatuses.isEmpty()) {
+                for (Status s : allStatuses) {
+                    if (userLoggedIn == s.getUserId() || friendDao.checkIfFriends(userDao.getDetailsById(s.getUserId()).getUserName(), userDao.getDetailsById(userLoggedIn).getUserName())) {
+                        statuses.add(s);
+                    }
+                }
             }
         } catch (SQLException ex) {
-            System.err.println("\tA problem occurred during the displayOwnStatuses method:");
+            System.err.println("\tA problem occurred during the displayStatuses method:");
             System.err.println("\t" + ex.getMessage());
         } finally {
             try {
@@ -190,12 +196,12 @@ public class StatusDao extends Dao implements StatusDaoInterface {
                     freeConnection(con);
                 }
             } catch (SQLException e) {
-                System.err.println("A problem occurred when closing down the displayOwnStatuses method:\n" + e.getMessage());
+                System.err.println("A problem occurred when closing down the displayStatuses method:\n" + e.getMessage());
             }
         }
         return statuses;
     }
-    
+
     @Override
     public Status findStatusById(String inputStatId) {
         Connection con = null;
@@ -238,7 +244,7 @@ public class StatusDao extends Dao implements StatusDaoInterface {
         }
         return s;
     }
-    
+
     @Override
     public boolean deleteStatus(Status s) {
         Connection con = null;
@@ -253,8 +259,8 @@ public class StatusDao extends Dao implements StatusDaoInterface {
             ps.setInt(1, s.getStatusId());
 
             rs = ps.executeUpdate();
-            if(rs==1){
-                deleted=true;
+            if (rs == 1) {
+                deleted = true;
             }
         } catch (SQLException ex) {
             System.err.println("\tA problem occurred during the deleteStatus method:");

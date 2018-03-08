@@ -24,4 +24,6 @@ public interface FriendDaoInterface {
     public boolean removeUserFriends(String username1);
 
     public Friend checkFriendshipStatus(String username1, String username2);
+    
+    public boolean checkIfFriends(String username1, String username2);
 }
