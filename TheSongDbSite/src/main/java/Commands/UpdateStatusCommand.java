@@ -5,7 +5,7 @@
  */
 package Commands;
 
-import Daos.MessageDao;
+import Daos.StatusDao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,20 +14,18 @@ import javax.servlet.http.HttpSession;
  *
  * @author tadas
  */
-public class SendMessageCommand implements Command {
+public class UpdateStatusCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String forwardToJsp = "";
 
-        String fromId = request.getParameter("fromId");
-        String toId = request.getParameter("toId");
-        String subjectLine = request.getParameter("subjectLine");
-        String messageContent = request.getParameter("messageContent");
-        if (toId != null && fromId != null && subjectLine != null && messageContent != null) {
+        String userId = request.getParameter("userId");
+        String statusContent = request.getParameter("statusContent");
+        if (statusContent != null) {
 
-            MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
-            boolean sent = messageDao.sendMessage(fromId, toId, subjectLine, messageContent);
+            StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
+            boolean sent = statusDao.sendStatus(userId, statusContent);
             if(sent){
             forwardToJsp = "profile.jsp";
             }

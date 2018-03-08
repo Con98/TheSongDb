@@ -1,0 +1,29 @@
+<%@page import="Dtos.User"%>
+<%@page import="Daos.UserDao"%>
+<%  
+            try {
+                User loggedUser = (User) session.getAttribute("login");
+                String userName = loggedUser.getUserName();
+                int userId = loggedUser.getUserId();
+        %>
+        <div style="width: 50%; text-align: center;">
+            <form class="form-horizontal" action="FrontController" method="post">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="statusContent">Status:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="statusContent" placeholder="Enter status" required>
+                    </div>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="Update status" class="btn btn-default">
+                </div>
+                <br>
+
+                <input type="hidden" name="userId" value="<%= userId%>"/>
+                <input type="hidden" name="action" value="updateStatus"/>
+            </form>
+        </div>
+        <% } catch (NullPointerException ex) {
+                //Display an error message to the log
+                System.out.println("An error occured when trying to update status: " + ex.getMessage());
+            }%>

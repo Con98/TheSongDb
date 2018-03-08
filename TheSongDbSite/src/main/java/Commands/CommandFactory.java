@@ -58,7 +58,13 @@ public class CommandFactory {
                     break;
                 case "deleteMessage":
                     command = new DeleteMessageCommand();
-                            break;
+                    break;
+                case "deleteStatus":
+                    command = new DeleteStatusCommand();
+                    break;
+                case "updateStatus":
+                    command = new UpdateStatusCommand();
+                    break;
 //                case "search":
 //                    command = new SearchCommand();
 //                    break;

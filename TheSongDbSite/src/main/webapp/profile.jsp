@@ -1,3 +1,5 @@
+<%@page import="Daos.StatusDao"%>
+<%@page import="Dtos.Status"%>
 <%@page import="Dtos.Message"%>
 <!DOCTYPE html>
 <%-- 
@@ -99,13 +101,15 @@
                     %>
                 </tr>
                 <%
-                    MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
-                    ArrayList<Message> messages = messageDao.displayAllMessages(loggedUser.getUserId());
+
                 %>
             </table>
             <h1><%= loggedUser.getUserName()%>'s messages</h1>
+            <%
+                MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
+                ArrayList<Message> messages = messageDao.displayAllMessages(loggedUser.getUserId());
+                if (!messages.isEmpty()) { %>
             <table border="1">
-            <% if (!messages.isEmpty()) { %>
                 <tr>
                     <th>Sender</th>
                     <th>Receiver</th>
@@ -114,29 +118,57 @@
                     <th>Message</th>
                     <th>Delete</th>
                 </tr>
-                
-                    <%
-                        for (Message m : messages) {
-                            User sender = userDao.getDetailsById(m.getFromId());
-                            User receiver = userDao.getDetailsById(m.getToId());
-                            
 
-                    %>
-                    <tr>
+                <%
+                    for (Message m : messages) {
+                        User sender = userDao.getDetailsById(m.getFromId());
+                        User receiver = userDao.getDetailsById(m.getToId());
+
+
+                %>
+                <tr>
                     <td><%= sender.getUserName()%></td>
                     <td><%= receiver.getUserName()%></td>
                     <td><%= m.getSentOn()%></td>
                     <td><%= m.getSubjectLine()%></td>
                     <td><%= m.getMessageContent()%></td>
                     <td><a href="deleteMessage.jsp?id=<%=m.getMessageId()%>">Delete</a></td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                
+                </tr>
+                <%
+                    }
+                %>
+
             </table>
             <% } else {
-            out.println("No messages found");
+                    out.println("No messages found");
+                }%>
+                <h1><%= loggedUser.getUserName()%>'s statuses</h1>
+            <%
+                StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
+                ArrayList<Status> statuses = statusDao.displayOwnStatuses(loggedUser.getUserId());
+                if (!statuses.isEmpty()) { %>
+            <table border="1">
+                <tr>
+                    <th>Status</th>
+                    <th>Date updated</th>
+                    <th>Delete</th>
+                </tr>
+
+                <%
+                    for (Status s : statuses) {
+                %>
+                <tr>
+                    <td><%= s.getStatusContent()%></td>
+                    <td><%= s.getSentOn()%></td>
+                    <td><a href="deleteStatus.jsp?id=<%= s.getStatusId()%>">Delete</a></td>
+                </tr>
+                <%
+                    }
+                %>
+
+            </table>
+            <% } else {
+                    out.println("No statuses found");
                 }%>
         </div>
     </section>

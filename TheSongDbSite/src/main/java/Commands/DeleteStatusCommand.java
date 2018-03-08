@@ -6,7 +6,9 @@
 package Commands;
 
 import Daos.MessageDao;
+import Daos.StatusDao;
 import Dtos.Message;
+import Dtos.Status;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,16 +17,16 @@ import javax.servlet.http.HttpSession;
  *
  * @author tadas
  */
-public class DeleteMessageCommand implements Command {
+public class DeleteStatusCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String forwardToJsp = "";
 
-        String messageId = request.getParameter("messageId");
-            MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
-            Message m = messageDao.findMessageById(messageId);
-            boolean deleted = messageDao.deleteMessage(m);
+        String statusId = request.getParameter("statusId");
+            StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
+            Status s = statusDao.findStatusById(statusId);
+            boolean deleted = statusDao.deleteStatus(s);
             if (deleted) {
                 forwardToJsp = "profile.jsp";
             } else {
