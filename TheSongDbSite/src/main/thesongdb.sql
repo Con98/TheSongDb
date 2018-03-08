@@ -126,7 +126,7 @@ ALTER TABLE `message`
 --
 ALTER TABLE `status`
   ADD PRIMARY KEY (`statusId`),
-  ADD KEY `userId` (`userId`),
+  ADD KEY `userId` (`userId`);
 
 
 --
@@ -187,7 +187,7 @@ ALTER TABLE `message`
 -- Constraints for table `message`
 --
 ALTER TABLE `status`
-  ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
