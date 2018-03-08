@@ -56,6 +56,8 @@
 
     %>
     <h1>Welcome <%=loggedUser.getUserName()%></h1>
+    
+    <%@include file="updateStatus.jsp" %>
 
     <br/>
     <h2>Personal Info</h2>

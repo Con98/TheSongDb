@@ -2,9 +2,9 @@
 <%@page import="Daos.UserDao"%>
 <%  
             try {
-                User loggedUser = (User) session.getAttribute("login");
-                String userName = loggedUser.getUserName();
-                int userId = loggedUser.getUserId();
+                User updateStatLoggedUser = (User) session.getAttribute("login");
+                String userName = updateStatLoggedUser.getUserName();
+                int updateStatUserId = updateStatLoggedUser.getUserId();
         %>
         <div style="width: 50%; text-align: center;">
             <form class="form-horizontal" action="FrontController" method="post">
@@ -19,7 +19,7 @@
                 </div>
                 <br>
 
-                <input type="hidden" name="userId" value="<%= userId%>"/>
+                <input type="hidden" name="userId" value="<%= updateStatUserId%>"/>
                 <input type="hidden" name="action" value="updateStatus"/>
             </form>
         </div>

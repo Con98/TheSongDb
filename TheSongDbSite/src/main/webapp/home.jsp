@@ -24,7 +24,7 @@
         %>
         
         <h1>Hello <%= user.getFirstName()%></h1>
-        
+        <%@include file="updateStatus.jsp" %>
         <%
             }
             %>

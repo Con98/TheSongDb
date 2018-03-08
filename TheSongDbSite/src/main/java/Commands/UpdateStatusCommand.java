@@ -30,7 +30,7 @@ public class UpdateStatusCommand implements Command {
             forwardToJsp = "profile.jsp";
             }
             else{
-                forwardToJsp = "sendMessage.jsp";
+                forwardToJsp = "error.jsp";
             }
             
             
