@@ -65,9 +65,9 @@ public class CommandFactory {
                 case "updateStatus":
                     command = new UpdateStatusCommand();
                     break;
-//                case "search":
-//                    command = new SearchCommand();
-//                    break;
+                case "search":
+                    command = new SearchCommand();
+                    break;
                 case "logout":
                     command = new LogoutCommand();
                     break;

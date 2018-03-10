@@ -16,7 +16,8 @@ and open the template in the editor.
     </head>
     
     <body>
-        <h2>Welcome to TheSongDb</h2>
+        <h1>Welcome to TheSongDb</h1>
+        <h3>On this site we use The LastFm Api in order to bring you a convenient place to find out the currently most popular music</h3>
         <h3>Please login or register to get started</h3>
     </body>
 </html>

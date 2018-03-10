@@ -31,18 +31,21 @@
                         session.setAttribute("userId", user.getUserId());
                         int userId = user.getUserId();
                 %>
-
                 <a class="navbar-brand" href="home.jsp">TheSongDb</a>
 
                 <%
                 } else {
-
-
                 %>
                 <a class="navbar-brand" href="index.jsp">TheSongDb</a>
                 <%                    }
                 %>
             </div>
+            <%
+                if (logName != null) {
+                    User user = (User) logName;
+                    session.setAttribute("userId", user.getUserId());
+                    int userId = user.getUserId();
+            %>
             <ul class="nav navbar-nav">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Friends<span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -51,9 +54,27 @@
                         <li><a href="#">Friend 3</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Music</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Music<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="displayTopArtists.jsp?size=1">Top 10 Artists</a></li>
+                    </ul>
+                </li>
                 <li><a href="sendMessage.jsp">Send message</a></li>
+                <form class="navbar-form navbar-left" action="FrontController" method="post">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="action" value="search"/>
+                </form> 
             </ul>
+            <%
+                }
+            %>
             <ul class="nav navbar-nav navbar-right">
                 <%
                     if (logName != null) {
@@ -66,8 +87,6 @@
 
                 <%
                 } else {
-
-
                 %>
                 <li><a href="register.jsp"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                 <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -81,7 +100,6 @@
                                 session.setAttribute("userId", user.getUserId());
                                 int userId = user.getUserId();
                         %>
-
                         <li><a href="FrontController?action=logout">Logout</a></li>
 
                         <%
