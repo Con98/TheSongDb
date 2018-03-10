@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 /**
@@ -314,5 +315,67 @@ public class UserDao extends Dao implements UserDaoInterface {
             }
         }
         return u;     // u may be null 
-    } 
+    }
+    
+        @Override
+    public ArrayList<User> viewAllUsers() {
+        ArrayList<User> allUsers = new ArrayList();
+        boolean found = false;
+
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = conn.prepareStatement("SELECT * FROM users");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                while (rs.next()) {
+                    User u = new User();
+                    u.setUserId(rs.getInt("userId"));
+                    u.setFirstName(rs.getString("firstName"));
+                    u.setSurName(rs.getString("surName"));
+                    u.setEmail(rs.getString("email"));
+                    if (rs.getInt("type") == 0) {
+                        u.setType(false);
+                    } else if (rs.getInt("type") == 1) {
+                        u.setType(true);
+                    }
+                    u.setPassword(rs.getString("password"));
+
+                    allUsers.add(u);
+                    found = true;
+                }
+
+            }
+        } catch (SQLException se) {
+            System.out.println("SQL Exception occurred: " + se.getMessage());
+
+        } catch (Exception e) {
+            System.out.println("Exception occurred: " + e.getMessage());
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    System.out.println("Exception occurred when attempting to close ResultSet: " + ex.getMessage());
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    System.out.println("Exception occurred when attempting to close the PreparedStatement: " + ex.getMessage());
+                }
+            }
+            freeConnection(conn);
+        }
+        if (!found) {
+            return null;
+        } else {
+            return allUsers;
+        }
+    }
 }

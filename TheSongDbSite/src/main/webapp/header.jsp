@@ -62,7 +62,7 @@
                 <li><a href="sendMessage.jsp">Send message</a></li>
                 <form class="navbar-form navbar-left" action="FrontController" method="post">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="search" placeholder="Search">
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit">
                                 <i class="glyphicon glyphicon-search"></i>

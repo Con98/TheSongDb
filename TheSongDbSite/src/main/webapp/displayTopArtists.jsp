@@ -34,7 +34,7 @@
             
             %>
 
-        <table class="table">
+        <table class="table table-responsive">
             <tr>
                 <th>Chart Number</th>
                 <th>Album Art</th>
@@ -48,7 +48,7 @@
             <tr>
                 <td class="row"><%=i + 1%></td>
                 <td class="row"><img class="art" src="<%=art.get(i)%>"></td>
-                <td  class="row"><a href="displayAlbums.jsp?action=<%=top10.get(i).get("mbid")%>"><%=top10.get(i).get("name")%></a></td>
+                <td  class="row"><a href="artistInfo.jsp?action=<%=top10.get(i).get("name")%>"><%=top10.get(i).get("name")%></a></td>
                 <td class="row"><a href="<%=top10.get(i).get("url")%>"><%=top10.get(i).get("url")%></a></td>
             </tr>
 

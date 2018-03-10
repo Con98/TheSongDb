@@ -23,10 +23,10 @@ public class MusicDao {
     public MusicDao() {
 
     }
-
+    private final String api_key = "581cca30b41a4cc0d5b3eb59d502b651";
     public ArrayList<JSONObject> getTop10Artists() {
         RestTemplate restTemplate = new RestTemplate();
-        String artist = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=581cca30b41a4cc0d5b3eb59d502b651&limit=10&format=json", String.class);
+        String artist = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key="+ api_key +"&limit=10&format=json", String.class);
 
         JSONObject j = new JSONObject(artist);
         JSONObject getSth = j.getJSONObject("artists");
@@ -41,9 +41,9 @@ public class MusicDao {
         return jlist;
     }
 
-    public ArrayList<JSONObject> getTop10Albums(String mbid) {
+    public ArrayList<JSONObject> getTop10Albums(String name) {
         RestTemplate restTemplate = new RestTemplate();
-        String album = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&mbid=" + mbid + "&api_key=581cca30b41a4cc0d5b3eb59d502b651&limit=10&format=json", String.class);
+        String album = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=" + name + "&api_key="+ api_key +"&limit=10&format=json", String.class);
 
         JSONObject j = new JSONObject(album);
 
@@ -71,5 +71,43 @@ public class MusicDao {
         }
         return art;
 
+    }
+    
+    public ArrayList<String> getAlbumArt(int size, String name) {
+        MusicDao music = new MusicDao();
+        ArrayList<String> art = new ArrayList();
+        ArrayList<JSONObject> albums = music.getTop10Albums(name);
+        for (int i = 0; i < albums.size(); i++) {
+            JSONArray images = albums.get(i).getJSONArray("image");
+            String ob = images.getJSONObject(size).get("#text").toString();
+            art.add(ob);
+        }
+        return art;
+    }
+    
+    public JSONObject getArtist(String artistName){
+        RestTemplate restTemplate = new RestTemplate();
+        String artist = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artistName +"&api_key="+ api_key +"&format=json", String.class);
+
+        JSONObject j = new JSONObject(artist);
+        JSONObject artistDetails = j.getJSONObject("artist");
+        
+
+        
+
+        return artistDetails;
+    }
+    public JSONObject getArtistBio(String artistName){
+        RestTemplate restTemplate = new RestTemplate();
+        String artist = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artistName +"&api_key="+ api_key +"&format=json", String.class);
+
+        JSONObject j = new JSONObject(artist);
+        JSONObject artistDetails = j.getJSONObject("artist");
+        JSONObject artistBio = artistDetails.getJSONObject("bio");
+        
+
+        
+
+        return artistBio;
     }
 }
