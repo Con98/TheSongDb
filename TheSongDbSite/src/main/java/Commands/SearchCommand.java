@@ -56,4 +56,3 @@ public class SearchCommand implements Command{
         return forwardToJsp;
     }
 }
-<h1><a href="artistInfo.jsp?action=<%=name%>">Click here to go to <%=userN%>'s artist profile</a></h1>
