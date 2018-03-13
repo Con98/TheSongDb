@@ -79,47 +79,7 @@ public class FriendDao extends Dao implements FriendDaoInterface {
             }
         }
         return friends;
-    }
-
-    /**
-     *
-     * @param username1
-     * @param username2
-     * @return
-     */
-    @Override
-    public int addFriendship(String username1, String username2) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        int rowsAffected = 0;
-
-        try {
-            con = this.getConnection();
-
-            String query = "INSERT INTO friendRequest(friend1, friend2) VALUES (?, ?)";
-            ps = con.prepareStatement(query);
-            ps.setString(1, username1);
-            ps.setString(2, username2);
-
-            rowsAffected = ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.err.println("\tA problem occurred during the addFriendship method:");
-            System.err.println("\t" + ex.getMessage());
-            rowsAffected = 0;
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    freeConnection(con);
-                }
-            } catch (SQLException e) {
-                System.err.println("A problem occurred when closing down the addFriendship method:\n" + e.getMessage());
-            }
-        }
-        return rowsAffected;
-    }
+    }    
 
     /**
      *
@@ -166,6 +126,42 @@ public class FriendDao extends Dao implements FriendDaoInterface {
         return removed;
     }
 
+    @Override
+    public int confirmFriendship(String username1, String username2) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int rowsAffected = 0;
+        
+        try {
+            con = this.getConnection();
+
+            String query1 = "INSERT INTO friend(friend1, friend2) VALUES (?, ?)";
+            ps = con.prepareStatement(query1);
+            ps.setString(1, username1);
+            ps.setString(2, username2);
+
+            rs = ps.executeQuery();
+            rowsAffected = ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the addFriendship method:");
+            System.err.println("\t" + ex.getMessage());
+            rowsAffected = 0;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the addFriendship method:\n" + e.getMessage());
+            }
+        }
+        return rowsAffected;
+    }
+    
     /**
      *
      * @param username1
@@ -317,82 +313,5 @@ public class FriendDao extends Dao implements FriendDaoInterface {
         return friends; //may be null
     }
     
-    @Override
-    public int checkFriendRequest(String username1, String username2){
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int rowsAffected = 0;
-        
-        try {
-            con = this.getConnection();
-
-            String query = "SELECT * FROM friendRequest WHERE (friend1 = ? AND friend2 = ?) OR (friend1 = ? AND friend2 = ?)";
-
-            ps = con.prepareStatement(query);
-            ps.setString(1, username1);
-            ps.setString(2, username2);
-            ps.setString(3, username2);
-            ps.setString(4, username1);
-
-            rs = ps.executeQuery();} catch (SQLException ex) {
-            System.err.println("\tA problem occurred during the addFriendship method:");
-            System.err.println("\t" + ex.getMessage());
-            rowsAffected = 0;
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    freeConnection(con);
-                }
-            } catch (SQLException e) {
-                System.err.println("A problem occurred when closing down the addFriendship method:\n" + e.getMessage());
-            }
-        }
-        return rowsAffected;
-    }
     
-    /**
-     *
-     * @param username1
-     * @param username2
-     * @return
-     */
-    @Override
-    public int confirmFriendship(String username1, String username2) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int rowsAffected = 0;
-        
-        try {
-            con = this.getConnection();
-
-            String query1 = "INSERT INTO friend(friend1, friend2) VALUES (?, ?)";
-            ps = con.prepareStatement(query1);
-            ps.setString(1, username1);
-            ps.setString(2, username2);
-
-            rs = ps.executeQuery();
-            rowsAffected = ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.err.println("\tA problem occurred during the addFriendship method:");
-            System.err.println("\t" + ex.getMessage());
-            rowsAffected = 0;
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    freeConnection(con);
-                }
-            } catch (SQLException e) {
-                System.err.println("A problem occurred when closing down the addFriendship method:\n" + e.getMessage());
-            }
-        }
-        return rowsAffected;
-    }
 }

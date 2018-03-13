@@ -17,8 +17,6 @@ public interface FriendDaoInterface {
     //public Friend addNewFriend();
     public ArrayList<Friend> displayAllFriends(String username);
 
-    public int addFriendship(String username1, String username2);
-
     public boolean removeFriendship(String username1, String username2);
 
     public boolean removeUserFriends(String username1);
@@ -26,8 +24,6 @@ public interface FriendDaoInterface {
     public Friend checkFriendshipStatus(String username1, String username2);
     
     public boolean checkIfFriends(String username1, String username2);
-    
-    public int checkFriendRequest(String username1, String username2);
     
     public int confirmFriendship(String username1, String username2);
 }

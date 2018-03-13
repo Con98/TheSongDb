@@ -1,3 +1,6 @@
+<%@page import="java.lang.System.out"%>
+<%@page import="Dtos.FriendRequest"%>
+<%@page import="Daos.FriendRequestDao"%>
 <%@page import="Daos.StatusDao"%>
 <%@page import="Dtos.Status"%>
 <%@page import="Dtos.Message"%>
@@ -97,6 +100,27 @@
                             out.println("No Friends Found");
                         }
                     %>
+                </tr>
+                <br/>
+                    <%
+                        FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
+                        ArrayList<FriendRequest> friendRequests = friendRequestDao.displayAllFriendRequests(loggedUser.getUserName());
+                    %>
+                <h1>Friend Requests</h1>
+                <table>
+                    <%
+                        for (FriendRequest fr : friendRequests){
+                    %>
+                    <tr>
+                        <td><%=fr.getFriend2()%></td>
+                        <%
+                            }
+                        } else {
+                            out.println("No Friend Requests Found");
+                        }
+                    %>
+                    </tr>
+                </table>
                 </tr>
                 <%
 
