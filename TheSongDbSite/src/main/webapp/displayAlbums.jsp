@@ -12,7 +12,7 @@
                 <%@ include file="header.jsp"%>
         <%@page import="Daos.MusicDao"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
+        <title><%=new TextBundle("topAlbums").getText(lang)%></title>
     </head>
     <body>
         <%
@@ -20,13 +20,13 @@
             MusicDao musicDao = new MusicDao();
             ArrayList<JSONObject> albums = musicDao.getTop10Albums(mbid);
             %>
-            <h1>Top 10 Albums</h1>
+            <h1><%=new TextBundle("top10Albums").getText(lang)%></h1>
             <table class="table">
             <tr>
-                <th>Chart Number</th>
-                <th class="col">Name</th>
-                <th class="col">PlayCount</th>
-                <th class="col">LastFm-Url</th>
+                <th><%=new TextBundle("chartNumber").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("name").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("playCount").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("lastFmURL").getText(lang)%></th>
             </tr>
 
             <%
@@ -42,7 +42,6 @@
             <%
                 }
             %>
-
         </table>
     </body>
 </html>
