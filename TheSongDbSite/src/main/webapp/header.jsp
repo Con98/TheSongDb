@@ -12,7 +12,6 @@
         <%@page import="java.util.ResourceBundle"%>
         <%@page import="Daos.UserDao"%>
         <%@page import="Dtos.User"%>
-        <%@include file="internationalization.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -99,34 +98,23 @@
                                 User user = (User) logName;
                                 session.setAttribute("userId", user.getUserId());
                                 int userId = user.getUserId();
-                                try {
-                                    String locale = request.getParameter("lang");
-                                    if (!request.getParameterMap().containsKey("lang") || locale.equalsIgnoreCase("lt")) { %>
-                        <li><a href="?lang=en">Keisti &#303; angl&#371; kalb&#261;</a></li><%} else {%>
-                        <li><a href="?lang=lt">Switch to Lithuanian</a></li><% }
-                            } catch (NullPointerException ex) {
-                                System.out.println("An error occured when trying to get language parameter from url:" + ex);
-                            } %>
+                        %>
                         <li><a href="FrontController?action=logout">Logout</a></li>
 
 
                         <%
                         } else {
-                            try {
-                                String locale = request.getParameter("lang");
-                                if (!request.getParameterMap().containsKey("lang") || locale.equalsIgnoreCase("en")) { %>
-                        <li><a href="?lang=lt">Switch to Lithuanian</a></li><%} else {%>
-                        <li><a href="?lang=en">Switch to English</a></li><% }
-                            } catch (NullPointerException ex) {
-                                System.out.println("An error occured when trying to get language parameter from url:" + ex);
-                            } %>
+                        %>
                         <li><a href="#">Page 1-2</a></li>
                         <li><a href="#">Page 1-3</a></li>
                             <%
                                 }
+
                             %>
+
                     </ul>
                 </li>
+            <%//@include file="internationalization.jsp" %>
             </ul>
         </div>
     </nav>
