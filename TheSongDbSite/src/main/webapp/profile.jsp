@@ -80,15 +80,11 @@
     <section>
         <div id="rightColumn">
             <%
-                UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
-                Object user = session.getAttribute("userName");
-                String username = (String) user;
-                if (username != null) {
-                    FriendDao friendDao = new FriendDao("TheSongDb", "jdbc/TheSongDb");
-                    ArrayList<Friend> friends = friendDao.displayAllFriends(username);
+                FriendDao friendDao = new FriendDao("TheSongDb", "jdbc/TheSongDb");
+                ArrayList<Friend> friends = friendDao.displayAllFriends(loggedUser.getUserName());
 
             %>
-            <h1><%=username%>'s Friend List</h1>
+            <h1><%=loggedUser.getUserName()%>'s Friend List</h1>
             <table>
                 <%
                     for (Friend f : friends) {

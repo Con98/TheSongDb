@@ -26,4 +26,8 @@ public interface FriendDaoInterface {
     public Friend checkFriendshipStatus(String username1, String username2);
     
     public boolean checkIfFriends(String username1, String username2);
+    
+    public int checkFriendRequest(String username1, String username2);
+    
+    public int confirmFriendship(String username1, String username2);
 }
