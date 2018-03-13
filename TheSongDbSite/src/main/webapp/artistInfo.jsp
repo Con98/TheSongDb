@@ -14,7 +14,7 @@
         <%@ include file="header.jsp"%>
         <%@page import="Daos.MusicDao"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Artist Info</title>
+        <title><%=new TextBundle("artistInfoTitle").getText(lang)%></title>
     </head>
     <body>
         <%            MusicDao musicDao = new MusicDao();
@@ -22,39 +22,35 @@
             String name = null;
             JSONObject top10 = musicDao.getArtist(aName);
             JSONObject bio = musicDao.getArtistBio(aName);
-            String mbid=null;
-            
+            String mbid = null;
+
             String ob = null;
-                if (top10.get("name").equals(aName)) {
-                    JSONArray images = top10.getJSONArray("image");
-                    ob = images.getJSONObject(4).get("#text").toString();
-                    name = top10.getString("name");
-                }
-            
+            if (top10.get("name").equals(aName)) {
+                JSONArray images = top10.getJSONArray("image");
+                ob = images.getJSONObject(4).get("#text").toString();
+                name = top10.getString("name");
+            }
 
 
         %>
 
         <img class="img-circle img-responsive" style="float:left;" src="<%=ob%>">
-        <h1 style="float:left;"><%=name%>'s Artist Page</h1>
+        <h1 style="float:left;"><%=name%><%=new TextBundle("artistsPage").getText(lang)%></h1>
         <br><br><br><br>
         <p><%=bio.getString("summary")%></p>
         <br><br><br><br><br><br><br><br><br>
-
         <%
             ArrayList<JSONObject> albums = musicDao.getTop10Albums(aName);
         %>
-
         <table class="table">
             <h1>Top 10 Albums</h1>
             <tr>
-                <th>Chart Number</th>
-                <th class="col">Album Art</th>
-                <th class="col">Name</th>
-                <th class="col">PlayCount</th>
-                <th class="col">LastFm-Url</th>
+                <th><%=new TextBundle("chartNumber").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("albumArt").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("name").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("playCount").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("lastFmURL").getText(lang)%> </th>
             </tr>
-
             <%
                 for (int i = 0; i < albums.size(); i++) {
                     ArrayList<String> art = musicDao.getAlbumArt(1, aName);
@@ -66,16 +62,9 @@
                 <td class="row"><%=albums.get(i).get("playcount")%></td>
                 <td class="row"><%=albums.get(i).get("url")%></td>
             </tr>
-
             <%
-                    }
+                }
             %>
         </table>
-
-    
-        
-    
-
     </body>
-
 </html>

@@ -1,6 +1,4 @@
-<%@page import="java.lang.Object"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.ResourceBundle"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
