@@ -12,6 +12,7 @@
         <%@page import="java.util.ResourceBundle"%>
         <%@page import="Daos.UserDao"%>
         <%@page import="Dtos.User"%>
+        <%@include file="createLocale.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -87,11 +88,11 @@
                 <%
                 } else {
                 %>
-                <li><a href="register.jsp"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="register.jsp"><span class="glyphicon glyphicon-user"></span> <%=new TextBundle("register").getText(lang) %></a></li>
+                <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> <%=new TextBundle("login").getText(lang) %></a></li>
                     <%                        }
                     %>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-asterisk"></span> Settings <span class="caret"></span></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-asterisk"></span> <%=new TextBundle("settings").getText(lang) %> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <%
                             if (logName != null) {
@@ -114,7 +115,7 @@
 
                     </ul>
                 </li>
-            <%//@include file="internationalization.jsp" %>
+            <%@include file="internationalization.jsp" %>
             </ul>
         </div>
     </nav>

@@ -22,16 +22,11 @@ public class ChangeLanguageCommand implements Command{
         String language = request.getParameter("language");
         // Assuming that the language parameter was supplied
         if(language != null){
-            // Create a locale based on the supplied language
-            Locale currentLocale = new Locale(language);
+
             
             // Store the locale and the chosen language in the session
             HttpSession session = request.getSession();
-            session.setAttribute("currentLocale", currentLocale);
             session.setAttribute("language", language);
-            // Reset the resource bundle so that it will be updated 
-            // to reflect the current locale when the page is reloaded
-            session.setAttribute("dataBundle", null);
         }
         
         // Deal with figuring out where to send the client back to

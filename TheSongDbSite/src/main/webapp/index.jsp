@@ -10,20 +10,16 @@ and open the template in the editor.
 <html>
     <head>
         <%@include file="header.jsp"%>
-        <title>Welcome</title>
+        <title><%=new TextBundle("indexTitle").getText(lang)%></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     </head>
 
     <body>
-        <%            
-            String locale = "en";
-            //TextBundle welcome = new TextBundle("welcome");
-        %>
 
-        
-        <h3>On this site we use The LastFm Api in order to bring you a convenient place to find out the currently most popular music</h3>
-        <h3>Please login or register to get started</h3>
+        <h1><%=new TextBundle("welcome").getText(lang)%></h1>
+        <h3><%=new TextBundle("indexInfo").getText(lang)%></h3>
+        <h3><%=new TextBundle("pleaseLogin").getText(lang)%> </h3>
     </body>
 </html>
