@@ -12,12 +12,12 @@
         <%@ include file="header.jsp"%>
         <%@page import="Daos.MusicDao"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Top 10 Artists</title>
+        <title><%= new TextBundle("top10Artists").getText(lang)%> </title>
     </head>
     <body>
 
-        <h1>Top 10 Artists Based On Current Charts</h1>
-        <h2>Click an artists name to see albums by them</h2>
+        <h1><%= new TextBundle("top10BasedOnCharts").getText(lang)%> </h1>
+        <h2><%=new TextBundle("clickOnArtistsName").getText(lang)%> </h2>
         <br>
         <%
             int size = Integer.parseInt(request.getParameter("size"));
@@ -28,18 +28,15 @@
             //Number value to change image size 1=small 2=medium 3=large
             ArrayList<String> art = musicDao.getArt(size);
         %>
-        <a href="displayTopArtists.jsp?size=1" class="btn btn-default">Make Art Smaller</a>
-        <a href="displayTopArtists.jsp?size=2" class="btn btn-default">Make Art Larger</a>
-        <%
-            
-            %>
+        <a href="displayTopArtists.jsp?size=1" class="btn btn-default"><%=new TextBundle("makeArtSmaller").getText(lang)%> </a>
+        <a href="displayTopArtists.jsp?size=2" class="btn btn-default"><%=new TextBundle("makeArtLarger").getText(lang)%></a>
 
         <table class="table table-responsive">
             <tr>
-                <th>Chart Number</th>
-                <th>Album Art</th>
-                <th class="col">Name</th>
-                <th class="col">LastFm-Url</th>
+                <th><%=new TextBundle("chartNumber").getText(lang)%></th>
+                <th><%=new TextBundle("albumArt").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("name").getText(lang)%></th>
+                <th class="col"><%=new TextBundle("lastFmURL").getText(lang)%></th>
             </tr>
 
             <%
