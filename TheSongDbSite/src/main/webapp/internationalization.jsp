@@ -4,7 +4,4 @@
 <%@page import="org.apache.commons.i18n.ResourceBundleMessageProvider"%>
 
 <% ResourceBundleMessageProvider.install("TheSongDb");
-TextBundle login = new TextBundle("login");
 %>
-
-<%=login.getText(new Locale("lt"))%>
