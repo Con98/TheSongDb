@@ -11,6 +11,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <aside>
+    
         <%
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             Object user = session.getAttribute("userName");

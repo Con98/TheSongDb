@@ -1,4 +1,4 @@
-<%@page import="java.lang.System.out"%>
+
 <%@page import="Dtos.FriendRequest"%>
 <%@page import="Daos.FriendRequestDao"%>
 <%@page import="Daos.StatusDao"%>
@@ -59,7 +59,7 @@
 
     %>
     <h1>Welcome <%=loggedUser.getUserName()%></h1>
-    
+
     <%@include file="updateStatus.jsp" %>
 
     <br/>
@@ -102,23 +102,30 @@
                     %>
                 </tr>
                 <br/>
-                    <%
-                        FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
-                        ArrayList<FriendRequest> friendRequests = friendRequestDao.displayAllFriendRequests(loggedUser.getUserName());
-                    %>
+                <%
+                    if (loggedUser != null) {
+                        UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
+                        Object user = session.getAttribute("userName");
+                        String username = (String) user;
+
+                        if (username != null) {
+                            FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
+                            ArrayList<FriendRequest> friendRequests = friendRequestDao.displayAllFriendRequests(username);
+                %>
                 <h1>Friend Requests</h1>
                 <table>
                     <%
-                        for (FriendRequest fr : friendRequests){
+                        for (FriendRequest fr : friendRequests) {
                     %>
                     <tr>
                         <td><%=fr.getFriend2()%></td>
                         <%
+                                    }
+                                } else {
+                                    out.println("No Friend Requests Found");
+                                }
                             }
-                        } else {
-                            out.println("No Friend Requests Found");
-                        }
-                    %>
+                        %>
                     </tr>
                 </table>
                 </tr>
