@@ -19,6 +19,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `thesongdb`
 --
+CREATE DATABASE IF NOT EXISTS thesongdb;
+use thesongdb;
+
 
 -- --------------------------------------------------------
 
@@ -193,6 +196,13 @@ ALTER TABLE `users`
 ALTER TABLE `friend`
   ADD CONSTRAINT `friend_ibfk_1` FOREIGN KEY (`friend1`) REFERENCES `users` (`userName`) ON DELETE CASCADE,
   ADD CONSTRAINT `friend_ibfk_2` FOREIGN KEY (`friend2`) REFERENCES `users` (`userName`) ON DELETE CASCADE;
+  
+  --
+-- Constraints for table `friendrequest`
+--
+ALTER TABLE `friendrequest`
+  ADD CONSTRAINT `friendrequest_ibfk_1` FOREIGN KEY (`friend1`) REFERENCES `users` (`userName`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friendrequest_ibfk_2` FOREIGN KEY (`friend2`) REFERENCES `users` (`userName`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `message`
