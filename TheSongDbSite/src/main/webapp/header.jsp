@@ -100,13 +100,16 @@
                                 session.setAttribute("userId", user.getUserId());
                                 int userId = user.getUserId();
                         %>
+                        <li><%@include file="internationalization.jsp" %></li>
                         <li><a href="FrontController?action=logout">Logout</a></li>
 
 
                         <%
                         } else {
                         %>
+                        <li id="sel1"><label for="sel1">Change Language:</label><%@include file="internationalization.jsp"%></li>
                         <li><a href="#">Page 1-2</a></li>
+                        
                         <li><a href="#">Page 1-3</a></li>
                             <%
                                 }
@@ -115,7 +118,7 @@
 
                     </ul>
                 </li>
-            <%@include file="internationalization.jsp" %>
+            
             </ul>
         </div>
     </nav>

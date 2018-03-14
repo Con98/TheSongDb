@@ -5,7 +5,7 @@
 <form action="FrontController" method="post">
     <!-- When the value of the drop down changes, 
     submit the form and send the value to the controller -->
-    <select name="language" onchange="this.form.submit()">
+    <select name="language" onchange="this.form.submit()" class="form">
         <%            //Retrieve the resource bundle from the session
 
             TextBundle en = new TextBundle("option_en");
