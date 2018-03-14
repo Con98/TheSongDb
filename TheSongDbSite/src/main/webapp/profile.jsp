@@ -205,9 +205,6 @@
         <% } else {
                 new TextBundle("noMessagesFound").getText(lang);
             }%>
-        <%
-            }
-        %>
     </div>
 </body>
 </html>

@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="statusContent"><%=new TextBundle("status").getText(lang) %>:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="statusContent" placeholder="Enter status" required>
+                        <input type="text" class="form-control" name="statusContent" placeholder="<%=new TextBundle("enterStatus").getText(lang) %>" required>
                     </div>
                 </div>
                 <div class="col-sm-offset-2 col-sm-10">

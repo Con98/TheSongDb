@@ -54,15 +54,15 @@
                         <li><a href="#">Friend 3</a></li>
                     </ul>
                 </li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Music<span class="caret"></span></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><%=new TextBundle("music").getText(lang) %><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="displayTopArtists.jsp?size=1"><%=new TextBundle("top10Artists").getText(lang) %></a></li>
                     </ul>
                 </li>
-                <li><a href="sendMessage.jsp">Send message</a></li>
+                <li><a href="sendMessage.jsp"><%=new TextBundle("sendMessage").getText(lang) %></a></li>
                 <form class="navbar-form navbar-left" action="FrontController" method="post">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="search" placeholder="Search">
+                        <input type="text" class="form-control" name="search" placeholder="<%=new TextBundle("search").getText(lang) %>">
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit">
                                 <i class="glyphicon glyphicon-search"></i>
@@ -83,7 +83,7 @@
                         int userId = user.getUserId();
                 %>
 
-                <li><a href="profile.jsp"><span class="glyphicon glyphicon-user"></span> Hello <%= user.getFirstName()%></a></li>
+                <li><a href="profile.jsp"><span class="glyphicon glyphicon-user"></span> <%=new TextBundle("hello").getText(lang) %> <%= user.getFirstName()%></a></li>
 
                 <%
                 } else {
@@ -100,7 +100,7 @@
                                 session.setAttribute("userId", user.getUserId());
                                 int userId = user.getUserId();
                         %>
-                        <li><a href="FrontController?action=logout">Logout</a></li>
+                        <li><a href="FrontController?action=logout"><%=new TextBundle("logout").getText(lang) %></a></li>
 
 
                         <%

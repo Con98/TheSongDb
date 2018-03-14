@@ -12,11 +12,11 @@
         %>
 
         <option value="en" selected><%=new TextBundle("option_en").getText(lang)%></option>
-        <option value="lt"><%=new TextBundle("option_en").getText(lang)%></option>
+        <option value="lt"><%=new TextBundle("option_lt").getText(lang)%></option>
         <%
         } else {
         %>
-        <option value="lt" selected><%=new TextBundle("option_en").getText(lang)%></option>
+        <option value="lt" selected><%=new TextBundle("option_lt").getText(lang)%></option>
         <option value="en"><%=new TextBundle("option_en").getText(lang)%></option>
         <% }%>
     </select>

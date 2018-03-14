@@ -33,13 +33,13 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="subjectLine"><%=new TextBundle("subject").getText(lang) %>:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="subjectLine" placeholder="Enter Subject" required>
+                        <input type="text" class="form-control" name="subjectLine" placeholder="<%=new TextBundle("enterSubject").getText(lang) %>" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="messageContent"><%=new TextBundle("message").getText(lang) %>:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="messageContent" placeholder="Enter message" required>
+                        <input type="text" class="form-control" name="messageContent" placeholder="<%=new TextBundle("enterMessage").getText(lang) %>" required>
                     </div>
                 </div>
                 <div class="col-sm-offset-2 col-sm-10">
