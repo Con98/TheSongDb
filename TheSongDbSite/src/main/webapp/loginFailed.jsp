@@ -4,15 +4,16 @@
     Author     : Thomas
 --%>
 
+<%@page import="org.apache.commons.i18n.bundles.TextBundle"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Failed</title>
+        <title><%=new TextBundle("loginFailed").getText(lang) %></title>
     </head>
     <body>
-        <h1>Failed to login, please try again</h1>
-        <a href="index.jsp">Return Home</a>
+        <h1><%=new TextBundle("loginFailedTryAgain").getText(lang) %></h1>
+        <a href="index.jsp"><%=new TextBundle("returnHome").getText(lang) %></a>
     </body>
 </html>

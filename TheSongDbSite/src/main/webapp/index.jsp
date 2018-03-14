@@ -16,7 +16,7 @@ and open the template in the editor.
 
     <body>
 
-        <h1><%=new TextBundle("welcome").getText(lang)%></h1>
+        <h1><%=new TextBundle("welcomeToSite").getText(lang)%></h1>
         <h3><%=new TextBundle("indexInfo").getText(lang)%></h3>
         <h3><%=new TextBundle("pleaseLogin").getText(lang)%> </h3>
     </body>

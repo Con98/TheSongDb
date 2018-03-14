@@ -4,6 +4,7 @@
     Author     : emmet
 --%>
 
+<%@page import="org.apache.commons.i18n.bundles.TextBundle"%>
 <%@page import="Daos.UserDao"%>
 <%@page import="Daos.FriendRequestDao"%>
 <%@page import="java.util.ArrayList"%>
@@ -19,7 +20,7 @@
             FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
             ArrayList<FriendRequest> friendRequests = friendRequestDao.displayAllFriendRequests(username);
     %>
-    <h1>Friend Requests</h1>
+    <h1><%=new TextBundle("friendRequests").getText(lang) %></h1>
     <table>
         <%
             for (FriendRequest fr : friendRequests) {

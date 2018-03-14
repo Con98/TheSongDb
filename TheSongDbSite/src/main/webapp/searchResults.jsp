@@ -13,15 +13,15 @@
                 <%@ include file="header.jsp"%>
         <%@page import="Daos.MusicDao"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Results</title>
+        <title><%=new TextBundle("results").getText(lang) %></title>
     </head>
     <body>
-        <h1>Search Results</h1>
+        <h1><%=new TextBundle("searchResults").getText(lang) %></h1>
         <%
             JSONObject artist = (JSONObject)session.getAttribute("artist");
             String name = artist.getString("name");
             %>
-            <h1><a href="artistInfo.jsp?action=<%=name%>">Click here to go to <%=name%>'s artist profile</a></h1>
+            <h1><a href="artistInfo.jsp?action=<%=name%>"><%=new TextBundle("clickHere").getText(lang) %> <%=name%><%=new TextBundle("toProfile").getText(lang) %></a></h1>
     </body>
     
 </html>

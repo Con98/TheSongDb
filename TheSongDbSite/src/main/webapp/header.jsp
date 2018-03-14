@@ -47,7 +47,7 @@
                     int userId = user.getUserId();
             %>
             <ul class="nav navbar-nav">
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Friends<span class="caret"></span></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><%=new TextBundle("friends").getText(lang) %><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Friend 1</a></li>
                         <li><a href="#">Friend 2</a></li>
@@ -56,7 +56,7 @@
                 </li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Music<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="displayTopArtists.jsp?size=1">Top 10 Artists</a></li>
+                        <li><a href="displayTopArtists.jsp?size=1"><%=new TextBundle("top10Artists").getText(lang) %></a></li>
                     </ul>
                 </li>
                 <li><a href="sendMessage.jsp">Send message</a></li>
@@ -112,7 +112,6 @@
                                 }
 
                             %>
-
                     </ul>
                 </li>
             <%@include file="internationalization.jsp" %>

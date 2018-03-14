@@ -13,10 +13,10 @@
             <%@ include file="header.jsp"%>
         <%@page import="Daos.MusicDao"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><%=new TextBundle("musicHome").getText(lang) %></title>
     </head>
     <body>
-        <h1>Welcome to the Music section</h1>
+        <h1><%=new TextBundle("musicSelection").getText(lang) %></h1>
         <br>
         <%
             MusicDao musicDao = new MusicDao();
@@ -26,10 +26,10 @@
             
             <table class="table">
             <tr>
-                <th>Chart Number</th>
-                <th class="col">Name</th>
-                <th class="col">PlayCount</th>
-                <th class="col">Url</th>
+                <th><%=new TextBundle("chartNumber").getText(lang) %></th>
+                <th class="col"><%=new TextBundle("name").getText(lang) %></th>
+                <th class="col"><%=new TextBundle("playCount").getText(lang) %></th>
+                <th class="col"><%=new TextBundle("LastFmURL").getText(lang) %></th>
             </tr>
 
             <%

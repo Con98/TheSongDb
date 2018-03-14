@@ -3,6 +3,7 @@
     Created on : 22-Feb-2018, 13:29:48
     Author     : emmet
 --%>
+<%@page import="org.apache.commons.i18n.bundles.TextBundle"%>
 <%@page import="Daos.FriendDao"%>
 <%@page import="Daos.UserDao" %>
 <%@page import="Dtos.User" %>
@@ -21,7 +22,7 @@
                 ArrayList<Friend> friends = friendDao.displayAllFriends(username);
 
         %>
-        <h1><%=username%>'s Friend List</h1>
+        <h1><%=username%><%= new TextBundle("friendsList").getText(lang)%></h1>
         <table>
             <%
                 for (Friend f : friends) {
