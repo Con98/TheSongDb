@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Are you sure?</title>
+        <title><%=new TextBundle("deleteQuestion").getText(lang)%></title>
         <%@include file="header.jsp" %>
     </head>
     <body>
@@ -22,25 +22,25 @@
             s = statusDao.findStatusById(statusId);
             if (s != null) {
                 User poster = userDao.getDetailsById(s.getUserId());
-        %><h1>Are you sure you want to delete this status?</h1>
+        %><h1><%=new TextBundle("AreUSureStatus").getText(lang)%></h1>
         <table border="1">
             <tr>
-                <th>Status ID</th>
-                <th>Poster</th>
-                <th>Date updated</th>
-                <th>Status</th>
+                <th><%=new TextBundle("statusID").getText(lang)%></th>
+                <th><%=new TextBundle("poster").getText(lang)%></th>
+                <th><%=new TextBundle("datePublished").getText(lang)%></th>
+                <th><%=new TextBundle("status").getText(lang)%></th>
             </tr>
             <tr>
-                <td><%= s.getStatusId()%></td>
-                <td><%= poster.getUserName()%></td>
-                <td><%= s.getSentOn()%></td>
-                <td><%= s.getStatusContent()%></td>
+                <td><%=s.getStatusId()%></td>
+                <td><%=poster.getUserName()%></td>
+                <td><%=s.getSentOn()%></td>
+                <td><%=s.getStatusContent()%></td>
             </tr>
         </table>
         <% }%>
         <form class="form-horizontal" action="FrontController" method="post">
-            <input type="submit" value="Delete" class="btn btn-default">
-            <a href="profile.jsp" class="btn btn-default">Go back</a>
+            <input type="submit" value="<%=new TextBundle("delete").getText(lang)%>" class="btn btn-default">
+            <a href="profile.jsp" class="btn btn-default"><%=new TextBundle("goBack").getText(lang)%></a>
             <input type="hidden" name="statusId" value="<%= s.getStatusId()%>"/>
             <input type="hidden" name="action" value="deleteStatus"/>
         </form>

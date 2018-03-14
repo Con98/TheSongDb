@@ -9,10 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sending message</title>
-
         <%@include file="header.jsp" %>
-
+        <title><%=new TextBundle("sendingMessage").getText(lang) %></title>
     </head>
     <body>
 
@@ -23,7 +21,7 @@
                 String userName = loggedUser.getUserName();
                 int userId = loggedUser.getUserId();
         %>
-        <h1><%=userName%> is sending a message</h1>
+        <h1><%=userName%> <%=new TextBundle("isSendingAMessage").getText(lang) %></h1>
         <div style="width: 50%; text-align: center;">
             <form class="form-horizontal" action="FrontController" method="post">
                 <div class="form-group">
@@ -33,19 +31,19 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="subjectLine">Subject:</label>
+                    <label class="control-label col-sm-2" for="subjectLine"><%=new TextBundle("subject").getText(lang) %>:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="subjectLine" placeholder="Enter Subject" required>
+                        <input type="text" class="form-control" name="subjectLine" placeholder="<%=new TextBundle("enterSubject").getText(lang) %>" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="messageContent">Message:</label>
+                    <label class="control-label col-sm-2" for="messageContent"><%=new TextBundle("message").getText(lang) %>:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="messageContent" placeholder="Enter message" required>
+                        <input type="text" class="form-control" name="messageContent" placeholder="<%=new TextBundle("enterMessage").getText(lang) %>" required>
                     </div>
                 </div>
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" value="Send message" class="btn btn-default">
+                    <input type="submit" value="<%=new TextBundle("sendMessage").getText(lang) %>" class="btn btn-default">
                 </div>
                 <br>
 

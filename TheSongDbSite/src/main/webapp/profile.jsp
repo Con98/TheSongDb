@@ -1,3 +1,6 @@
+
+<%@page import="Dtos.FriendRequest"%>
+<%@page import="Daos.FriendRequestDao"%>
 <%@page import="Daos.StatusDao"%>
 <%@page import="Dtos.Status"%>
 <%@page import="Dtos.Message"%>
@@ -10,15 +13,15 @@
 
 
 <head>
-    <%@page import = "Dtos.User" %>
-    <%@page import = "Daos.UserDao" %>
-    <%@page import = "Daos.MessageDao" %>
+    <%@page import="Dtos.User" %>
+    <%@page import="Daos.UserDao" %>
+    <%@page import="Daos.MessageDao" %>
     <%@ include file="header.jsp"%>
     <%@page import="Dtos.Friend" %>
     <%@page import="Daos.FriendDao"%>
     <%@page import="java.util.ArrayList"%>
     <%@page contentType="text/html" pageEncoding="UTF-8"%>
-    <title>Profile</title>
+    <title><%=new TextBundle("profile").getText(lang) %></title>
 </head>
 
 <body>
@@ -46,7 +49,7 @@
         }
     %>
 
-    <h1>Welcome To Your Profile</h1>
+    <h1><%=new TextBundle("welcomeToProfile").getText(lang) %></h1>
     <%
         User loggedUser = (User) session.getAttribute("login");
     %>
@@ -55,25 +58,25 @@
         if (loggedUser != null) {
 
     %>
-    <h1>Welcome <%=loggedUser.getUserName()%></h1>
-    
+    <h1><%=new TextBundle("welcome").getText(lang)%> <%=loggedUser.getUserName()%></h1>
+
     <%@include file="updateStatus.jsp" %>
 
     <br/>
-    <h2>Personal Info</h2>
+    <h2><%=new TextBundle("personalInfo").getText(lang)%></h2>
     <table>
         <tr>
-            <th>First Name: </th>
+            <th><%=new TextBundle("name").getText(lang)%>: </th>
             <td><%=loggedUser.getFirstName()%></td>
         </tr>
 
         <tr>
-            <th>Surname: </th>
+            <th><%=new TextBundle("surname").getText(lang)%>: </th>
             <td><%=loggedUser.getSurName()%></td>
         </tr>
 
         <tr>
-            <th>Email Address: </th>
+            <th><%=new TextBundle("email").getText(lang)%>: </th>
             <td><%=loggedUser.getEmail()%></td>
         </tr>
     </table>
@@ -84,7 +87,7 @@
                 ArrayList<Friend> friends = friendDao.displayAllFriends(loggedUser.getUserName());
 
             %>
-            <h1><%=loggedUser.getUserName()%>'s Friend List</h1>
+            <h1><%=loggedUser.getUserName()%><%=new TextBundle("friendsList").getText(lang)%></h1>
             <table>
                 <%
                     for (Friend f : friends) {
@@ -98,20 +101,48 @@
                         }
                     %>
                 </tr>
+                <br/>
+                <%
+                    if (loggedUser != null) {
+                        UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
+                        Object user = session.getAttribute("userName");
+                        String username = (String) user;
+
+                        if (username != null) {
+                            FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
+                            ArrayList<FriendRequest> friendRequests = friendRequestDao.displayAllFriendRequests(username);
+                %>
+                <h1><%=new TextBundle("friendRequests").getText(lang)%></h1>
+                <table>
+                    <%
+                        for (FriendRequest fr : friendRequests) {
+                    %>
+                    <tr>
+                        <td><%=fr.getFriend2()%></td>
+                        <%
+                                    }
+                                } else {
+                                    out.println("No Friend Requests Found");
+                                }
+                            }
+                        %>
+                    </tr>
+                </table>
+                </tr>
                 <%
 
                 %>
             </table>
-            <h1><%= loggedUser.getUserName()%>'s statuses</h1>
+            <h1><%= loggedUser.getUserName()%><%=new TextBundle("statuses").getText(lang)%></h1>
             <%
                 StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
                 ArrayList<Status> statuses = statusDao.displayOwnStatuses(loggedUser.getUserId());
                 if (!statuses.isEmpty()) { %>
             <table border="1">
                 <tr>
-                    <th>Status</th>
-                    <th>Date updated</th>
-                    <th>Delete</th>
+                    <th><%=new TextBundle("status").getText(lang)%></th>
+                    <th><%=new TextBundle("datePublished").getText(lang)%></th>
+                    <th><%=new TextBundle("delete").getText(lang)%></th>
                 </tr>
 
                 <%
@@ -120,7 +151,7 @@
                 <tr>
                     <td><%= s.getStatusContent()%></td>
                     <td><%= s.getSentOn()%></td>
-                    <td><a href="deleteStatus.jsp?id=<%= s.getStatusId()%>">Delete</a></td>
+                    <td><a href="deleteStatus.jsp?id=<%= s.getStatusId()%>"><%=new TextBundle("delete").getText(lang)%></a></td>
                 </tr>
                 <%
                     }
@@ -128,26 +159,27 @@
 
             </table>
             <% } else {
-                    out.println("No statuses found");
+                    new TextBundle("noStatusesFound").getText(lang);
                 }%>
         </div>
     </section>
     <div id="leftColumn">
         <%
             MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
+            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             ArrayList<Message> messages = messageDao.displayAllMessages(loggedUser.getUserId());
         %>
 
-        <h1><%= loggedUser.getUserName()%>'s messages</h1>
+        <h1><%= loggedUser.getUserName()%><%=new TextBundle("messages").getText(lang)%></h1>
         <table border="1">
             <% if (!messages.isEmpty()) { %>
             <tr>
-                <th>Sender</th>
-                <th>Receiver</th>
-                <th>Date sent</th>
-                <th>Subject</th>
-                <th>Message</th>
-                <th>Delete</th>
+                <th><%=new TextBundle("sender").getText(lang)%></th>
+                <th><%=new TextBundle("receiver").getText(lang)%></th>
+                <th><%=new TextBundle("timeSent").getText(lang)%></th>
+                <th><%=new TextBundle("subject").getText(lang)%></th>
+                <th><%=new TextBundle("message").getText(lang)%></th>
+                <th><%=new TextBundle("delete").getText(lang)%></th>
             </tr>
 
             <%
@@ -163,7 +195,7 @@
                 <td><%= m.getSentOn()%></td>
                 <td><%= m.getSubjectLine()%></td>
                 <td><%= m.getMessageContent()%></td>
-                <td><a href="deleteMessage.jsp?id=<%=m.getMessageId()%>">Delete</a></td>
+                <td><a href="deleteMessage.jsp?id=<%=m.getMessageId()%>"><%=new TextBundle("delete").getText(lang)%></a></td>
             </tr>
             <%
                 }
@@ -171,11 +203,8 @@
 
         </table>
         <% } else {
-                out.println("No messages found");
+                new TextBundle("noMessagesFound").getText(lang);
             }%>
-        <%
-            }
-        %>
     </div>
 </body>
 </html>

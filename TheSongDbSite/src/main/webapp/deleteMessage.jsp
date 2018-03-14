@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Are you sure?</title>
+        <title><%=new TextBundle("deleteQuestion").getText(lang)%></title>
         <%@include file="header.jsp" %>
     </head>
     <body>
@@ -23,15 +23,15 @@
             if (m != null) {
                 User sender = userDao.getDetailsById(m.getFromId());
                 User receiver = userDao.getDetailsById(m.getToId());
-        %><h1>Are you sure you want to delete this message?</h1>
+        %><h1><%=new TextBundle("AreUSureMessage").getText(lang)%> </h1>
         <table border="1">
             <tr>
-                <th>Message ID</th>
-                <th>Sender</th>
-                <th>Receiver</th>
-                <th>Date sent</th>
-                <th>Subject</th>
-                <th>Message</th>
+                <th><%=new TextBundle("messageID").getText(lang)%> </th>
+                <th><%=new TextBundle("sender").getText(lang)%> </th>
+                <th><%=new TextBundle("receiver").getText(lang)%> </th>
+                <th><%=new TextBundle("timeSent").getText(lang)%> </th>
+                <th><%=new TextBundle("subject").getText(lang)%> </th>
+                <th><%=new TextBundle("message").getText(lang)%></th>
             </tr>
             <tr>
                 <td><%= m.getMessageId()%></td>
@@ -44,8 +44,8 @@
         </table>
         <% }%>
         <form class="form-horizontal" action="FrontController" method="post">
-            <input type="submit" value="Delete" class="btn btn-default">
-            <a href="profile.jsp" class="btn btn-default">Go back</a>
+            <input type="submit" value="<%=new TextBundle("delete").getText(lang)%>" class="btn btn-default">
+            <a href="profile.jsp" class="btn btn-default"><%=new TextBundle("goBack").getText(lang)%> </a>
             <input type="hidden" name="messageId" value="<%= m.getMessageId()%>"/>
             <input type="hidden" name="action" value="deleteMessage"/>
         </form>

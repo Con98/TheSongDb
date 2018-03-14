@@ -15,7 +15,7 @@
         <%@page import="Dtos.User"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="header.jsp" %>
-        <title>Home</title>
+        <title><%= new TextBundle("home").getText(lang)%></title>
     </head>
     <body>
         <%            Object logiName = session.getAttribute("login");
@@ -25,9 +25,9 @@
                 int userId = user.getUserId();
         %>
 
-        <h1>Hello <%= user.getFirstName()%></h1>
+        <h1><%= new TextBundle("hello").getText(lang)%> <%= user.getFirstName()%></h1>
         <%@include file="updateStatus.jsp" %>
-        <h1><%= user.getUserName()%>'s statuses</h1>
+        <h1><%= user.getUserName()%><%= new TextBundle("statuses").getText(lang)%></h1>
         <%
             StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
@@ -35,9 +35,9 @@
             if (!statuses.isEmpty()) { %>
         <table border="1">
             <tr>
-                <th>Poster</th>
-                <th>Status</th>
-                <th>Date updated</th>
+                <th><%= new TextBundle("poster").getText(lang)%></th>
+                <th><%= new TextBundle("status").getText(lang)%></th>
+                <th><%= new TextBundle("datePublished").getText(lang)%></th>
             </tr>
 
             <%
