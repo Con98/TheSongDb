@@ -22,6 +22,7 @@
     
     <dependencies>
         <dependency>
+<<<<<<< HEAD
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <scope>test</scope>
@@ -44,6 +45,18 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
             <version>4.11</version>
+=======
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+>>>>>>> 85049e14a2473a5a81c9678ac91c47eacdeecbf4
         </dependency>
         <dependency>
             <groupId>javax</groupId>
