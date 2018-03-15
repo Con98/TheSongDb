@@ -10,9 +10,6 @@ package Daos;
  * @author Thomas
  */
 import static Daos.Dao.freeConnection;
-import Dtos.Friend;
-import Dtos.Message;
-import Dtos.User;
 import Dtos.Status;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -207,7 +204,7 @@ public class StatusDao extends Dao implements StatusDaoInterface {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Status s = new Status();
+        Status s = null;
         try {
             con = this.getConnection();
 

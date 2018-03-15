@@ -14,20 +14,34 @@ import java.util.ArrayList;
  */
 public interface MessageDaoInterface {
     /**
-     * Gets all messages sent to user
-     * Uses database field toId to distinguish (i.e. toId matched userId logged in)
-     * Returns object type Message
+     * Inserts message to database using information provided
+     * @param fromId ID of the user who is sending the message
+     * @param toId ID of the user who is receiving the message
+     * @param subjectLine Subject of the message
+     * @param messageContent Message contents of the message to be sent
+     * @return returns boolean, true if added successfully, false if updating status failed
      */
-    //public ArrayList getMessages();
+    public boolean sendMessage(String fromId, String toId, String subjectLine, String messageContent);
     
     /**
-     * Creates new message to be sent to a user
-     * Matches the fromId to tell who the message is coming from
-     * Matches the toId to the user who is chosen to receive the message
+     * Display all messages of the user currently logged in
+     * Retrieved from the database
+     * @param userId the ID of the user who is signed in
+     * @return ArrayList containing the user's(signed in) messages
      */
-    //public Message createMessage();
-    public boolean sendMessage(String fromId, String toId, String subjectLine, String messageContent);
     public ArrayList<Message> displayAllMessages(int userId);
+    
+    /**
+     * Retrieve message from the messageId provided 
+     * @param messageId the ID of the message to retrieve
+     * @return Object of type Message, can be null
+     */
     public Message findMessageById(String messageId);
+    
+    /**
+     * Deletes message provided in parameter
+     * @param m The message that is to be deleted
+     * @return boolean, returns true if message successfully deleted and false if failed to delete
+     */
     public boolean deleteMessage(Message m);
 }
