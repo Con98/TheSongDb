@@ -61,7 +61,7 @@
                 <td class="row"><img class="art" src="<%=art.get(i)%>"></td>
                 <td  class="row"><a href="albumInfo.jsp?artist=<%=aName%>&album=<%=albums.get(i).get("name")%>"><%=albums.get(i).get("name")%></a></td>
                 <td class="row"><%=albums.get(i).get("playcount")%></td>
-                <td class="row"><%=albums.get(i).get("url")%></td>
+                <td class="row"><a href="<%=albums.get(i).get("url")%>"><%=albums.get(i).get("url")%></a></td>
             </tr>
             <%
                 }
