@@ -100,21 +100,23 @@
                                 session.setAttribute("userId", user.getUserId());
                                 int userId = user.getUserId();
                         %>
+                        <li><label for="cld">Change Language:</label></li>
+                        <li id="cld"><%@include file="internationalization.jsp" %></li>
                         <li><a href="FrontController?action=logout"><%=new TextBundle("logout").getText(lang) %></a></li>
 
 
                         <%
                         } else {
                         %>
-                        <li><a href="#">Page 1-2</a></li>
-                        <li><a href="#">Page 1-3</a></li>
+                        <li><label for="cld">Change Language:</label></li>
+                        <li><%@include file="internationalization.jsp" %></li>
                             <%
                                 }
 
                             %>
                     </ul>
                 </li>
-            <%@include file="internationalization.jsp" %>
+            
             </ul>
         </div>
     </nav>

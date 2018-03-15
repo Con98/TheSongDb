@@ -11,6 +11,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import json.JSONArray;
+import json.JSONException;
 import json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
@@ -44,18 +45,21 @@ public class MusicDao {
     public ArrayList<JSONObject> getTop10Albums(String name) {
         RestTemplate restTemplate = new RestTemplate();
         String album = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=" + name + "&api_key="+ api_key +"&limit=10&format=json", String.class);
-
+        ArrayList<JSONObject> jlist = new ArrayList();
+        try{
         JSONObject j = new JSONObject(album);
 
         JSONObject getSth = j.getJSONObject("topalbums");
         JSONArray ja = getSth.getJSONArray("album");
 
-        ArrayList<JSONObject> jlist = new ArrayList();
+        
         for (int i = 0; i < 10; i++) {
             JSONObject j1 = ja.getJSONObject(i);
             jlist.add(j1);
         }
-
+        }catch(JSONException e){
+            return null;
+        }
         return jlist;
     }
 
@@ -109,5 +113,27 @@ public class MusicDao {
         
 
         return artistBio;
+    }
+    
+    public ArrayList<JSONObject> getAlbumDetails(String artistName, String albumName) {
+        RestTemplate restTemplate = new RestTemplate();
+        String album = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key="+ api_key +"&artist=" + artistName + "&album=" + albumName + "&limit=10&format=json", String.class);
+        ArrayList<JSONObject> jlist = new ArrayList();
+        try{
+        JSONObject j = new JSONObject(album);
+
+        JSONObject getSth = j.getJSONObject("album");
+        JSONObject track = getSth.getJSONObject("tracks");
+        JSONArray ja = track.getJSONArray("track");
+
+        
+        for (int i = 0; i < ja.length(); i++) {
+            JSONObject j1 = ja.getJSONObject(i);
+            jlist.add(j1);
+        }
+        }catch(JSONException e){
+            return null;
+        }
+        return jlist;
     }
 }

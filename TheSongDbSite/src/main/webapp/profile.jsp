@@ -93,7 +93,7 @@
                     for (Friend f : friends) {
                 %>
                 <tr>
-                    <td><%=f.getFriend2()%></td>
+                    <td><%=f.getFriend2().getFirstName()%></td>
                     <%
                             }
                         } else {
@@ -118,7 +118,7 @@
                         for (FriendRequest fr : friendRequests) {
                     %>
                     <tr>
-                        <td><%=fr.getFriend2()%></td>
+                        <td><%=fr.getFriend2().getFirstName()%></td>
                         <%
                                     }
                                 } else {

@@ -262,7 +262,8 @@ public class UserDao extends Dao implements UserDaoInterface {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        User u = null;
+        User u = new User();
+        boolean found = false;
         try {
             con = this.getConnection();
             
@@ -273,13 +274,18 @@ public class UserDao extends Dao implements UserDaoInterface {
             rs = ps.executeQuery();
             if (rs.next()) 
             {
-                String firstName = rs.getString("firstName");
-                String surName = rs.getString("surName");
-                String userName = rs.getString("userName");
-                String email = rs.getString("email");
-                boolean type = rs.getBoolean("type");
-                String password = rs.getString("password");
-                u = new User(firstName, surName, userName, email, type, password);
+                u.setUserId(rs.getInt("userId"));
+                u.setFirstName(rs.getString("firstName"));
+                u.setSurName(rs.getString("surName"));
+                u.setUserName(rs.getString("userName"));
+                u.setEmail(rs.getString("email"));
+                if (rs.getInt("isAdmin") == 0) {
+                    u.setType(false);
+                } else if (rs.getInt("isAdmin") == 1) {
+                    u.setType(true);
+                }
+                u.setPassword(rs.getString("password"));
+                found = true;
             }
         } 
         catch (SQLException e) 
@@ -314,7 +320,11 @@ public class UserDao extends Dao implements UserDaoInterface {
                 System.err.println("A problem occurred when closing down the findUserByUsername method:\n" + e.getMessage());
             }
         }
-        return u;     // u may be null 
+        if (!found) {
+            return null;
+        } else {
+            return u;
+        }
     }
     
         @Override

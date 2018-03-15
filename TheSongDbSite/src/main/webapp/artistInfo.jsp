@@ -41,6 +41,7 @@
         <br><br><br><br><br><br><br><br><br>
         <%
             ArrayList<JSONObject> albums = musicDao.getTop10Albums(aName);
+            if(albums != null){
         %>
         <table class="table">
             <h1>Top 10 Albums</h1>
@@ -58,13 +59,18 @@
             <tr>
                 <td class="row"><%=i + 1%></td>
                 <td class="row"><img class="art" src="<%=art.get(i)%>"></td>
-                <td  class="row"><%=albums.get(i).get("name")%></td>
+                <td  class="row"><a href="albumInfo.jsp?artist=<%=aName%>&album=<%=albums.get(i).get("name")%>"><%=albums.get(i).get("name")%></a></td>
                 <td class="row"><%=albums.get(i).get("playcount")%></td>
                 <td class="row"><%=albums.get(i).get("url")%></td>
             </tr>
             <%
                 }
+                }else{
             %>
+            <h1>No albums found</h1>
+            <%
+                }
+                %>
         </table>
     </body>
 </html>

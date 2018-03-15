@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import json.JSONException;
 import json.JSONObject;
 
 /**
@@ -36,8 +37,14 @@ public class SearchCommand implements Command{
             UserDao userDao = new UserDao("thesongdb", "jdbc/WebPatternsCA3");
             MusicDao musicDao = new MusicDao();
             userF = userDao.findUserByUsername(input);
+            try{
             artist = musicDao.getArtist(input);
+            }catch(JSONException e){
+                session.setAttribute("artist", null);
+            }
             if (userF != null) {
+                session.setAttribute("user", userF);
+            }else{
                 session.setAttribute("user", userF);
             }
             if (artist != null) {
