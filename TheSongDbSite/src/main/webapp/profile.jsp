@@ -112,7 +112,9 @@
                             FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
                             ArrayList<FriendRequest> friendRequests = friendRequestDao.displayAllFriendRequests(username);
                 %>
-                <h1><%=new TextBundle("friendRequests").getText(lang)%></h1>
+                <br/>
+                <br/>
+                <h1>Your New Friend Requests<%=new TextBundle("friendRequests").getText(lang)%></h1>
                 <table>
                     <%
                         for (FriendRequest fr : friendRequests) {
@@ -129,10 +131,11 @@
                     </tr>
                 </table>
                 </tr>
-                <%
-
-                %>
             </table>
+        </div>
+                    
+    </section>
+            <div id="leftColumn" style="float-left">
             <h1><%= loggedUser.getUserName()%><%=new TextBundle("statuses").getText(lang)%></h1>
             <%
                 StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
@@ -161,9 +164,7 @@
             <% } else {
                     new TextBundle("noStatusesFound").getText(lang);
                 }%>
-        </div>
-    </section>
-    <div id="leftColumn">
+    
         <%
             MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
