@@ -121,7 +121,19 @@
                     %>
                     <tr>
                         <td><%=fr.getFriend2().getFirstName()%></td>
+                        <button id="confirmRequest"
                         <%
+                            FriendDao friendDao2 = new FriendDao("TheSongDb", "jdbc/TheSongDb");
+                            Object user1 = session.getAttribute("userName");
+                            String username1 = (String) user1;
+                            friendDao2.confirmFriendship(username1, fr.getFriend2().getUserName());
+                        %>>Confirm Friend</button>
+                    <button id="rejectRequest"
+                            <%
+                                FriendRequestDao denyRequest = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
+                                denyRequest.denyFriendship(username1, fr.getFriend2().getUserName());
+                            %>>Reject Friend</button>
+                            <%
                                     }
                                 } else {
                                     out.println("No Friend Requests Found");
