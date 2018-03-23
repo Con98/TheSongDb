@@ -44,7 +44,7 @@
             String ob = null;
         %>
         
-        <button class="friend"<%
+        <button id="friend"<%
             
             FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
             Object user = session.getAttribute("userName");
