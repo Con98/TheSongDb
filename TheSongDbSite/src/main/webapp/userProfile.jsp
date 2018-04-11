@@ -4,6 +4,7 @@
     Author     : thoma
 --%>
 
+<%@page import="Daos.FriendDao"%>
 <%@page import="java.lang.String"%>
 <%@page import="Daos.FriendRequestDao"%>
 <%@page import="Dtos.User"%>
@@ -44,12 +45,30 @@
             String ob = null;
         %>
         
-        <button id="friend"<%
-            
-            FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
+        <%
+            FriendDao friendDao = new FriendDao("TheSongDb", "jdbc/TheSongDb");
             Object user = session.getAttribute("userName");
             String username = (String) user;
-            friendRequestDao.addFriendship(username, aName);
+            boolean areFriends = friendDao.checkIfFriends(username, aName);
+            
+if (areFriends == true){
+        %>
+        <button id="friendRequest"<%
+            
+            FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
+                        friendRequestDao.addFriendship(username, aName);
                 %>>Send Friend Request</button>
+                
+                <%
+                }
+else {
+                %>
+                <button id="deleteFriend"<%
+            friendDao.removeFriendship(username, aName);
+                %>>Delete Friend</button>
+                <button id="sendMessage"
+                    <%
+                        
+                    %>>Send Message</button>
     </body>
 </html>
