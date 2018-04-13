@@ -80,6 +80,9 @@
             <td><%=loggedUser.getEmail()%></td>
         </tr>
     </table>
+        <%
+            if (loggedUser.isType() == false){
+        %>
     <section>
         <div id="rightColumn">
             <%
@@ -95,8 +98,7 @@
                 <tr>
                     <td><%=f.getFriend2().getFirstName()%></td>
                     <%
-                            }
-                        } else {
+                            }else {
                             out.println("No Friends Found");
                         }
                     %>
@@ -147,6 +149,9 @@
         </div>
                     
     </section>
+                    <%
+                        } }
+                    %>
             <div id="leftColumn" style="float-left">
             <h1><%= loggedUser.getUserName()%><%=new TextBundle("statuses").getText(lang)%></h1>
             <%
@@ -219,5 +224,14 @@
                 new TextBundle("noMessagesFound").getText(lang);
             }%>
     </div>
+    
+    <%
+        if (loggedUser.isType() == true){
+            %>
+            
+            <button id="deleteUser"><a href="deleteUser.jsp">Delete User</a></button>
+    <%
+        }
+    %>
 </body>
 </html>
