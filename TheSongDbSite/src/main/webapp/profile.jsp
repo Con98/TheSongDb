@@ -64,20 +64,20 @@
 
     <br/>
     <h2><%=new TextBundle("personalInfo").getText(lang)%></h2>
-    <table>
+    <table class="table table-bordered">
         <tr>
-            <th><%=new TextBundle("name").getText(lang)%>: </th>
-            <td><%=loggedUser.getFirstName()%></td>
+            <th class="col"><%=new TextBundle("name").getText(lang)%>: </th>
+            <td class="row"><%=loggedUser.getFirstName()%></td>
         </tr>
 
         <tr>
-            <th><%=new TextBundle("surname").getText(lang)%>: </th>
-            <td><%=loggedUser.getSurName()%></td>
+            <th class="col"><%=new TextBundle("surname").getText(lang)%>: </th>
+            <td class="row"><%=loggedUser.getSurName()%></td>
         </tr>
 
         <tr>
-            <th><%=new TextBundle("email").getText(lang)%>: </th>
-            <td><%=loggedUser.getEmail()%></td>
+            <th class="col"><%=new TextBundle("email").getText(lang)%>: </th>
+            <td class="row"><%=loggedUser.getEmail()%></td>
         </tr>
     </table>
     <section>
@@ -88,12 +88,12 @@
 
             %>
             <h1><%=loggedUser.getUserName()%><%=new TextBundle("friendsList").getText(lang)%></h1>
-            <table>
+            <table class="table table-bordered">
                 <%
                     for (Friend f : friends) {
                 %>
                 <tr>
-                    <td><%=f.getFriend2().getFirstName()%></td>
+                    <td class="row"><%=f.getFriend2().getFirstName()%></td>
                     <%
                             }
                         } else {
@@ -112,8 +112,9 @@
                             FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
                             ArrayList<FriendRequest> friendRequests = friendRequestDao.displayAllFriendRequests(username);
                 %>
+            </table>
                 <h1><%=new TextBundle("friendRequests").getText(lang)%></h1>
-                <table>
+                <table class="table table-bordered">
                     <%
                         for (FriendRequest fr : friendRequests) {
                     %>
@@ -138,7 +139,7 @@
                 StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
                 ArrayList<Status> statuses = statusDao.displayOwnStatuses(loggedUser.getUserId());
                 if (!statuses.isEmpty()) { %>
-            <table border="1">
+            <table class="table table-bordered">
                 <tr>
                     <th><%=new TextBundle("status").getText(lang)%></th>
                     <th><%=new TextBundle("datePublished").getText(lang)%></th>
@@ -171,7 +172,7 @@
         %>
 
         <h1><%= loggedUser.getUserName()%><%=new TextBundle("messages").getText(lang)%></h1>
-        <table border="1">
+        <table class="table table-bordered">
             <% if (!messages.isEmpty()) { %>
             <tr>
                 <th><%=new TextBundle("sender").getText(lang)%></th>

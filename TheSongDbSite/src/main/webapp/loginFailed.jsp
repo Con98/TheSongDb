@@ -3,7 +3,7 @@
     Created on : Dec 4, 2017, 12:34:10 PM
     Author     : Thomas
 --%>
-
+<%@include file="header.jsp"%>
 <%@page import="org.apache.commons.i18n.bundles.TextBundle"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

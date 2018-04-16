@@ -13,6 +13,7 @@
         <%@page import="Daos.UserDao"%>
         <%@page import="Dtos.User"%>
         <%@include file="createLocale.jsp" %>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -103,13 +104,14 @@
                         <li><label for="cld">Change Language:</label></li>
                         <li id="cld"><%@include file="internationalization.jsp" %></li>
                         <li><a href="FrontController?action=logout"><%=new TextBundle("logout").getText(lang) %></a></li>
-
+                        <li><a href="help.jsp">Help Page</a></li>
 
                         <%
                         } else {
                         %>
                         <li><label for="cld">Change Language:</label></li>
                         <li><%@include file="internationalization.jsp" %></li>
+                        <li><a href="help.jsp">Help Page</a></li>
                             <%
                                 }
 

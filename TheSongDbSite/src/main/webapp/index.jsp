@@ -14,10 +14,20 @@ and open the template in the editor.
 
     </head>
 
-    <body>
-
+    <body onload="<% session.setAttribute("isIndex", 1); %>">
+        <%if(session.getAttribute("login") != null){
+            %>
+            <script>window.location="home.jsp"</script>
+            <%
+        }%>
         <h1><%=new TextBundle("welcomeToSite").getText(lang)%></h1>
         <h3><%=new TextBundle("indexInfo").getText(lang)%></h3>
         <h3><%=new TextBundle("pleaseLogin").getText(lang)%> </h3>
+        <div style="border: red solid;">
+        <h2>For the Usability Test</h2>
+        <h3>Click help in the settings menu for quick info</h3>
+        </div>
+        
+        
     </body>
 </html>

@@ -33,7 +33,7 @@
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             ArrayList<Status> statuses = statusDao.displayStatuses(user.getUserId());
             if (!statuses.isEmpty()) { %>
-        <table border="1">
+        <table class="table-hover table-bordered table">
             <tr>
                 <th><%= new TextBundle("poster").getText(lang)%></th>
                 <th><%= new TextBundle("status").getText(lang)%></th>

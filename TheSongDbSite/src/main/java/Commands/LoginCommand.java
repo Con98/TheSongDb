@@ -24,7 +24,6 @@ public class LoginCommand implements Command {
         String name = request.getParameter("email");
         String pass = request.getParameter("password");
         if (name != null && pass != null) {
-
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             User user = userDao.login(name, pass);
             if(user == null || user.getFirstName() == null || user.getPassword() == null){   
@@ -33,11 +32,13 @@ public class LoginCommand implements Command {
             else if(user.isType() == false){
                 HttpSession session = request.getSession();
             session.setAttribute("login", user);
+            session.setAttribute("loginUname",user.getUserName());
                 forwardToJsp = "home.jsp";
             }
             else if(user.isType() == true){
                 HttpSession session = request.getSession();
             session.setAttribute("login", user);
+            session.setAttribute("loginUname",user.getUserName());
             forwardToJsp = "adminLogin.jsp";
             }
             

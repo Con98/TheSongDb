@@ -22,6 +22,7 @@
                 int userId = loggedUser.getUserId();
         %>
         <h1><%=userName%> <%=new TextBundle("isSendingAMessage").getText(lang) %></h1>
+        <h2>UserID 4 = TestUser :  UserID 5 = TestUser2</h2>
         <div style="width: 50%; text-align: center;">
             <form class="form-horizontal" action="FrontController" method="post">
                 <div class="form-group">
@@ -56,5 +57,5 @@
                 System.out.println("An error occured when trying to send a message: " + ex.getMessage());
             }%>
     </body>
-    <script
+    
 </html>

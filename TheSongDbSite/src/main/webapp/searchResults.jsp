@@ -37,7 +37,7 @@
             }
             if (u != null) {
         %>
-        <h1><%=u.getFirstName()%></h1>
+        <h1>User<a href="userProfile.jsp?userName=<%=u.getUserName()%>"><%=u.getFirstName() + " " + u.getSurName()%></a> was found</h1>
         <%
         } else {
         %>

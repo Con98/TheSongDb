@@ -38,5 +38,8 @@
             <input type="hidden" name="action" value="login"/>
         </form>
 </div>
+            <br>
+            <h2>User1:  Email = user@user.ie : Password = user</h2>
+            <h2>User2: Email = user2@user.ie : Password= user2</h2>
     </body>
 </html>
