@@ -388,4 +388,39 @@ public class UserDao extends Dao implements UserDaoInterface {
             return allUsers;
         }
     }
+    
+    @Override
+    public boolean deleteUser(User u) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int rs = 0;
+        boolean deleted = false;
+        try {
+            con = this.getConnection();
+
+            String query = "DELETE FROM `user` WHERE `userId` = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, u.getUserId());
+
+            rs = ps.executeUpdate();
+            if(rs==1){
+                deleted=true;
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the deleteMessage method:");
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the deleteMessage method:\n" + e.getMessage());
+            }
+        }
+        return deleted;
+    }
 }

@@ -90,4 +90,6 @@ public interface UserDaoInterface {
     public User getDetailsById(int id);
     
      public User findUserByUsername(String uname);
+     
+     public boolean deleteUser(User u);
 }

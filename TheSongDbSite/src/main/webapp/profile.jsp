@@ -80,6 +80,9 @@
             <td class="row"><%=loggedUser.getEmail()%></td>
         </tr>
     </table>
+        <%
+            if (loggedUser.isType() == false){
+        %>
     <section>
         <div id="rightColumn">
             <%
@@ -95,8 +98,7 @@
                 <tr>
                     <td class="row"><%=f.getFriend2().getFirstName()%></td>
                     <%
-                            }
-                        } else {
+                            }else {
                             out.println("No Friends Found");
                         }
                     %>
@@ -112,15 +114,34 @@
                             FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
                             ArrayList<FriendRequest> friendRequests = friendRequestDao.displayAllFriendRequests(username);
                 %>
+<<<<<<< HEAD
             </table>
                 <h1><%=new TextBundle("friendRequests").getText(lang)%></h1>
                 <table class="table table-bordered">
+=======
+                <br/>
+                <br/>
+                <h1>Your New Friend Requests<%=new TextBundle("friendRequests").getText(lang)%></h1>
+                <table>
+>>>>>>> 85200999396953d8beac6f7434715655e72bdfe2
                     <%
                         for (FriendRequest fr : friendRequests) {
                     %>
                     <tr>
                         <td><%=fr.getFriend2().getFirstName()%></td>
+                        <button id="confirmRequest"
                         <%
+                            FriendDao friendDao2 = new FriendDao("TheSongDb", "jdbc/TheSongDb");
+                            Object user1 = session.getAttribute("userName");
+                            String username1 = (String) user1;
+                            friendDao2.confirmFriendship(username1, fr.getFriend2().getUserName());
+                        %>>Confirm Friend</button>
+                    <button id="rejectRequest"
+                            <%
+                                FriendRequestDao denyRequest = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
+                                denyRequest.denyFriendship(username1, fr.getFriend2().getUserName());
+                            %>>Reject Friend</button>
+                            <%
                                     }
                                 } else {
                                     out.println("No Friend Requests Found");
@@ -130,10 +151,14 @@
                     </tr>
                 </table>
                 </tr>
-                <%
-
-                %>
             </table>
+        </div>
+                    
+    </section>
+                    <%
+                        } }
+                    %>
+            <div id="leftColumn" style="float-left">
             <h1><%= loggedUser.getUserName()%><%=new TextBundle("statuses").getText(lang)%></h1>
             <%
                 StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
@@ -162,9 +187,7 @@
             <% } else {
                     new TextBundle("noStatusesFound").getText(lang);
                 }%>
-        </div>
-    </section>
-    <div id="leftColumn">
+    
         <%
             MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
@@ -207,5 +230,14 @@
                 new TextBundle("noMessagesFound").getText(lang);
             }%>
     </div>
+    
+    <%
+        if (loggedUser.isType() == true){
+            %>
+            
+            <button id="deleteUser"><a href="deleteUser.jsp">Delete User</a></button>
+    <%
+        }
+    %>
 </body>
 </html>
