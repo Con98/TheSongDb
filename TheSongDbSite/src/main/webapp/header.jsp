@@ -4,6 +4,9 @@
     Author     : Thomas
 --%>
 
+<%@page import="Dtos.Friend"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Daos.FriendDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,11 +20,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/extra.css" rel="stylesheet">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
 
     </head>
-
+<script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
 
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -50,14 +62,27 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><%=new TextBundle("friends").getText(lang) %><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Friend 1</a></li>
-                        <li><a href="#">Friend 2</a></li>
-                        <li><a href="#">Friend 3</a></li>
+                        <%
+                            FriendDao fDao = new FriendDao("TheSongDb", "jdbc/TheSongDb");
+                            ArrayList<Friend> friends = fDao.displayAllFriends(user.getUserName());
+                            for(Friend f : friends){
+                            %>
+                        <li class="dropdown-submenu">
+                            <a class="test"href="#"><%=f.getFriend2().getFirstName()%> <%=f.getFriend2().getSurName()%><span class="caret"></span></a>
+                        
+                        <ul class="dropdown-menu">
+                            <li><a href="userProfile.jsp?userName=<%=f.getFriend2().getUserName()%>">View Profile</a></li>
+                            <li><a href="sendMessage.jsp?action=<%=f.getFriend2().getUserId()%>">Send Message</a></li>
+                        </ul>
+                        </li>
+                        <%
+                            }
+                        %>
                     </ul>
                 </li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><%=new TextBundle("music").getText(lang) %><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="displayTopArtists.jsp?size=1"><%=new TextBundle("top10Artists").getText(lang) %></a></li>
+                        <li><a href="displayTopArtists.jsp"><%=new TextBundle("top10Artists").getText(lang) %></a></li>
                     </ul>
                 </li>
                 <li><a href="inbox.jsp">Inbox</a></li>

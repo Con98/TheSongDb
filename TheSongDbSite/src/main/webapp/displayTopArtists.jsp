@@ -19,19 +19,14 @@
         <h1><%= new TextBundle("top10BasedOnCharts").getText(lang)%> </h1>
         <h2><%=new TextBundle("clickOnArtistsName").getText(lang)%> </h2>
         <br>
-        <%
-            int size = Integer.parseInt(request.getParameter("size"));
-            %>
 
         <%            MusicDao musicDao = new MusicDao();
             ArrayList<JSONObject> top10 = musicDao.getTop10Artists();
             //Number value to change image size 1=small 2=medium 3=large
-            ArrayList<String> art = musicDao.getArt(size);
+            ArrayList<String> art = musicDao.getArt(1);
         %>
-        <a href="displayTopArtists.jsp?size=1" class="btn btn-default"><%=new TextBundle("makeArtSmaller").getText(lang)%> </a>
-        <a href="displayTopArtists.jsp?size=2" class="btn btn-default"><%=new TextBundle("makeArtLarger").getText(lang)%></a>
 
-        <table class="table table-responsive table-striped">
+        <table class="table table-responsive" style="background-color: #1e1e1e; opacity:0.8;">
             <tr>
                 <th><%=new TextBundle("chartNumber").getText(lang)%></th>
                 <th><%=new TextBundle("albumArt").getText(lang)%></th>

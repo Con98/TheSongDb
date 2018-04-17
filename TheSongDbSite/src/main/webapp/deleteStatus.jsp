@@ -11,8 +11,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><%=new TextBundle("deleteQuestion").getText(lang)%></title>
         <%@include file="header.jsp" %>
+        <title><%=new TextBundle("deleteQuestion").getText(lang)%></title>
+        
     </head>
     <body>
         <%  StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");

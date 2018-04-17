@@ -112,7 +112,7 @@ public class StatusDao extends Dao implements StatusDaoInterface {
         try {
             con = this.getConnection();
 
-            String query = "SELECT * FROM status WHERE userId = ?";
+            String query = "SELECT * FROM status WHERE userId = ? ORDER BY sentOn DESC";
             ps = con.prepareStatement(query);
             ps.setInt(1, userLoggedIn);
 
@@ -159,7 +159,7 @@ public class StatusDao extends Dao implements StatusDaoInterface {
         try {
             con = this.getConnection();
 
-            String query = "SELECT * FROM status";
+            String query = "SELECT * FROM status ORDER BY sentOn DESC";
             ps = con.prepareStatement(query);
 
             rs = ps.executeQuery();

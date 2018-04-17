@@ -13,9 +13,9 @@
         <title><%= new TextBundle("login").getText(lang)%></title>
         
     </head>
-    <body>
+    <body style="text-align:center;">
         <h1><%= new TextBundle("login").getText(lang)%></h1>
-<div style="width: 50%; text-align: center;">
+<div style="width: 50%;  text-align: center;">
         <form class="form-horizontal" action="FrontController" method="post">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email"><%= new TextBundle("email").getText(lang)%>:</label>
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" value="<%= new TextBundle("login").getText(lang)%>" class="btn btn-default">
+                <input type="submit" value="<%= new TextBundle("login").getText(lang)%>" class="btn btn-default btn-danger">
             </div>
             <br>
             

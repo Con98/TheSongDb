@@ -27,32 +27,33 @@
 
         <h1><%= new TextBundle("hello").getText(lang)%> <%= user.getFirstName()%></h1>
         <%@include file="updateStatus.jsp" %>
-        <h1><%= user.getUserName()%><%= new TextBundle("statuses").getText(lang)%></h1>
+        <h1><%= user.getUserName()%> Friends Status's</h1>
         <%
             StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             ArrayList<Status> statuses = statusDao.displayStatuses(user.getUserId());
             if (!statuses.isEmpty()) { %>
-        <table class="table-hover table-bordered table">
-            <tr>
-                <th><%= new TextBundle("poster").getText(lang)%></th>
-                <th><%= new TextBundle("status").getText(lang)%></th>
-                <th><%= new TextBundle("datePublished").getText(lang)%></th>
-            </tr>
-
             <%
-                for (Status s : statuses) {
+                for (int i = statuses.size() -1; i > 0; i--) {
+                    
             %>
-            <tr>
-                <td><%= userDao.getDetailsById(s.getUserId()).getUserName() %></td>
-                <td><%= s.getStatusContent()%></td>
-                <td><%= s.getSentOn()%></td>
-            </tr>
+            <div class="sTable">       
+                <div class="sInfo">
+                <%= new TextBundle("poster").getText(lang)%>
+                <%= userDao.getDetailsById(statuses.get(i).getUserId()).getUserName() %>
+                </div>
+
+            
+            <div class="sContent">
+                
+                <%= new TextBundle("status").getText(lang)%>
+                <%= statuses.get(i).getStatusContent()%>
+            </div>
+            </div>
             <%
                 }
             %>
-
-        </table>
+    
         <% }
             }
         %>
