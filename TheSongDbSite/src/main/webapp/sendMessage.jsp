@@ -22,15 +22,10 @@
                 int userId = loggedUser.getUserId();
         %>
         <h1><%=userName%> <%=new TextBundle("isSendingAMessage").getText(lang) %></h1>
-        <h2>UserID 4 = TestUser :  UserID 5 = TestUser2</h2>
+        
         <div style="width: 50%; text-align: center;">
             <form class="form-horizontal" action="FrontController" method="post">
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="toId">To:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="toId" placeholder="Enter user ID" required>
-                    </div>
-                </div>
+                <input type="hidden" name="toId" value="<%=request.getParameter("action")%>" required>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="subjectLine"><%=new TextBundle("subject").getText(lang) %>:</label>
                     <div class="col-sm-10">

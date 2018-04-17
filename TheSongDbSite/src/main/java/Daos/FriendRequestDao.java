@@ -29,32 +29,21 @@ public class FriendRequestDao extends Dao implements FriendRequestDaoInterface{
     }
     
     @Override
-    public ArrayList<FriendRequest> displayAllFriendRequests(String username) {
+    public ArrayList<String> displayAllFriendRequests(String username) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<FriendRequest> friendRequests = new ArrayList<>();
+        ArrayList<String> friends = new ArrayList<>();
         try {
             con = this.getConnection();
-
-            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
-            User user = userDao.findUserByUsername(username);
-
-            String query = "SELECT * FROM friend WHERE friend1 = ? OR friend2 = ?";
+            String query = "SELECT * FROM friendrequest WHERE friend2 = ?";
             ps = con.prepareStatement(query);
             ps.setString(1, username);
-            ps.setString(2, username);
 
             rs = ps.executeQuery();
             while (rs.next()) {
                 String friend = rs.getString("friend1");
-                if (friend.equals(username)) {
-                    friend = rs.getString("friend2");
-                }
-                User userFriend = userDao.findUserByUsername(friend);
-
-                FriendRequest fr = new FriendRequest(user, userFriend);
-                friendRequests.add(fr);
+                friends.add(friend);
             }
         } catch (SQLException ex) {
             System.err.println("\tA problem occurred during the displayAllFriendRequests method:");
@@ -74,7 +63,7 @@ public class FriendRequestDao extends Dao implements FriendRequestDaoInterface{
                 System.err.println("A problem occurred when closing down the findFriendshipsByUsername method:\n" + e.getMessage());
             }
         }
-        return friendRequests;
+        return friends;
     }
     
     @Override
@@ -86,7 +75,7 @@ public class FriendRequestDao extends Dao implements FriendRequestDaoInterface{
         try {
             con = this.getConnection();
 
-            String query = "INSERT INTO friendRequest(friend1, friend2) VALUES (?, ?)";
+            String query = "INSERT INTO friendrequest(friend1, friend2) VALUES (?, ?)";
             ps = con.prepareStatement(query);
             ps.setString(1, username1);
             ps.setString(2, username2);
@@ -121,7 +110,7 @@ public class FriendRequestDao extends Dao implements FriendRequestDaoInterface{
         try {
             con = this.getConnection();
 
-            String query = "SELECT * FROM friendRequest WHERE (friend1 = ? AND friend2 = ?) OR (friend1 = ? AND friend2 = ?)";
+            String query = "SELECT * FROM friendrequest WHERE (friend1 = ? AND friend2 = ?) OR (friend1 = ? AND friend2 = ?)";
 
             ps = con.prepareStatement(query);
             ps.setString(1, username1);
@@ -163,7 +152,7 @@ public class FriendRequestDao extends Dao implements FriendRequestDaoInterface{
         try {
             con = this.getConnection();
 
-            String query = "DELETE FROM friendRequest WHERE (friend1 = ? AND friend2 = ?) OR (friend1 = ? AND friend2 = ?)";
+            String query = "DELETE FROM friendrequest WHERE (friend1 = ? AND friend2 = ?) OR (friend1 = ? AND friend2 = ?)";
             ps = con.prepareStatement(query);
             ps.setString(1, username1);
             ps.setString(2, username2);

@@ -5,11 +5,10 @@
 --%>
 
 <%@page import="Daos.FriendDao"%>
-<<<<<<< HEAD
-=======
+
 <%@page import="java.lang.String"%>
 <%@page import="Daos.FriendRequestDao"%>
->>>>>>> 85200999396953d8beac6f7434715655e72bdfe2
+
 <%@page import="Dtos.User"%>
 <%@page import="Daos.UserDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,7 +20,7 @@
         <title>User Profile</title>
     </head>
     <body>
-<<<<<<< HEAD
+
         <%  
             UserDao userDao = new UserDao("thesongdb");
             FriendDao fDao = new FriendDao("thesongdb");
@@ -42,11 +41,11 @@
             </tr>
             
         </table>
-        
+        <a href="sendMessage.jsp?action=<%=u.getUserId()%>">Send Message</a>
         <%
             }
             %>
-=======
+
         <%        try {
             if (session.getAttribute("login") == null) {
     %>
@@ -71,7 +70,7 @@
     %>
     
         <%            
-            String aName = request.getParameter("action");
+            String uName = request.getParameter("action");
             String ob = null;
         %>
         
@@ -79,27 +78,23 @@
             FriendDao friendDao = new FriendDao("TheSongDb", "jdbc/TheSongDb");
             Object user = session.getAttribute("userName");
             String username = (String) user;
-            boolean areFriends = friendDao.checkIfFriends(username, aName);
+            boolean areFriends = friendDao.checkIfFriends(uName, username);
+            FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
             
 if (areFriends == true){
         %>
-        <button id="friendRequest"<%
-            
-            FriendRequestDao friendRequestDao = new FriendRequestDao("TheSongDb", "jdbc/TheSongDb");
-                        friendRequestDao.addFriendship(username, aName);
-                %>>Send Friend Request</button>
+        
                 
                 <%
-                }
-else {
+                }else{
+User loggedUser = (User) session.getAttribute("login");
                 %>
-                <button id="deleteFriend"<%
-            friendDao.removeFriendship(username, aName);
-                %>>Delete Friend</button>
-                <button id="sendMessage"
-                    <%
-                        
-                    %>>Send Message</button>
->>>>>>> 85200999396953d8beac6f7434715655e72bdfe2
+    <form action="FrontController" method="post">
+        <input type="hidden" name="currentUser" value="<%=loggedUser.getUserName()%>">
+        <input type="hidden" name="searchUser" value="<%=aName%>">
+        <input type="submit" value="Send Friend Request" class="btn btn-default">
+         <input type="hidden" name="action" value="SendFriendRequest"/>
+    </form>
+                <%}%>
     </body>
 </html>

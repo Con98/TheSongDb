@@ -130,27 +130,17 @@ public class FriendDao extends Dao implements FriendDaoInterface {
     public int confirmFriendship(String username1, String username2) {
         Connection con = null;
         PreparedStatement ps = null;
-        PreparedStatement ps2 = null;
-        ResultSet rs = null;
         int rowsAffected = 0;
         
         try {
             con = this.getConnection();
 
             String query1 = "INSERT INTO friend(friend1, friend2) VALUES (?, ?)";
-            String query2 = "DELETE FROM friendRequest(friend1, friend2) VALUES (?, ?)";
             ps = con.prepareStatement(query1);
             ps.setString(1, username1);
             ps.setString(2, username2);
-            
-            ps2 = con.prepareStatement(query2);
-            ps2.setString(1, username1);
-            ps2.setString(2, username2);
-
-            rs = ps.executeQuery();
             rowsAffected = ps.executeUpdate();
             
-            rs = ps2.executeQuery();
         } catch (SQLException ex) {
             System.err.println("\tA problem occurred during the addFriendship method:");
             System.err.println("\t" + ex.getMessage());

@@ -60,7 +60,7 @@
                         <li><a href="displayTopArtists.jsp?size=1"><%=new TextBundle("top10Artists").getText(lang) %></a></li>
                     </ul>
                 </li>
-                <li><a href="sendMessage.jsp"><%=new TextBundle("sendMessage").getText(lang) %></a></li>
+                <li><a href="inbox.jsp">Inbox</a></li>
                 <form class="navbar-form navbar-left" action="FrontController" method="post">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder="<%=new TextBundle("search").getText(lang) %>">

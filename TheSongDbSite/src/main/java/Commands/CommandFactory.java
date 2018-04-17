@@ -71,6 +71,18 @@ public class CommandFactory {
                 case "logout":
                     command = new LogoutCommand();
                     break;
+                    
+                case "SendFriendRequest":
+                    command = new AddFriendCommand();
+                    break;
+                    
+                    case "AcceptFriend":
+                    command = new ConfirmFriendCommand();
+                    break;
+                    
+                    case "DenyFriend":
+                    command = new DenyRequestCommand();
+                    break;
 //                case "editUser":
 //                    command = new EditUserCommand();
 //                    break;
