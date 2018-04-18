@@ -26,6 +26,9 @@ body{
     background-color: #1e1e1e;
     margin: 0.5em;
     display: block;
+    opacity:0.8;
+    width:50%;
+    text-align:center;
 }
 .sInfo{
     

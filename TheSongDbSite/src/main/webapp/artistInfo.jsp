@@ -34,7 +34,7 @@
 
         %>
 
-        <img class="img-circle img-responsive" style="float:left;" src="<%=ob%>">
+        <img class="img-circle img-responsive" style="float:left; border: red solid 5px;" src="<%=ob%>">
         <h1 style="float:left;"><%=name%><%=new TextBundle("artistsPage").getText(lang)%></h1>
         <br><br><br><br>
         <p><%=bio.getString("summary")%></p>
@@ -43,7 +43,7 @@
             ArrayList<JSONObject> albums = musicDao.getTop10Albums(aName);
             if(albums != null){
         %>
-        <table class="table">
+        <table class="table" style="background-color: #1e1e1e; opacity:0.8;">
             <h1>Top 10 Albums</h1>
             <tr>
                 <th><%=new TextBundle("chartNumber").getText(lang)%></th>

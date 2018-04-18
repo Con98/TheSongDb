@@ -39,14 +39,14 @@
             %>
             <div class="sTable">       
                 <div class="sInfo">
-                <%= new TextBundle("poster").getText(lang)%>
+                <%= new TextBundle("poster").getText(lang)%>:
                 <%= userDao.getDetailsById(statuses.get(i).getUserId()).getUserName() %>
                 </div>
 
             
             <div class="sContent">
                 
-                <%= new TextBundle("status").getText(lang)%>
+                <%= new TextBundle("status").getText(lang)%>:
                 <%= statuses.get(i).getStatusContent()%>
             </div>
             </div>
