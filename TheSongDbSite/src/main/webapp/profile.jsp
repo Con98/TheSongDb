@@ -58,6 +58,8 @@
         if (loggedUser != null) {
 
     %>
+    <section>
+    <div id="leftColumn">
     <h1><%=new TextBundle("welcome").getText(lang)%> <%=loggedUser.getUserName()%></h1>
 
     <%@include file="updateStatus.jsp" %>
@@ -80,6 +82,37 @@
             <td class="row"><%=loggedUser.getEmail()%></td>
         </tr>
     </table>
+        
+            <h1><%= loggedUser.getUserName()%><%=new TextBundle("statuses").getText(lang)%></h1>
+            <%
+                StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
+                ArrayList<Status> statuses = statusDao.displayOwnStatuses(loggedUser.getUserId());
+                if (!statuses.isEmpty()) { %>
+            <table class="table table-bordered">
+                <tr>
+                    <th><%=new TextBundle("status").getText(lang)%></th>
+                    <th><%=new TextBundle("datePublished").getText(lang)%></th>
+                    <th><%=new TextBundle("delete").getText(lang)%></th>
+                </tr>
+
+                <%
+                    for (Status s : statuses) {
+                %>
+                <tr>
+                    <td><%= s.getStatusContent()%></td>
+                    <td><%= s.getSentOn()%></td>
+                    <td><a href="deleteStatus.jsp?id=<%= s.getStatusId()%>"><%=new TextBundle("delete").getText(lang)%></a></td>
+                </tr>
+                <%
+                    }
+                %>
+
+            </table>
+            <% } else {
+                    new TextBundle("noStatusesFound").getText(lang);
+                }%>
+    </div>
+    </section>
     <section>
         <div id="rightColumn">
             <%
@@ -146,36 +179,9 @@
 
                 %>
             </table>
-            <h1><%= loggedUser.getUserName()%><%=new TextBundle("statuses").getText(lang)%></h1>
-            <%
-                StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
-                ArrayList<Status> statuses = statusDao.displayOwnStatuses(loggedUser.getUserId());
-                if (!statuses.isEmpty()) { %>
-            <table class="table table-bordered">
-                <tr>
-                    <th><%=new TextBundle("status").getText(lang)%></th>
-                    <th><%=new TextBundle("datePublished").getText(lang)%></th>
-                    <th><%=new TextBundle("delete").getText(lang)%></th>
-                </tr>
-
-                <%
-                    for (Status s : statuses) {
-                %>
-                <tr>
-                    <td><%= s.getStatusContent()%></td>
-                    <td><%= s.getSentOn()%></td>
-                    <td><a href="deleteStatus.jsp?id=<%= s.getStatusId()%>"><%=new TextBundle("delete").getText(lang)%></a></td>
-                </tr>
-                <%
-                    }
-                %>
-
-            </table>
-            <% } else {
-                    new TextBundle("noStatusesFound").getText(lang);
-                }%>
         </div>
     </section>
+            
     
 </body>
 </html>
