@@ -82,7 +82,9 @@
             <td class="row"><%=loggedUser.getEmail()%></td>
         </tr>
     </table>
-        
+    </section>
+        <div id="leftColumn">
+        <section>
             <h1><%= loggedUser.getUserName()%><%=new TextBundle("statuses").getText(lang)%></h1>
             <%
                 StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
@@ -111,8 +113,8 @@
             <% } else {
                     new TextBundle("noStatusesFound").getText(lang);
                 }%>
-    </div>
     </section>
+        </div>
     <section>
         <div id="rightColumn">
             <%
