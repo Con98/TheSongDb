@@ -7,7 +7,7 @@ package Daos;
 
 /**
  *
- * @author Thomas
+ * @author tadas
  */
 import static Daos.Dao.freeConnection;
 import Dtos.Message;
@@ -76,7 +76,7 @@ public class MessageDao extends Dao implements MessageDaoInterface {
         boolean succeeded = false;
         try {
             con = this.getConnection();
-            String query = "INSERT INTO `message`(`messageId`, `fromId`, `toId`, `subjectLine`, `messageContent`) VALUES (null,?,?,?,?)";
+            String query = "INSERT INTO `message`(`fromId`, `toId`, `subjectLine`, `messageContent`) VALUES (?,?,?,?)";
             ps = con.prepareStatement(query);
             ps.setString(1, fromId);
             ps.setString(2, toId);
@@ -148,6 +148,51 @@ public class MessageDao extends Dao implements MessageDaoInterface {
                 }
             } catch (SQLException e) {
                 System.err.println("A problem occurred when closing down the displayAllMessages method:\n" + e.getMessage());
+            }
+        }
+        return messages;
+    }
+    
+    @Override
+    public ArrayList<Message> displayReportedMessages() {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<Message> messages = new ArrayList<>();
+        try {
+            con = this.getConnection();
+
+            String query = "SELECT * FROM message WHERE isReported = 1";
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int messageId = rs.getInt("messageId");
+                int fromId = rs.getInt("fromId");
+                int toId = rs.getInt("toId");
+                String sentOn = rs.getString("sentOn");
+                String subjectLine = rs.getString("subjectLine");
+                String messageContent = rs.getString("messageContent");
+                
+
+                Message m = new Message(messageId, fromId, toId, sentOn, subjectLine, messageContent);
+                messages.add(m);
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the displayReportedMessages method:");
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the displayReportedMessages method:\n" + e.getMessage());
             }
         }
         return messages;
@@ -235,6 +280,43 @@ public class MessageDao extends Dao implements MessageDaoInterface {
         }
         return deleted;
     }
+    
+    @Override
+    public boolean reportMessage(Message m) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int rs = 0;
+        boolean reported = false;
+        try {
+            con = this.getConnection();
+
+            String query = "UPDATE `message` SET isReported = 1 WHERE `messageId` = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, m.getMessageId());
+
+            rs = ps.executeUpdate();
+            if(rs==1){
+                reported=true;
+            }
+        } catch (SQLException ex) {
+            System.err.println("\tA problem occurred during the reportMessage method:");
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                System.err.println("A problem occurred when closing down the reportMessage method:\n" + e.getMessage());
+            }
+        }
+        return reported;
+    }
+    
+    
 
     public static void main(String[] args) {
         String key = "Bar12345Bar12345"; // 128 bit key

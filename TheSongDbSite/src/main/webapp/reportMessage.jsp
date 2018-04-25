@@ -12,7 +12,7 @@
     <head>
         <%@include file="header.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><%=new TextBundle("deleteQuestion").getText(lang)%></title>
+        <title><%=new TextBundle("reportQuestion").getText(lang)%></title>
     </head>
     <body>
         <%  MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
@@ -23,7 +23,7 @@
             if (m != null) {
                 User sender = userDao.getDetailsById(m.getFromId());
                 User receiver = userDao.getDetailsById(m.getToId());
-        %><h1><%=new TextBundle("AreUSureMessage").getText(lang)%> </h1>
+        %><h1><%=new TextBundle("AreUSureReportMessage").getText(lang)%> </h1>
         <table border="1">
             <tr>
                 <th><%=new TextBundle("messageID").getText(lang)%> </th>
@@ -44,10 +44,10 @@
         </table>
         <% }%>
         <form class="form-horizontal" action="FrontController" method="post">
-            <input type="submit" value="<%=new TextBundle("delete").getText(lang)%>" class="btn btn-default">
+            <input type="submit" value="<%=new TextBundle("report").getText(lang)%>" class="btn btn-default">
             <a href="inbox.jsp" class="btn btn-default"><%=new TextBundle("goBack").getText(lang)%> </a>
             <input type="hidden" name="messageId" value="<%= m.getMessageId()%>"/>
-            <input type="hidden" name="action" value="deleteMessage"/>
+            <input type="hidden" name="action" value="reportMessage"/>
         </form>
     </body>
 </html>
