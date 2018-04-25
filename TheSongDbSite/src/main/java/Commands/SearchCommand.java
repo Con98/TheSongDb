@@ -7,6 +7,7 @@ package Commands;
 
 import Daos.MusicDao;
 import Daos.UserDao;
+import Dtos.Api.Artist;
 import Dtos.User;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class SearchCommand implements Command{
 
         String input = request.getParameter("search");
         User userF = new User();
-        JSONObject artist = new JSONObject();
+        ArrayList<Artist> artist = new ArrayList();
         ArrayList<JSONObject> albums = new ArrayList();
         session.setAttribute("input", input);
         session.setAttribute("user", userF);
@@ -38,7 +39,7 @@ public class SearchCommand implements Command{
             MusicDao musicDao = new MusicDao();
             userF = userDao.findUserByUsername(input);
             try{
-            artist = musicDao.getArtist(input);
+            artist = musicDao.searchArtist(input);
             }catch(JSONException e){
                 session.setAttribute("artist", null);
             }

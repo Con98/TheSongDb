@@ -10,7 +10,11 @@
 <html>
     <head>
         <%@ include file="header.jsp"%>
+        <%@page import="Dtos.Api.Artist"%>
+        <%@page import="Dtos.Api.Album"%>
+        <%@page import="Dtos.Api.Track"%>
         <%@page import="Daos.MusicDao"%>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%= new TextBundle("top10Artists").getText(lang)%> </title>
     </head>
@@ -21,10 +25,9 @@
         <br>
 
         <%            MusicDao musicDao = new MusicDao();
-            ArrayList<JSONObject> top10 = musicDao.getTop10Artists();
+            ArrayList<Artist> top10 = musicDao.getTop10Artists();
             //Number value to change image size 1=small 2=medium 3=large
-            ArrayList<String> art = musicDao.getArt(1);
-        %>
+%>
 
         <table class="table table-responsive" style="background-color: #1e1e1e; opacity:0.8;">
             <tr>
@@ -33,20 +36,22 @@
                 <th class="col"><%=new TextBundle("name").getText(lang)%></th>
                 <th class="col"><%=new TextBundle("lastFmURL").getText(lang)%></th>
             </tr>
-
             <%
                 for (int i = 0; i < top10.size(); i++) {
             %>
             <tr>
                 <td class="row"><%=i + 1%></td>
-                <td class="row"><img class="art" src="<%=art.get(i)%>"></td>
-                <td  class="row"><a href="artistInfo.jsp?action=<%=top10.get(i).get("name")%>"><%=top10.get(i).get("name")%></a></td>
-                <td class="row"><a href="<%=top10.get(i).get("url")%>"><%=top10.get(i).get("url")%></a></td>
+                <td class="row"><img class="art" src="<%=top10.get(i).getImage()%>"></td>
+                <td  class="row"><a href="artistInfo.jsp?action=<%=top10.get(i).getName()%>"><%=top10.get(i).getName()%></a></td>
+                <td class="row"><a href="<%=top10.get(i).getUrl()%>"><%=top10.get(i).getUrl()%></a></td>
+
             </tr>
 
             <%
                 }
             %>
+
+
 
         </table>
     </body>

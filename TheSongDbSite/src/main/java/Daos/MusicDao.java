@@ -10,10 +10,19 @@ import java.util.ArrayList;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import json.JSONArray;
-import json.JSONException;
-import json.JSONObject;
-import org.springframework.web.client.RestTemplate;
+import Dtos.Api.Artist;
+import Dtos.Api.Album;
+import Dtos.Api.Track;
+import java.net.URI;
+import java.util.Scanner;
+import javax.json.JsonArray;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
+
+import javax.ws.rs.client.ClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
 /**
  *
@@ -25,115 +34,154 @@ public class MusicDao {
 
     }
     private final String api_key = "581cca30b41a4cc0d5b3eb59d502b651";
-    public ArrayList<JSONObject> getTop10Artists() {
-        RestTemplate restTemplate = new RestTemplate();
-        String artist = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key="+ api_key +"&limit=10&format=json", String.class);
+//    private Client client = ClientBuilder.newBuilder().build();
+//    public Client getClient(){
+//        return client;
+//    }
 
-        JSONObject j = new JSONObject(artist);
-        JSONObject getSth = j.getJSONObject("artists");
-        JSONArray ja = getSth.getJSONArray("artist");
+    public ArrayList<Artist> getTop10Artists() {
+        ResteasyClient client = new ResteasyClientBuilder().build();
+        String url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=" + api_key + "&limit=10&format=json";
 
-        ArrayList<JSONObject> jlist = new ArrayList();
+        URI uri = URI.create(url);
+        ResteasyWebTarget target = client.target(uri);
+
+        StringReader sr = new StringReader(target.request().get(String.class));
+        JsonReader jr = Json.createReader(sr);
+
+        JsonObject j = jr.readObject().getJsonObject("artists");
+        JsonArray k = j.getJsonArray("artist");
+
+        ArrayList<Artist> jlist = new ArrayList();
         for (int i = 0; i < 10; i++) {
-            JSONObject j1 = ja.getJSONObject(i);
-            jlist.add(j1);
+            String z = k.getJsonObject(i).getJsonArray("image").getJsonObject(1).getString("#text");
+            String t = k.getJsonObject(i).getString("name");
+            String u = k.getJsonObject(i).getString("url");
+
+            Artist a = new Artist(z, t, u);
+            jlist.add(a);
         }
 
         return jlist;
     }
 
-    public ArrayList<JSONObject> getTop10Albums(String name) {
-        RestTemplate restTemplate = new RestTemplate();
-        String album = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=" + name + "&api_key="+ api_key +"&limit=10&format=json", String.class);
-        ArrayList<JSONObject> jlist = new ArrayList();
-        try{
-        JSONObject j = new JSONObject(album);
+    public ArrayList<Album> getTop10Albums(String name) {
+        ResteasyClient client = new ResteasyClientBuilder().build();
+        String aName = name.replaceAll("\\s", "%20");
+        String url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=" + aName + "&api_key=" + api_key + "&limit=10&format=json";
+        URI uri = URI.create(url);
+        ResteasyWebTarget target = client.target(uri);
+        StringReader sr = new StringReader(target.request().get(String.class));
+        JsonReader jr = Json.createReader(sr);
 
-        JSONObject getSth = j.getJSONObject("topalbums");
-        JSONArray ja = getSth.getJSONArray("album");
+        ArrayList<Album> jlist = new ArrayList();
 
-        
+        JsonObject j = jr.readObject().getJsonObject("topalbums");
+        JsonArray k = j.getJsonArray("album");
+
         for (int i = 0; i < 10; i++) {
-            JSONObject j1 = ja.getJSONObject(i);
-            jlist.add(j1);
+            String im = k.getJsonObject(i).getJsonArray("image").getJsonObject(1).getString("#text");
+            String t = k.getJsonObject(i).getString("name");
+            int z = k.getJsonObject(i).getInt("playcount");
+            String u = k.getJsonObject(i).getString("url");
+
+            Album a = new Album(t, z, u);
+            a.setImage(im);
+            jlist.add(a);
         }
-        }catch(JSONException e){
-            return null;
-        }
+
         return jlist;
     }
 
-    public ArrayList<String> getArt(int size) {
-        MusicDao music = new MusicDao();
-        ArrayList<JSONObject> artists = music.getTop10Artists();
-        ArrayList<String> art = new ArrayList();
+    public Artist getArtist(String artistName) {
+        ResteasyClient client = new ResteasyClientBuilder().build();
+        String aName = artistName.replaceAll("\\s", "%20");
+        String url = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + aName + "&api_key=" + api_key + "&format=json";
+        URI uri = URI.create(url);
 
-        for (int i = 0; i < artists.size(); i++) {
-            JSONArray images = artists.get(i).getJSONArray("image");
-            String ob = images.getJSONObject(size).get("#text").toString();
-            art.add(ob);
-        }
-        return art;
+        ResteasyWebTarget target = client.target(uri);
 
+        StringReader sr = new StringReader(target.request().get(String.class));
+        JsonReader jr = Json.createReader(sr);
+
+        JsonObject j = jr.readObject().getJsonObject("artist");
+        JsonObject k = j.getJsonObject("bio");
+        String bio = k.getString("summary");
+
+        String im = j.getJsonArray("image").getJsonObject(3).getString("#text");
+        String name = j.getString("name");
+        String ur = j.getString("url");
+
+        Artist a = new Artist(im, name, ur);
+        a.setBio(bio);
+
+        return a;
     }
-    
-    public ArrayList<String> getAlbumArt(int size, String name) {
-        MusicDao music = new MusicDao();
-        ArrayList<String> art = new ArrayList();
-        ArrayList<JSONObject> albums = music.getTop10Albums(name);
-        for (int i = 0; i < albums.size(); i++) {
-            JSONArray images = albums.get(i).getJSONArray("image");
-            String ob = images.getJSONObject(size).get("#text").toString();
-            art.add(ob);
+
+    public ArrayList<Track> getAlbumTracks(String artistName, String albumName) {
+        Client client = ClientBuilder.newClient();
+        String arName = artistName.replaceAll("\\s", "%20");
+        String alName = albumName.replaceAll("\\s", "%20");
+        String url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" + api_key + "&artist=" + arName + "&album=" + alName + "&limit=10&format=json";
+
+        URI uri = URI.create(url);
+        WebTarget target = client.target(uri);
+
+        StringReader sr = new StringReader(target.request().get(String.class));
+        JsonReader jr = Json.createReader(sr);
+
+        ArrayList<Track> jlist = new ArrayList();
+
+        JsonObject getSth = jr.readObject().getJsonObject("album");
+
+        JsonObject toptag = getSth.getJsonObject("toptags");
+        JsonObject tag = toptag.getJsonObject("tag");
+        String genre = tag.getString("name");
+        String tagurl = tag.getString("url");
+
+        JsonObject track = getSth.getJsonObject("tracks");
+        JsonArray ja = track.getJsonArray("track");
+
+        for (int i = 0; i < ja.size(); i++) {
+            String t = ja.getJsonObject(i).getString("name");
+            String u = ja.getJsonObject(i).getString("url");
+
+            Track t1 = new Track(t, u, genre);
+            t1.setGenreUrl(tagurl);
+            jlist.add(t1);
         }
-        return art;
-    }
-    
-    public JSONObject getArtist(String artistName){
-        RestTemplate restTemplate = new RestTemplate();
-        String artist = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artistName +"&api_key="+ api_key +"&format=json", String.class);
 
-        JSONObject j = new JSONObject(artist);
-        JSONObject artistDetails = j.getJSONObject("artist");
-        
-
-        
-
-        return artistDetails;
-    }
-    public JSONObject getArtistBio(String artistName){
-        RestTemplate restTemplate = new RestTemplate();
-        String artist = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artistName +"&api_key="+ api_key +"&format=json", String.class);
-
-        JSONObject j = new JSONObject(artist);
-        JSONObject artistDetails = j.getJSONObject("artist");
-        JSONObject artistBio = artistDetails.getJSONObject("bio");
-        
-
-        
-
-        return artistBio;
-    }
-    
-    public ArrayList<JSONObject> getAlbumDetails(String artistName, String albumName) {
-        RestTemplate restTemplate = new RestTemplate();
-        String album = restTemplate.getForObject("http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key="+ api_key +"&artist=" + artistName + "&album=" + albumName + "&limit=10&format=json", String.class);
-        ArrayList<JSONObject> jlist = new ArrayList();
-        try{
-        JSONObject j = new JSONObject(album);
-
-        JSONObject getSth = j.getJSONObject("album");
-        JSONObject track = getSth.getJSONObject("tracks");
-        JSONArray ja = track.getJSONArray("track");
-
-        
-        for (int i = 0; i < ja.length(); i++) {
-            JSONObject j1 = ja.getJSONObject(i);
-            jlist.add(j1);
-        }
-        }catch(JSONException e){
-            return null;
-        }
         return jlist;
+
+    }
+
+    public ArrayList<Artist> searchArtist(String artistName) {
+        ResteasyClient client = new ResteasyClientBuilder().build();
+        String aName = artistName.replaceAll("\\s", "%20");
+        String url = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=" + aName + "&api_key=" + api_key + "&format=json";
+        URI uri = URI.create(url);
+
+        ResteasyWebTarget target = client.target(uri);
+
+        StringReader sr = new StringReader(target.request().get(String.class));
+        JsonReader jr = Json.createReader(sr);
+
+        JsonObject j = jr.readObject().getJsonObject("results");
+        JsonObject k = j.getJsonObject("artistmatches");
+        JsonArray e = k.getJsonArray("artist");
+        ArrayList<Artist> results = new ArrayList();
+        for (int i = 0; i < e.size(); i++) {
+            JsonObject t = e.getJsonObject(i);
+            String im = t.getJsonArray("image").getJsonObject(1).getString("#text");
+            String name = t.getString("name");
+            String ur = t.getString("url");
+
+            Artist a = new Artist(im, name, ur);
+            results.add(a);
+        }
+
+        
+
+        return results;
     }
 }

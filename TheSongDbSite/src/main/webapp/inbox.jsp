@@ -20,11 +20,10 @@
     <body>
         <div id="leftColumn">
         <%
+            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             User loggedUser = (User) session.getAttribute("login");
             MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
-            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             ArrayList<Message> messages = messageDao.displayAllMessages(loggedUser.getUserId());
-            
         %>
 
         <h1><%= loggedUser.getUserName()%><%=new TextBundle("messages").getText(lang)%></h1>
@@ -43,8 +42,6 @@
                 for (Message m : messages) {
                     User sender = userDao.getDetailsById(m.getFromId());
                     User receiver = userDao.getDetailsById(m.getToId());
-
-
             %>
             <tr>
                 <td><%= sender.getUserName()%></td>

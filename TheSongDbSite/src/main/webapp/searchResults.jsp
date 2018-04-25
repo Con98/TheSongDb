@@ -14,24 +14,46 @@
         <%@ include file="header.jsp"%>
         <%@page import="Daos.MusicDao"%>
         <%@page import="Daos.UserDao"%>
+        <%@page import="Dtos.Api.Artist"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="js/jquery.min.js"></script>
         <title><%=new TextBundle("results").getText(lang)%></title>
     </head>
     <body>
         <h1><%=new TextBundle("searchResults").getText(lang)%></h1>
+        <div class="col-md-5" style="float:left; position: absolute;">
+        <table class="table" style="background-color: #1e1e1e; opacity:0.8;">
+            <tr>
+            <th>Image</th>
+            <th>Name</th>
+            </tr>
         <%
-            JSONObject test = (JSONObject) session.getAttribute("artist");
+            ArrayList<Artist> test = (ArrayList<Artist>) session.getAttribute("artist");
             User u = (User) session.getAttribute("user");
             if (test != null) {
                 try {
-                    JSONObject artist = (JSONObject) session.getAttribute("artist");
-                    String name = artist.getString("name");
+                    for (int i = 0; i < test.size(); i++) {
+                        Artist a = test.get(i);
+
+
         %>
-        <h1><a href="artistInfo.jsp?action=<%=name%>"><%=new TextBundle("clickHere").getText(lang)%> <%=name%>'<%=new TextBundle("toProfile").getText(lang)%></a></h1>
+        
+            
+            
+            <tr>
+                <td><img src="<%=a.getImage()%>"></td>
+                <td><h3><a href="artistInfo.jsp?action=<%=a.getName()%>"><%=new TextBundle("clickHere").getText(lang)%> <%=a.getName()%>'<%=new TextBundle("toProfile").getText(lang)%></a></h3></td>
+        </tr>
+        
+
         <%
+            }
         } catch (JSONException e) {
         %>
-        <h1>No artist with that name found</h1>
+        
+        <td><h1>No artist with that name found</h1></td>
+        </table>
+    </div>
         <%
                 }
             }
@@ -41,7 +63,9 @@
         <%
         } else {
         %>
-        <h1>No User with that name found</h1>
+        <div class="col-md-5">
+        <h1>No Users Found, please try again</h1>
+        </div>
         <%
             }
         %>
