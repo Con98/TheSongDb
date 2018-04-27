@@ -1,4 +1,3 @@
-
 <%@page import="Dtos.FriendRequest"%>
 <%@page import="Daos.FriendRequestDao"%>
 <%@page import="Daos.StatusDao"%>
@@ -35,14 +34,12 @@
         if (session.getAttribute("login") != null) {
             User loggedUser = (User) session.getAttribute("login");
             boolean userN = loggedUser.isType();
-
-            if (loggedUser.isType() == userN) {
     %>
 
     <% } else {%>
     <!--Regular Nav-->
     <%
-                }
+                
             }
         } catch (Exception ex) {
             out.println(ex.getMessage());
@@ -56,7 +53,7 @@
 
     <%
         if (loggedUser != null) {
-
+            if(loggedUser.isType() == false){
     %>
     <section>
     <div id="leftColumn">
@@ -178,9 +175,22 @@
                 </table>
                 </tr>
                 <%
+} else if (loggedUser.isType() == true){
+UserDao userDao1 = new UserDao("TheSongDb", "jdbc/TheSongDb");
+User user = new User();
+ArrayList<User> users = userDao1.viewAllUsers();
 
                 %>
-            </table>
+                <select>Select User To Delete
+                    <% for (User u : users)%>
+                    <option><%u.getUserName();%></option>
+                </select>
+                
+                
+                <input type="submit" name="deleteUser" value="<% userDao1.deleteUser(user);%>"
+                       <%
+                } 
+                %>
         </div>
     </section>
             

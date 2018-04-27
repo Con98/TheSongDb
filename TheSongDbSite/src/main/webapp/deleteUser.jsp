@@ -22,7 +22,7 @@
             
 for (User u : users) {
     User uName = userdao.getDetailsById(u.getUserId());
-    userdao.deleteUser(u.getUserId());
+    userdao.deleteUser(u);
 }
         %>
     </body>
