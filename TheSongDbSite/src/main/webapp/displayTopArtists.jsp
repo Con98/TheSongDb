@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jsp"%>
+        <%@include file="../Utility/header.jsp" %>
         <%@page import="Dtos.Api.Artist"%>
         <%@page import="Dtos.Api.Album"%>
         <%@page import="Dtos.Api.Track"%>
@@ -18,7 +18,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%= new TextBundle("top10Artists").getText(lang)%> </title>
     </head>
-    <body>
+    <body class="container container-fluid">
 
         <h1><%= new TextBundle("top10BasedOnCharts").getText(lang)%> </h1>
         <h2><%=new TextBundle("clickOnArtistsName").getText(lang)%> </h2>

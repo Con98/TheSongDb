@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Help</title>
     </head>
-    <body>
+    <body class="container container-fluid">
         <h1>Help Page</h1>
         
         

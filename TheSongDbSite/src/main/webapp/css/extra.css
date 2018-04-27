@@ -12,6 +12,7 @@ h1{
 }
 body{
     color: red;
+    background-image:url(../images/background2.jpg);
 }
 .dropdown-submenu {
     position: relative;
@@ -48,4 +49,10 @@ body{
 }
 .albumInfo{
     text-align: center;
+}
+.container{
+    
+}
+main{
+    background-color: #1e1e1e; opacity:0.9;
 }

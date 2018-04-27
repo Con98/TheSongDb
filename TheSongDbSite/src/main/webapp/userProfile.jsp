@@ -19,7 +19,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User Profile</title>
     </head>
-    <body>
+    <body class="container container-fluid">
 
         <%  
             UserDao userDao = new UserDao("thesongdb");

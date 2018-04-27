@@ -12,7 +12,7 @@
         <%@include file="header.jsp" %>
         <title><%=new TextBundle("sendingMessage").getText(lang) %></title>
     </head>
-    <body>
+    <body class="container container-fluid">
 
         <%  
             try {

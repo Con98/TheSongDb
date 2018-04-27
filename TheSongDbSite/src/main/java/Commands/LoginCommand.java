@@ -29,17 +29,11 @@ public class LoginCommand implements Command {
             if(user == null || user.getFirstName() == null || user.getPassword() == null){   
             forwardToJsp = "loginFailed.jsp";
             }
-            else if(user.isType() == false){
+            else{
                 HttpSession session = request.getSession();
             session.setAttribute("login", user);
             session.setAttribute("loginUname",user.getUserName());
                 forwardToJsp = "home.jsp";
-            }
-            else if(user.isType() == true){
-                HttpSession session = request.getSession();
-            session.setAttribute("login", user);
-            session.setAttribute("loginUname",user.getUserName());
-            forwardToJsp = "adminLogin.jsp";
             }
             
 

@@ -11,11 +11,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jsp"%>
+        <%@include file="header.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Album Tracks</title>
     </head>
-    <body>
+    <body class="container container-fluid">
+        <div class="content">
         <%            String artist = request.getParameter("artist");
             String album = request.getParameter("album");
             String image = request.getParameter("image");
@@ -31,7 +32,7 @@
         <br><br>
         <h1>Song List</h1>
         </div>
-        <table class="table" style="background-color: #1e1e1e; opacity:0.8;">
+        <table class="table table-responsive" style="background-color: #1e1e1e; opacity:0.8;">
             <tr>
                 <th>Name</th>
                 <th>Url</th>
@@ -57,5 +58,6 @@
         <%
             }
         %>
+        </div>
     </body>
 </html>

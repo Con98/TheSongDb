@@ -15,7 +15,7 @@
 
 
     </head>
-    <body>
+    <body class="container container-fluid">
         <h1><%= new TextBundle("register").getText(lang)%></h1>
         <div style="width: 50%; text-align: center;">
             <form class="form-horizontal" action="FrontController" method="post">

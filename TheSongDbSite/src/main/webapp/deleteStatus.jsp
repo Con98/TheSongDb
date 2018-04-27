@@ -15,7 +15,7 @@
         <title><%=new TextBundle("deleteQuestion").getText(lang)%></title>
         
     </head>
-    <body>
+    <body class="container container-fluid">
         <%  StatusDao statusDao = new StatusDao("TheSongDb", "jdbc/TheSongDb");
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             String statusId = request.getParameter("id");

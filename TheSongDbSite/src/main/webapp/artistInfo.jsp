@@ -11,14 +11,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="header.jsp"%>
+        <%@include file="header.jsp" %>
         <%@page import="Daos.MusicDao"%>
         <%@page import="Dtos.Api.Artist"%>
         <%@page import="Dtos.Api.Album"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%=new TextBundle("artistInfoTitle").getText(lang)%></title>
     </head>
-    <body>
+    <body class="container container-fluid">
+        <main>
         <%            MusicDao musicDao = new MusicDao();
             String aName = request.getParameter("action");
             String name = null;
@@ -45,7 +46,7 @@
             ArrayList<Album> albums = musicDao.getTop10Albums(aName);
             if(albums != null){
         %>
-        <table class="table" style="background-color: #1e1e1e; opacity:0.8;">
+        <table class="table table-responsive" style="background-color: #1e1e1e; opacity:0.8;">
             <h1>Top 10 Albums</h1>
             <tr>
                 <th><%=new TextBundle("chartNumber").getText(lang)%></th>
@@ -75,5 +76,6 @@
                 }
                 %>
         </table>
+        </main>
     </body>
 </html>

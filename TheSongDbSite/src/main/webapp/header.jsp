@@ -130,8 +130,13 @@ $(document).ready(function(){
                         <li id="cld"><%@include file="internationalization.jsp" %></li>
                         <li><a href="FrontController?action=logout"><%=new TextBundle("logout").getText(lang) %></a></li>
                         <li><a href="help.jsp">Help Page</a></li>
-
                         <%
+                            if(user.isType() == true){
+                                
+                                %>
+                        <li><a href="adminSettings.jsp">Admin Settings</a></li>
+                        <%
+                            }
                         } else {
                         %>
                         <li><label for="cld">Change Language:</label></li>
@@ -139,7 +144,7 @@ $(document).ready(function(){
                         <li><a href="help.jsp">Help Page</a></li>
                             <%
                                 }
-
+                                
                             %>
                     </ul>
                 </li>

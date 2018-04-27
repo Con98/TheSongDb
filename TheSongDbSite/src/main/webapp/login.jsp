@@ -13,7 +13,7 @@
         <title><%= new TextBundle("login").getText(lang)%></title>
         
     </head>
-    <body>
+    <body class="container container-fluid">
         <h1 style="text-align: center;"><%= new TextBundle("login").getText(lang)%></h1>
         <form style="text-align: center; margin-left: auto; margin-right: auto; width:50%;" class="form-group" action="FrontController" method="post">
               <div class="form-group">

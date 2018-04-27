@@ -17,7 +17,7 @@
         <%@include file="header.jsp" %>
         <title><%= new TextBundle("home").getText(lang)%></title>
     </head>
-    <body>
+    <body class="container container-fluid">
         <%            Object logiName = session.getAttribute("login");
             if (logiName != null) {
                 User user = (User) logiName;

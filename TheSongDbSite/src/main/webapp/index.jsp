@@ -14,7 +14,7 @@ and open the template in the editor.
 
     </head>
 
-    <body onload="<% session.setAttribute("isIndex", 1); %>">
+    <body class="container container-fluid">
         <%if(session.getAttribute("login") != null){
             %>
             <script>window.location="home.jsp"</script>
