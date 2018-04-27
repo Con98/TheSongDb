@@ -101,5 +101,32 @@ public class Message {
     public String toString() {
         return "Message{" + "messageId=" + messageId + ", fromId=" + fromId + ", toId=" + toId + ", sentOn=" + sentOn + ", subjectLine=" + subjectLine + ", messageContent=" + messageContent + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.messageId;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Message other = (Message) obj;
+        if (this.messageId != other.messageId) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

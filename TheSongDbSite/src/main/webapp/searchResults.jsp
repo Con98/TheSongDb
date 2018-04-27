@@ -3,10 +3,8 @@
     Created on : Mar 10, 2018, 8:14:27 PM
     Author     : thoma
 --%>
-<%@page import="json.JSONException"%>
-<%@page import="json.JSONArray"%>
+<%@page import="javax.json.JsonException"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="json.JSONObject"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -48,7 +46,7 @@
 
         <%
             }
-        } catch (JSONException e) {
+        } catch (NullPointerException e) {
         %>
         
         <td><h1>No artist with that name found</h1></td>

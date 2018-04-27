@@ -4,7 +4,7 @@
     Author     : thoma
 --%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="json.JSONObject"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

@@ -13,6 +13,7 @@ import java.util.Objects;
  */
 public class Album {
     private String image;
+    private String largeImage;
     private String name;
     private int playcount;
     private String url;
@@ -31,6 +32,16 @@ public class Album {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public String getLargeImage() {
+        return largeImage;
+    }
+
+    public void setLargeImage(String largeImage) {
+        this.largeImage = largeImage;
+    }
+    
+    
 
     public String getRelease() {
         return release;

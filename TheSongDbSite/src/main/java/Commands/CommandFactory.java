@@ -59,6 +59,9 @@ public class CommandFactory {
                 case "deleteMessage":
                     command = new DeleteMessageCommand();
                     break;
+                    case "reportMessage":
+                    command = new ReportMessageCommand();
+                    break;
                 case "deleteStatus":
                     command = new DeleteStatusCommand();
                     break;

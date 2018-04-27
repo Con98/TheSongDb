@@ -36,6 +36,7 @@
                 <th><%=new TextBundle("subject").getText(lang)%></th>
                 <th><%=new TextBundle("message").getText(lang)%></th>
                 <th><%=new TextBundle("delete").getText(lang)%></th>
+                <th><%=new TextBundle("report").getText(lang)%></th>
             </tr>
 
             <%
@@ -50,6 +51,7 @@
                 <td><%= m.getSubjectLine()%></td>
                 <td><%= m.getMessageContent()%></td>
                 <td><a href="deleteMessage.jsp?id=<%=m.getMessageId()%>"><%=new TextBundle("delete").getText(lang)%></a></td>
+                <td><a href="reportMessage.jsp?id=<%=m.getMessageId()%>"><%=new TextBundle("report").getText(lang)%></a></td>
             </tr>
             <%
                 }

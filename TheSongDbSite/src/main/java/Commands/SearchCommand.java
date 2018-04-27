@@ -7,14 +7,16 @@ package Commands;
 
 import Daos.MusicDao;
 import Daos.UserDao;
+import Dtos.Api.Album;
 import Dtos.Api.Artist;
+import Dtos.Api.Track;
 import Dtos.User;
 import java.util.ArrayList;
+import javax.json.JsonException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import json.JSONException;
-import json.JSONObject;
+
 
 /**
  *
@@ -29,7 +31,8 @@ public class SearchCommand implements Command{
         String input = request.getParameter("search");
         User userF = new User();
         ArrayList<Artist> artist = new ArrayList();
-        ArrayList<JSONObject> albums = new ArrayList();
+        ArrayList<Album> albums = new ArrayList();
+        ArrayList<Track> tracks = new ArrayList();
         session.setAttribute("input", input);
         session.setAttribute("user", userF);
         session.setAttribute("artist", artist);
@@ -40,7 +43,8 @@ public class SearchCommand implements Command{
             userF = userDao.findUserByUsername(input);
             try{
             artist = musicDao.searchArtist(input);
-            }catch(JSONException e){
+//            albums = musicDao.searchAlbum(input);
+            }catch(JsonException e){
                 session.setAttribute("artist", null);
             }
             if (userF != null) {
@@ -49,6 +53,9 @@ public class SearchCommand implements Command{
                 session.setAttribute("user", userF);
             }
             if (artist != null) {
+                session.setAttribute("artist", artist);
+            }
+            if (albums != null) {
                 session.setAttribute("artist", artist);
             }
             

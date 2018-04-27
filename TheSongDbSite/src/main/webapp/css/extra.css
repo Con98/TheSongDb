@@ -42,3 +42,10 @@ body{
 .lfmUrl{
     color:red;
 }
+
+.lfmUrl:hover{
+    color:red;
+}
+.albumInfo{
+    text-align: center;
+}

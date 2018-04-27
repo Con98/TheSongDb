@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author tadas
  */
-public class DeleteMessageCommand implements Command {
+public class ReportMessageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -24,8 +24,8 @@ public class DeleteMessageCommand implements Command {
         String messageId = request.getParameter("messageId");
             MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
             Message m = messageDao.findMessageById(messageId);
-            boolean deleted = messageDao.deleteMessage(m);
-            if (deleted) {
+            boolean reported = messageDao.reportMessage(m);
+            if (reported) {
                 forwardToJsp = "inbox.jsp";
             } else {
                 forwardToJsp = "error.jsp";

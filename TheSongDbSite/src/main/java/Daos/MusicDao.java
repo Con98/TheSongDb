@@ -81,12 +81,14 @@ public class MusicDao {
 
         for (int i = 0; i < 10; i++) {
             String im = k.getJsonObject(i).getJsonArray("image").getJsonObject(1).getString("#text");
+            String lIm = k.getJsonObject(i).getJsonArray("image").getJsonObject(3).getString("#text");
             String t = k.getJsonObject(i).getString("name");
             int z = k.getJsonObject(i).getInt("playcount");
             String u = k.getJsonObject(i).getString("url");
 
             Album a = new Album(t, z, u);
             a.setImage(im);
+            a.setLargeImage(lIm);
             jlist.add(a);
         }
 
@@ -118,14 +120,14 @@ public class MusicDao {
         return a;
     }
 
-    public ArrayList<Track> getAlbumTracks(String artistName, String albumName) {
-        Client client = ClientBuilder.newClient();
+    public ArrayList<Track> getAlbumTracks(String albumName, String artistName) {
+        ResteasyClient client = new ResteasyClientBuilder().build();
         String arName = artistName.replaceAll("\\s", "%20");
         String alName = albumName.replaceAll("\\s", "%20");
-        String url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" + api_key + "&artist=" + arName + "&album=" + alName + "&limit=10&format=json";
+        String url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" + api_key + "&artist=" + arName + "&album=" + alName + "&format=json";
 
         URI uri = URI.create(url);
-        WebTarget target = client.target(uri);
+        ResteasyWebTarget target = client.target(uri);
 
         StringReader sr = new StringReader(target.request().get(String.class));
         JsonReader jr = Json.createReader(sr);
@@ -133,21 +135,17 @@ public class MusicDao {
         ArrayList<Track> jlist = new ArrayList();
 
         JsonObject getSth = jr.readObject().getJsonObject("album");
-
-        JsonObject toptag = getSth.getJsonObject("toptags");
-        JsonObject tag = toptag.getJsonObject("tag");
-        String genre = tag.getString("name");
-        String tagurl = tag.getString("url");
-
+        
         JsonObject track = getSth.getJsonObject("tracks");
-        JsonArray ja = track.getJsonArray("track");
+        JsonArray e = track.getJsonArray("track");
 
-        for (int i = 0; i < ja.size(); i++) {
-            String t = ja.getJsonObject(i).getString("name");
-            String u = ja.getJsonObject(i).getString("url");
+        
+        for (int i = 0; i < e.size(); i++) {
+            JsonObject t = e.getJsonObject(i);
 
-            Track t1 = new Track(t, u, genre);
-            t1.setGenreUrl(tagurl);
+            String tn = t.getString("name");
+            String turl = t.getString("url");
+            Track t1 = new Track(tn, turl);
             jlist.add(t1);
         }
 
@@ -184,4 +182,36 @@ public class MusicDao {
 
         return results;
     }
-}
+    
+//    public ArrayList<Album> searchAlbum(String albumName) {
+//        ResteasyClient client = new ResteasyClientBuilder().build();
+//        String aName = artistName.replaceAll("\\s", "%20");
+//        String url = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=" + aName + "&api_key=" + api_key + "&format=json";
+//        URI uri = URI.create(url);
+//
+//        ResteasyWebTarget target = client.target(uri);
+//
+//        StringReader sr = new StringReader(target.request().get(String.class));
+//        JsonReader jr = Json.createReader(sr);
+//
+//        JsonObject j = jr.readObject().getJsonObject("results");
+//        JsonObject k = j.getJsonObject("albummatches");
+//        JsonArray e = k.getJsonArray("album");
+//        ArrayList<Album> results = new ArrayList();
+//        for (int i = 0; i < e.size(); i++) {
+//            JsonObject t = e.getJsonObject(i);
+//            String im = t.getJsonArray("image").getJsonObject(1).getString("#text");
+//            String name = t.getString("name");
+//            String ur = t.getString("url");
+//
+//            
+//            results.add(a);
+//        }
+
+        
+
+//        return results;
+    }
+    
+
+

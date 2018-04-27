@@ -7,7 +7,7 @@ package Daos;
 
 /**
  *
- * @author Thomas
+ * @author tadas
  */
 import static Daos.Dao.freeConnection;
 import Dtos.Status;
@@ -76,7 +76,7 @@ public class StatusDao extends Dao implements StatusDaoInterface {
         boolean succeeded = false;
         try {
             con = this.getConnection();
-            String query = "INSERT INTO `status`(`statusId`, `userId`, `statusContent`) VALUES (null,?,?)";
+            String query = "INSERT INTO `status`(`userId`, `statusContent`) VALUES (?,?)";
             ps = con.prepareStatement(query);
             ps.setString(1, userId);
             ps.setString(2, statusContent);

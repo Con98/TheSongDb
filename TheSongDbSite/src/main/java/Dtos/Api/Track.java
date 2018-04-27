@@ -16,9 +16,16 @@ public class Track {
     private String url;
     private String genre;
     private String genreUrl;
+    private String imageUrl;
 
-    public Track(String name, String url, String genre){
-        
+    public Track(String name, String url){
+        this.name = name;
+        this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "Track{" + "name=" + name + ", url=" + url + ", genre=" + genre + ", genreUrl=" + genreUrl + '}';
     }
     public String getName() {
         return name;
@@ -50,6 +57,14 @@ public class Track {
 
     public void setGenreUrl(String genreUrl) {
         this.genreUrl = genreUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
     
     

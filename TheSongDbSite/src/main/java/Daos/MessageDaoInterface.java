@@ -44,4 +44,19 @@ public interface MessageDaoInterface {
      * @return boolean, returns true if message successfully deleted and false if failed to delete
      */
     public boolean deleteMessage(Message m);
+    
+    /**
+     * Reports message provided in parameter
+     * @param m The message that is to be reported
+     * @return boolean, returns true if message successfully reported and false if failed to report
+     */
+    public boolean reportMessage(Message m);
+    
+    /**
+     * Display all reported messages to the admin
+     * Retrieved from the database
+     * @param 
+     * @return ArrayList containing the reported messages
+     */
+    public ArrayList<Message> displayReportedMessages();
 }
