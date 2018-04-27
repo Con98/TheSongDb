@@ -174,6 +174,8 @@
                     </tr>
                 </table>
                 </tr>
+                </div>
+    </section>
                 <%
 } else if (loggedUser.isType() == true){
 UserDao userDao1 = new UserDao("TheSongDb", "jdbc/TheSongDb");
@@ -181,6 +183,8 @@ User user = new User();
 ArrayList<User> users = userDao1.viewAllUsers();
 
                 %>
+                <div id="leftColumn">
+                    <section>
                 <select>Select User To Delete
                     <% for (User u : users)%>
                     <option><%u.getUserName();%></option>
@@ -191,8 +195,16 @@ ArrayList<User> users = userDao1.viewAllUsers();
                        <%
                 } 
                 %>
-        </div>
-    </section>
+                    </section>
+                    <section>
+                        <%
+                            MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
+                            ArrayList<Message> messages = messageDao.displayAllMessages(loggedUser.getUserId());
+                        %>
+                        <h3>Reported Messages</h3>
+                        <%@include file = "reportMessage.jsp" %>
+                    </section>
+                </div>
             
     
 </body>
