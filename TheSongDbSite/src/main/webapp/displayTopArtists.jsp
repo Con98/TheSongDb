@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="../Utility/header.jsp" %>
+        <%@include file="header.jsp" %>
         <%@page import="Dtos.Api.Artist"%>
         <%@page import="Dtos.Api.Album"%>
         <%@page import="Dtos.Api.Track"%>

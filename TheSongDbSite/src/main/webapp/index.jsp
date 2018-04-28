@@ -24,6 +24,6 @@ and open the template in the editor.
         <h3><%=new TextBundle("indexInfo").getText(lang)%></h3>
         <h3><%=new TextBundle("pleaseLogin").getText(lang)%> </h3>
         
-        
+
     </body>
 </html>

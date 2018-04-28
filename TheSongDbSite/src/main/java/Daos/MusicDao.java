@@ -86,7 +86,8 @@ public class MusicDao {
             int z = k.getJsonObject(i).getInt("playcount");
             String u = k.getJsonObject(i).getString("url");
 
-            Album a = new Album(t, z, u);
+            Album a = new Album(t, u);
+            a.setPlaycount(z);
             a.setImage(im);
             a.setLargeImage(lIm);
             jlist.add(a);
@@ -183,35 +184,41 @@ public class MusicDao {
         return results;
     }
     
-//    public ArrayList<Album> searchAlbum(String albumName) {
-//        ResteasyClient client = new ResteasyClientBuilder().build();
-//        String aName = artistName.replaceAll("\\s", "%20");
-//        String url = "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=" + aName + "&api_key=" + api_key + "&format=json";
-//        URI uri = URI.create(url);
-//
-//        ResteasyWebTarget target = client.target(uri);
-//
-//        StringReader sr = new StringReader(target.request().get(String.class));
-//        JsonReader jr = Json.createReader(sr);
-//
-//        JsonObject j = jr.readObject().getJsonObject("results");
-//        JsonObject k = j.getJsonObject("albummatches");
-//        JsonArray e = k.getJsonArray("album");
-//        ArrayList<Album> results = new ArrayList();
-//        for (int i = 0; i < e.size(); i++) {
-//            JsonObject t = e.getJsonObject(i);
-//            String im = t.getJsonArray("image").getJsonObject(1).getString("#text");
-//            String name = t.getString("name");
-//            String ur = t.getString("url");
-//
-//            
-//            results.add(a);
-//        }
+    public ArrayList<Album> searchAlbum(String albumName) {
+        ResteasyClient client = new ResteasyClientBuilder().build();
+        String aName = albumName.replaceAll("\\s", "%20");
+        String url = "http://ws.audioscrobbler.com/2.0/?method=album.search&album=" + aName + "&api_key=" + api_key + "&format=json";
+        URI uri = URI.create(url);
+
+        ResteasyWebTarget target = client.target(uri);
+
+        StringReader sr = new StringReader(target.request().get(String.class));
+        JsonReader jr = Json.createReader(sr);
+
+        JsonObject j = jr.readObject().getJsonObject("results");
+        JsonObject k = j.getJsonObject("albummatches");
+        JsonArray e = k.getJsonArray("album");
+        ArrayList<Album> results = new ArrayList();
+        for (int i = 0; i < e.size(); i++) {
+            JsonObject t = e.getJsonObject(i);
+            String im = t.getJsonArray("image").getJsonObject(1).getString("#text");
+            String lIm = t.getJsonArray("image").getJsonObject(3).getString("#text");
+            String name = t.getString("name");
+            String artist = t.getString("artist");
+            String ur = t.getString("url");
+            
+            Album a = new Album(name, ur);
+            a.setImage(im);
+            a.setLargeImage(lIm);
+            a.setArtist(artist);
+            results.add(a);
+        }
 
         
 
-//        return results;
+        return results;
     }
+}
     
 
 

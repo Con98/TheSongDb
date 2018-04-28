@@ -62,7 +62,7 @@
             <tr>
                 <td class="row"><%=i + 1%></td>
                 <td class="row"><img class="art" src="<%=albums.get(i).getImage()%>"></a></td>
-                <td class="row"><a href="albumInfo.jsp?album=<%=albums.get(i).getName()%>&artist=<%=name%>&image=<%=albums.get(i).getLargeImage()%>"><%=albums.get(i).getName()%></td>
+                <td class="row"><a class="lfmUrl" href="albumInfo.jsp?album=<%=albums.get(i).getName()%>&artist=<%=name%>&image=<%=albums.get(i).getLargeImage()%>"><%=albums.get(i).getName()%></td>
                 <td class="row"><%=albums.get(i).getPlaycount()%></td>
                 <td class="row"><a class="lfmUrl" href="<%=albums.get(i).getUrl()%>"><%=albums.get(i).getUrl()%></a></td>
                 <input type="hidden" value="">

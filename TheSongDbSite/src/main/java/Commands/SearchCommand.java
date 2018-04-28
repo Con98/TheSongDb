@@ -17,19 +17,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
  *
  * @author thoma
  */
-public class SearchCommand implements Command{
-        @Override
+public class SearchCommand implements Command {
+
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String forwardToJsp = "";
         HttpSession session = request.getSession();
 
         String input = request.getParameter("search");
-        User userF = new User();
+        ArrayList<User> userF = new ArrayList();
         ArrayList<Artist> artist = new ArrayList();
         ArrayList<Album> albums = new ArrayList();
         ArrayList<Track> tracks = new ArrayList();
@@ -40,25 +40,33 @@ public class SearchCommand implements Command{
 
             UserDao userDao = new UserDao("thesongdb", "jdbc/WebPatternsCA3");
             MusicDao musicDao = new MusicDao();
-            userF = userDao.findUserByUsername(input);
-            try{
-            artist = musicDao.searchArtist(input);
-//            albums = musicDao.searchAlbum(input);
-            }catch(JsonException e){
+            ArrayList<User> uTe = userDao.viewAllUsers();
+            try {
+                
+                userF = userDao.findUserByName(input);
+                System.out.println(userF.size());
+                
+                artist = musicDao.searchArtist(input);
+           albums = musicDao.searchAlbum(input);
+            } catch (JsonException e) {
                 session.setAttribute("artist", null);
             }
-            if (userF != null) {
+            if (userF.size() > 0) {
                 session.setAttribute("user", userF);
-            }else{
+            } else {
                 session.setAttribute("user", userF);
             }
-            if (artist != null) {
+            if (artist.size() > 0) {
+                session.setAttribute("artist", artist);
+            }else {
                 session.setAttribute("artist", artist);
             }
-            if (albums != null) {
-                session.setAttribute("artist", artist);
+            if (albums.size() > 0) {
+                session.setAttribute("albums", albums);
+            }else {
+                session.setAttribute("albums", albums);
             }
-            
+
             forwardToJsp = "searchResults.jsp";
 
         } else {

@@ -91,5 +91,7 @@ public interface UserDaoInterface {
     
      public User findUserByUsername(String uname);
      
+     public ArrayList<User> findUserByName(String firstName);
+     
      public boolean deleteUser(User u);
 }

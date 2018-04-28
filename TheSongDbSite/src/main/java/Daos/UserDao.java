@@ -27,8 +27,8 @@ public class UserDao extends Dao implements UserDaoInterface {
     public UserDao(String databaseName) {
         super(databaseName);
     }
-    
-    public UserDao(String databaseName, String poolName){
+
+    public UserDao(String databaseName, String poolName) {
         super(databaseName, poolName);
     }
 
@@ -44,7 +44,7 @@ public class UserDao extends Dao implements UserDaoInterface {
      * -1 = user already registered
      */
     @Override
-    public int register(String firstName, String surName, String userName,  String email, String password) {
+    public int register(String firstName, String surName, String userName, String email, String password) {
 
         /**
          * Number indicating how many users are inserted into database.
@@ -171,7 +171,7 @@ public class UserDao extends Dao implements UserDaoInterface {
         }
         return u;
     }
-    
+
     @Override
     public User getDetailsById(int userId) {
         User u = new User();
@@ -208,8 +208,7 @@ public class UserDao extends Dao implements UserDaoInterface {
         } catch (Exception e) {
             System.out.println("Exception occurred: " + e.getMessage());
 
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -232,7 +231,7 @@ public class UserDao extends Dao implements UserDaoInterface {
             return u;
         }
     }
-    
+
     public static String passwordGenerator(String password) {
 
         String hashPassword = null;
@@ -257,9 +256,9 @@ public class UserDao extends Dao implements UserDaoInterface {
         }
         return hashPassword;
     }
-    
+
     @Override
-    public User findUserByUsername(String uname){
+    public User findUserByUsername(String uname) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -267,14 +266,13 @@ public class UserDao extends Dao implements UserDaoInterface {
         boolean found = false;
         try {
             con = this.getConnection();
-            
-            String query = "SELECT * FROM users WHERE userName = ?";
+
+            String query = "SELECT * FROM users WHERE userName LIKE ?";
             ps = con.prepareStatement(query);
-            ps.setString(1, uname);
-            
+            ps.setString(1, "%" + uname + "%");
+
             rs = ps.executeQuery();
-            if (rs.next()) 
-            {
+            if (rs.next()) {
                 u.setUserId(rs.getInt("userId"));
                 u.setFirstName(rs.getString("firstName"));
                 u.setSurName(rs.getString("surName"));
@@ -288,36 +286,24 @@ public class UserDao extends Dao implements UserDaoInterface {
                 u.setPassword(rs.getString("password"));
                 found = true;
             }
-        } 
-        catch (SQLException e) 
-        {
+        } catch (SQLException e) {
             System.err.println("\tA problem occurred during the findUserByUsername method:");
-            System.err.println("\t"+e.getMessage());
-        }
-        catch (NullPointerException ex) 
-        {
+            System.err.println("\t" + e.getMessage());
+        } catch (NullPointerException ex) {
             System.err.println("\tA problem occurred during the findUserByUsername method:");
-            System.err.println("\t"+ex.getMessage());
-        }
-        finally 
-        {
-            try 
-            {
-                if (rs != null) 
-                {
+            System.err.println("\t" + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
                     rs.close();
                 }
-                if (ps != null) 
-                {
+                if (ps != null) {
                     ps.close();
                 }
-                if (con != null) 
-                {
+                if (con != null) {
                     freeConnection(con);
                 }
-            } 
-            catch (SQLException e) 
-            {
+            } catch (SQLException e) {
                 System.err.println("A problem occurred when closing down the findUserByUsername method:\n" + e.getMessage());
             }
         }
@@ -327,8 +313,8 @@ public class UserDao extends Dao implements UserDaoInterface {
             return u;
         }
     }
-    
-        @Override
+
+    @Override
     public ArrayList<User> viewAllUsers() {
         ArrayList<User> allUsers = new ArrayList();
         boolean found = false;
@@ -341,25 +327,27 @@ public class UserDao extends Dao implements UserDaoInterface {
             ps = conn.prepareStatement("SELECT * FROM users");
             rs = ps.executeQuery();
 
-            while (rs.next()) {
+
+                while (rs.next()) {
                 while (rs.next()) {
                     User u = new User();
                     u.setUserId(rs.getInt("userId"));
                     u.setFirstName(rs.getString("firstName"));
                     u.setSurName(rs.getString("surName"));
+                    u.setUserName(rs.getString("userName"));
                     u.setEmail(rs.getString("email"));
-                    if (rs.getInt("type") == 0) {
+                    if (rs.getInt("isAdmin") == 0) {
                         u.setType(false);
-                    } else if (rs.getInt("type") == 1) {
+                    } else if (rs.getInt("isAdmin") == 1) {
                         u.setType(true);
                     }
                     u.setPassword(rs.getString("password"));
-
                     allUsers.add(u);
                     found = true;
                 }
-
             }
+
+            
         } catch (SQLException se) {
             System.out.println("SQL Exception occurred: " + se.getMessage());
 
@@ -389,7 +377,67 @@ public class UserDao extends Dao implements UserDaoInterface {
             return allUsers;
         }
     }
-    
+
+    @Override
+    public ArrayList<User> findUserByName(String firstName) {
+        ArrayList<User> allUsers = new ArrayList();
+
+
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "SELECT * FROM users WHERE firstName LIKE ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + firstName + "%");
+            rs = ps.executeQuery();
+
+
+                while (rs.next()) {
+                    User u = new User();
+                    u.setUserId(rs.getInt("userId"));
+                    u.setFirstName(rs.getString("firstName"));
+                    u.setSurName(rs.getString("surName"));
+                    u.setUserName(rs.getString("userName"));
+                    u.setEmail(rs.getString("email"));
+                    if (rs.getInt("isAdmin") == 0) {
+                        u.setType(false);
+                    } else if (rs.getInt("isAdmin") == 1) {
+                        u.setType(true);
+                    }
+                    u.setPassword(rs.getString("password"));
+                    allUsers.add(u);
+                    
+                }
+
+            
+        } catch (SQLException se) {
+            System.out.println("SQL Exception occurred: " + se.getMessage());
+
+        } catch (Exception e) {
+            System.out.println("Exception occurred: " + e.getMessage());
+
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    System.out.println("Exception occurred when attempting to close ResultSet: " + ex.getMessage());
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    System.out.println("Exception occurred when attempting to close the PreparedStatement: " + ex.getMessage());
+                }
+            }
+            freeConnection(conn);
+        }
+        return allUsers;
+    }
+
     @Override
     public boolean deleteUser(User u) {
         Connection con = null;
@@ -404,8 +452,8 @@ public class UserDao extends Dao implements UserDaoInterface {
             ps.setInt(1, u.getUserId());
 
             rs = ps.executeUpdate();
-            if(rs==1){
-                deleted=true;
+            if (rs == 1) {
+                deleted = true;
             }
         } catch (SQLException ex) {
             System.err.println("\tA problem occurred during the deleteMessage method:");

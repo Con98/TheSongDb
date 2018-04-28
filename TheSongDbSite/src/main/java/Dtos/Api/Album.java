@@ -18,10 +18,10 @@ public class Album {
     private int playcount;
     private String url;
     private String release;
+    private String artist;
 
-    public Album(String name, int playcount, String url) {
+    public Album(String name, String url) {
         this.name = name;
-        this.playcount = playcount;
         this.url = url;
     }
 
@@ -73,6 +73,14 @@ public class Album {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
 
     @Override

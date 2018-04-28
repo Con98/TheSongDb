@@ -44,7 +44,7 @@ public class ChangeLanguageCommand implements Command{
             // Break the page path up into pieces based on /
             String[] pathPieces = refererPage.split("/");
             // Get the actual page name (this will always be the last part)
-            forwardToJsp = pathPieces[pathPieces.length-1];
+            forwardToJsp = "index.jsp";
         } catch (URISyntaxException ex)
         {
             //Display an error message to the log
