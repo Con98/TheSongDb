@@ -12,16 +12,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Admin Section</title>
     </head>
     <body class="container container-fluid">
         <h1>Administration Station</h1>
-        <%            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
+        <%            
+            UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             User loggedUser = (User) session.getAttribute("login");
         %>
 
         <h3>Choose User To Delete</h3>
-        <%            UserDao userList = new UserDao("TheSongDb", "jdbc/TheSongDb");
+        <%            
+            UserDao userList = new UserDao("TheSongDb", "jdbc/TheSongDb");
             ArrayList<User> users = userList.viewAllUsers();
         %>
         <table class="table table-bordered">
@@ -57,7 +59,7 @@
             ArrayList<Message> reported = messageDao.displayReportedMessages();
         %>
         <table class="table table-bordered">
-            <% if (!reported.isEmpty()) { %>
+            <% if (!reported.isEmpty()) {%>
             <tr>
                 <th><%=new TextBundle("sender").getText(lang)%></th>
                 <th><%=new TextBundle("receiver").getText(lang)%></th>
@@ -66,21 +68,22 @@
                 <th><%=new TextBundle("message").getText(lang)%></th>
                 <th><%=new TextBundle("delete").getText(lang)%></th>
             </tr>
-            
+
             <%
-                for (Message r : reported){
+                for (Message r : reported) {
                     User sender = userDao.getDetailsById(r.getFromId());
                     User receiver = userDao.getDetailsById(r.getToId());
-                    %>
-                    <tr>
+            %>
+            <tr>
                 <td><%= sender.getUserName()%></td>
                 <td><%= receiver.getUserName()%></td>
                 <td><%= r.getSentOn()%></td>
                 <td><%= r.getSubjectLine()%></td>
                 <td><%= r.getMessageContent()%></td>
                 <td><a href="deleteMessage.jsp?id=<%=r.getMessageId()%>"><%=new TextBundle("delete").getText(lang)%></a></td>
-                    </tr>
+            </tr>
             <%
+                    }
                 }
             %>
         </table>
