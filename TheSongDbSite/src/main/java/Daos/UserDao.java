@@ -32,6 +32,10 @@ public class UserDao extends Dao implements UserDaoInterface {
         super(databaseName, poolName);
     }
 
+    UserDao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * Register new user
      *
