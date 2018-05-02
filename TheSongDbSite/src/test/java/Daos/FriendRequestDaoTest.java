@@ -42,18 +42,18 @@ public class FriendRequestDaoTest {
     /**
      * Test of displayAllFriendRequests method, of class friendRequestDao
      */
-    @Test
-    public void testDisplayAllFriendRequests(){
-        System.out.println("displayAllFriendRequests");
-        User u1 = new User();
-        User u2 = new User();
-        FriendRequest fr = new FriendRequest(u1, u2);
-        FriendRequestDao instance = new FriendRequestDao("thesongdbtest", "jdbc/TheSongDb");
-        ArrayList<FriendRequest> expResult = new ArrayList<>();
-        expResult.add(fr);
-        ArrayList<String> result = instance.displayAllFriendRequests(u1.getUserName());
-        assertEquals(expResult, result);
-    }
+//    @Test
+//    public void testDisplayAllFriendRequests(){
+//        System.out.println("displayAllFriendRequests");
+//        User u1 = new User();
+//        User u2 = new User();
+//        FriendRequest fr = new FriendRequest(u1, u2);
+//        FriendRequestDao instance = new FriendRequestDao("thesongdbtest", "jdbc/TheSongDb");
+//        ArrayList<String> expResult = new ArrayList<>();
+//        expResult.add(new FriendRequest(u1, u2));
+//        ArrayList<String> result = instance.displayAllFriendRequests(u1.getUserName());
+//        assertEquals(expResult, result);
+//    }
 
     /**
      * Test of addFriendship method, of class FriendRequestDao.
@@ -61,10 +61,12 @@ public class FriendRequestDaoTest {
     @Test
     public void testAddFriendship() {
         System.out.println("addFriendship");
-        String username1 = "";
-        String username2 = "";
-        FriendRequestDao instance = null;
-        int expResult = 0;
+        User u1 = new User();
+        User u2 = new User();
+        String username1 = u1.getUserName();
+        String username2 = u2.getUserName();
+        FriendRequestDao instance = new FriendRequestDao("thesongdbtest", "jdbc/TheSongDb");
+        int expResult = 1;
         int result = instance.addFriendship(username1, username2);
         assertEquals(expResult, result);
 
@@ -76,9 +78,11 @@ public class FriendRequestDaoTest {
     @Test
     public void testCheckFriendRequest() {
         System.out.println("checkFriendRequest");
-        String username1 = "";
-        String username2 = "";
-        FriendRequestDao instance = null;
+        User u1 = new User();
+        User u2 = new User();
+        String username1 = u1.getUserName();
+        String username2 = u2.getUserName();
+        FriendRequestDao instance = new FriendRequestDao("thesongdbtest", "jdbc/TheSongDb");
         int expResult = 0;
         int result = instance.checkFriendRequest(username1, username2);
         assertEquals(expResult, result);
@@ -91,10 +95,12 @@ public class FriendRequestDaoTest {
     @Test
     public void testDenyFriendship() {
         System.out.println("denyFriendship");
-        String username1 = "";
-        String username2 = "";
-        FriendRequestDao instance = null;
-        boolean expResult = false;
+        User u1 = new User();
+        User u2 = new User();
+        String username1 = u1.getUserName();
+        String username2 = u2.getUserName();
+        FriendRequestDao instance = new FriendRequestDao("thesongdbtest", "jdbc/TheSongDb");
+        boolean expResult = true;
         boolean result = instance.denyFriendship(username1, username2);
         assertEquals(expResult, result);
 
