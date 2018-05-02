@@ -94,6 +94,7 @@ public class FriendDaoTest {
      */
     @Test
     public void testRemoveUserFriends(){
+        System.out.println("removeUserFriends");
         User u1 = new User();
         User u2 = new User();
         User u3 = new User();
@@ -109,6 +110,7 @@ public class FriendDaoTest {
      */
     @Test
     public void testCheckFriendshipStatus(){
+        System.out.println("checkFriendshipStatus");
         User u1 = new User();
         User u2 = new User();
         Friend f1 = new Friend(u1, u2);
@@ -124,6 +126,7 @@ public class FriendDaoTest {
      */
     @Test
     public void testCheckIfFriends(){
+        System.out.println("checkIfFriends");
         User u1 = new User();
         User u2 = new User();
         Friend f1 = new Friend(u1, u2);
