@@ -17,13 +17,16 @@ and open the template in the editor.
     <body class="container container-fluid">
         <%if(session.getAttribute("login") != null){
             %>
-            <script>window.location="home.jsp"</script>
+            <script>window.location="home.jsp";</script>
             <%
         }%>
         <h1><%=new TextBundle("welcomeToSite").getText(lang)%></h1>
         <h3><%=new TextBundle("indexInfo").getText(lang)%></h3>
         <h3><%=new TextBundle("pleaseLogin").getText(lang)%> </h3>
         
-
+        <div>
+            <a class="twitter-timeline" data-width="300" data-height="500" data-theme="dark" data-link-color="#E81C4F" href="https://twitter.com/lastfm?ref_src=twsrc%5Etfw">Tweets by lastfm</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+        </div>
     </body>
+    
 </html>

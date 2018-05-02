@@ -66,7 +66,7 @@ public class FriendDaoTest {
         User u1 = new User();
         User u2 = new User();
         Friend f = new Friend(u1,u2);
-        FriendDao instance = new FriendDao("thesongdbtest", "jdbc/TheSongDb");
+        FriendDao instance = new FriendDao("thesongdbtest");
         instance.confirmFriendship(u1.getUserName(), u2.getUserName());
         boolean expResult = true;
         boolean result = instance.removeFriendship(u1.getUserName(), u2.getUserName());
@@ -86,7 +86,7 @@ public class FriendDaoTest {
         int expResult = 1;
         int result = instance.confirmFriendship(u1.getUserName(), u2.getUserName());
         assertEquals(expResult, result);
-        instance.removeFriendship(u1.getUserName(), u2.getUserName());
+        
     }
     
     /**

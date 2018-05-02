@@ -16,7 +16,7 @@
         <%@page import="Daos.UserDao"%>
         <%@page import="Dtos.User"%>
         <%@include file="createLocale.jsp" %>
-
+        <%@include file="loginCheck.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -34,7 +34,8 @@
             });
         });
     </script>
-
+    <%        int toId = 0;
+    %>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -44,12 +45,17 @@
                         session.setAttribute("userId", user.getUserId());
                         int userId = user.getUserId();
                 %>
-                <a class="navbar-brand" href="home.jsp">TheSongDb</a>
-
+                
+                
+                <a href="https://www.last.fm/home"><img src="images/lastfmicon.png" alt="" width="50" height="50"  /></a>
+                
+                <a class="navbar-brand" href="home.jsp">TheSongDb /</a>
+                
                 <%
                 } else {
                 %>
-                <a class="navbar-brand" href="index.jsp">TheSongDb</a>
+                <a href="https://www.last.fm/home"><img src="images/lastfmicon.png" alt="" width="50" height="50"  /></a>
+                <a class="navbar-brand" href="index.jsp">TheSongDb /</a>
                 <%                    }
                 %>
             </div>
@@ -72,17 +78,53 @@
 
                             <ul class="dropdown-menu">
                                 <li><a href="userProfile.jsp?userName=<%=f.getFriend2().getUserName()%>">View Profile</a></li>
-                                <li><a  href="#?action=<%=f.getFriend2().getUserName()%>" type="button" data-toggle="modal" data-target="#exampleModal">
-                                        Send Message
-                                        
-                                    </a></li>
+                                <li class="dropdown-submenu">
+                                    <a class="test" href="#">Send Message</a>
+                                        <ul class="dropdown-menu">
+                                            <div>
+                                            <form class="form-horizontal" action="FrontController" method="post">
 
+
+
+                                <h3 style="text-align:center;"><%=new TextBundle("subject").getText(lang)%></h3>
+                                <input type="hidden"name="toId" value="<%=f.getFriend2().getUserId()%>" required>
+                                
+
+                                <input type="text" class="form-control" name="subjectLine" placeholder="<%=new TextBundle("enterSubject").getText(lang)%>" required>
+
+                                <div class="form-group" style="text-align:center;">
+
+
+                                    <h3><%=new TextBundle("message").getText(lang)%></h3>
+                                    <textarea rows="4" cols="50" type="text" class="form-control" name="messageContent" placeholder="<%=new TextBundle("enterMessage").getText(lang)%>" required></textarea>
+
+                                </div>
+
+                                <input type="submit" value="<%=new TextBundle("sendMessage").getText(lang)%>" class="btn btn-default">
+                                <br>
+
+                                <input type="hidden" name="fromId" value="<%= userId%>"/>
+                                <input type="hidden" name="action" value="sendMessage"/>
+                            </form>
+                                            </div>
+                                        </ul>
+                                    </li>
+
+
+                                        
+
+                                    </a></li>
+                        
                             </ul>
                         </li>
                         <%
                             }
                         %>
+
                     </ul>
+
+
+
                 </li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><%=new TextBundle("music").getText(lang)%><span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -158,71 +200,7 @@
 
 
 
-    <!-- Modal -->
-    <div align="center" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Sending Message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <body class="container container-fluid">
-
-        <%  
-            try {
-                UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
-                User loggedUser = (User) session.getAttribute("login");
-                String userName = loggedUser.getUserName();
-                int userId = loggedUser.getUserId();
-        %>
-        <h1>Compose Message</h1>
-        
-        
-        <div style="width: 50%; text-align: center;">
-            <form class="form-horizontal" action="FrontController" method="post">
-                
-                    <%
-                        User user = (User) logName;
-                        FriendDao fDao = new FriendDao("TheSongDb", "jdbc/TheSongDb");
-                            ArrayList<Friend> friends = fDao.displayAllFriends(user.getUserName());
-                            for (Friend f : friends) {
-                        %>
-                    <input type="hidden" name="toId" value="<%=f.getFriend2().getUserId()%>" required>
-                    <%}%>
-
-                        <h3><%=new TextBundle("subject").getText(lang) %></h3>
-                        <input type="text" class="form-control" name="subjectLine" placeholder="<%=new TextBundle("enterSubject").getText(lang) %>" required>
-
-                    <div class="form-group" style="text-align:center;">
-                    
-                    
-                        <h3><%=new TextBundle("message").getText(lang) %></h3>
-                        <textarea rows="4" cols="50" type="text" class="form-control" name="messageContent" placeholder="<%=new TextBundle("enterMessage").getText(lang) %>" required></textarea>
-                    
-                </div>
-                
-                    <input type="submit" value="<%=new TextBundle("sendMessage").getText(lang) %>" class="btn btn-default">
-                <br>
-
-                <input type="hidden" name="fromId" value="<%= userId%>"/>
-                <input type="hidden" name="action" value="sendMessage"/>
-            </form>
-        </div>
-        <% } catch (NullPointerException ex) {
-                //Display an error message to the log
-                System.out.println("An error occured when trying to send a message: " + ex.getMessage());
-            }%>
-    </body>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 </body>
 
 </html>

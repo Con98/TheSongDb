@@ -17,7 +17,7 @@
         <%@include file="header.jsp" %>
         <title><%= new TextBundle("home").getText(lang)%></title>
     </head>
-    <body class="container container-fluid">
+    <body class="container container-fluid" style="text-align: center">
         <%            Object logiName = session.getAttribute("login");
             if (logiName != null) {
                 User user = (User) logiName;
@@ -37,7 +37,7 @@
                 for (int i = statuses.size() -1; i > 0; i--) {
                     
             %>
-            <div class="sTable">       
+            <div  class="sTable" style="text-align: center;">       
                 <div class="sInfo">
                 <%= new TextBundle("poster").getText(lang)%>:
                 <%= userDao.getDetailsById(statuses.get(i).getUserId()).getUserName() %>

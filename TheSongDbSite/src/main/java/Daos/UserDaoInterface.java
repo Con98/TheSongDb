@@ -93,5 +93,5 @@ public interface UserDaoInterface {
      
      public ArrayList<User> findUserByName(String firstName);
      
-     public boolean deleteUser(User u);
+     public boolean deleteUser(int userId);
 }
