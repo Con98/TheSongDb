@@ -33,29 +33,31 @@
             UserDao userDao = new UserDao("TheSongDb", "jdbc/TheSongDb");
             ArrayList<Status> statuses = statusDao.displayStatuses(user.getUserId());
             if (!statuses.isEmpty()) { %>
-            <%
-                for (int i = statuses.size() -1; i > 0; i--) {
-                    
-            %>
-            <div  class="sTable" style="text-align: center;">       
-                <div class="sInfo">
-                <%= new TextBundle("poster").getText(lang)%>:
-                <%= userDao.getDetailsById(statuses.get(i).getUserId()).getUserName() %>
-                </div>
+        <%
+            for (int i = statuses.size() - 1; i > 0; i--) {
 
-            
-            <div class="sContent">
-                
-                <%= new TextBundle("status").getText(lang)%>:
-                <%= statuses.get(i).getStatusContent()%>
-            </div>
-            </div>
-            <%
-                }
-            %>
-    
+        %>
+        <table class="table table-responsive table-bordered" style="text-align: center;">       
+            <tr>
+                <th><%= new TextBundle("poster").getText(lang)%>:</th>
+                <th><%= new TextBundle("status").getText(lang)%>:</th>
+            </tr>
+
+        
+
+
+
+
+        <tr>
+        <td><%= userDao.getDetailsById(statuses.get(i).getUserId()).getUserName()%></td>
+        <td><%= statuses.get(i).getStatusContent()%></td>
+        <tr>
+        <%
+            }
+        %>
+
         <% }
             }
         %>
-    </body>
+</body>
 </html>

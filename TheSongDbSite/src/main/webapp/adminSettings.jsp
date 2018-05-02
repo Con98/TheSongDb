@@ -32,7 +32,7 @@
 
             ArrayList<User> users = userList.viewAllUsers();
         %>
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="background-color: #1e1e1e; opacity:0.8;">
             <tr>
                 <th>Username</th>
                 <th>First Name</th>
@@ -42,6 +42,9 @@
 
             <%
                 for (User u : users) {
+                    if(u.isType() == false){
+                        
+                    
             %>
             <tr>
                 <td><%= u.getUserName()%></td>
@@ -50,12 +53,13 @@
                 <td><%= u.getEmail()%></td>
                 <td>
                     
-                    <a href="deleteUser.jsp?id=<%= u.getUserId()%>" class="btn btn-default"><%=new TextBundle("delete").getText(lang)%></a>
+                    <a href="deleteUser.jsp?userId=<%=u.getUserId()%>" class="btn btn-default"><%=new TextBundle("delete").getText(lang)%></a>
 
                 </td>
             </tr>
             <%
                 }
+}
             %>
         </table>
         <h3>Reported Messages</h3>

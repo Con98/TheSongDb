@@ -86,6 +86,10 @@ public class CommandFactory {
                     case "DenyFriend":
                     command = new DenyRequestCommand();
                     break;
+                    
+                    case "DeleteUser":
+                    command = new DeleteUserCommand();
+                    break;
 //                case "editUser":
 //                    command = new EditUserCommand();
 //                    break;
