@@ -34,17 +34,18 @@
 
 
         %>
-
-        <img class="img-circle img-responsive" style="float:left; border: red solid 5px;" src="<%=ob%>">
-        <h1 style="float:left;"><%=name%><%=new TextBundle("artistsPage").getText(lang)%></h1>
-        <br><br><br><br>
-        <p class="bio" style="padding-left:1em;"><%=top10.getBio()%></p>
-        <br><br><br><br><br><br><br><br><br>
+        <div class="container" style="text-align: center;">
+        <img class="img-circle" style="border: red solid 5px;" src="<%=ob%>" alt="artistImage">
+        </div>
+        <h1 align="center"><%=name%><%=new TextBundle("artistsPage").getText(lang)%></h1>
+        <p class="bio" style="text-align: center;"><%=top10.getBio()%></p>
         <%
+
             
             
             ArrayList<Album> albums = musicDao.getTop10Albums(aName);
             if(albums != null){
+                try{
         %>
         <table class="table table-responsive" style="background-color: #1e1e1e; opacity:0.8;">
             <h1>Top 10 Albums</h1>
@@ -69,11 +70,17 @@
             </tr>
             <%
                 }
-                }else{
+}catch(NullPointerException e){
+%>
+<h2>No albums found</h2>
+<%
+    }
+}
+                
+
             %>
-            <h1>No albums found</h1>
             <%
-                }
+                
                 %>
         </table>
         </main>

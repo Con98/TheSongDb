@@ -447,7 +447,7 @@ public class UserDao extends Dao implements UserDaoInterface {
         try {
             con = this.getConnection();
 
-            String query = "DELETE FROM `user` WHERE `userId` = ?";
+            String query = "DELETE FROM users WHERE userId = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, u.getUserId());
 

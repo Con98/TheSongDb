@@ -56,3 +56,6 @@ body{
 main{
     background-color: #1e1e1e; opacity:0.9;
 }
+textarea{
+    resize:none;
+}
