@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2018 at 10:16 PM
--- Server version: 10.1.26-MariaDB
--- PHP Version: 7.1.9
+-- Generation Time: May 02, 2018 at 09:12 PM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.6.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -22,14 +20,11 @@ SET time_zone = "+00:00";
 -- Database: `thesongdbtest`
 --
 
-CREATE DATABASE IF NOT EXISTS thesongdbtest;
-USE thesongdbtest;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `friend`
 --
-
 CREATE TABLE `friend` (
   `friendId` int(11) NOT NULL,
   `friend1` varchar(30) NOT NULL,
@@ -175,19 +170,16 @@ ALTER TABLE `users`
 --
 ALTER TABLE `friend`
   MODIFY `friendId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `friendrequest`
 --
 ALTER TABLE `friendrequest`
   MODIFY `requestId` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `UserId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- Constraints for dumped tables
 --
@@ -218,7 +210,6 @@ ALTER TABLE `message`
 --
 ALTER TABLE `status`
   ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`UserId`) ON DELETE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
