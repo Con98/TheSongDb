@@ -60,13 +60,12 @@ public class MusicDaoTest {
     @Test
     public void testGetTop10Albums() {
         System.out.println("getTop10Albums");
-        String name = "";
+        String name = "Drake";
         MusicDao instance = new MusicDao();
-        ArrayList<Album> expResult = null;
+        ArrayList<Album> expResult = instance.getTop10Albums(name);
         ArrayList<Album> result = instance.getTop10Albums(name);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -75,13 +74,13 @@ public class MusicDaoTest {
     @Test
     public void testGetArtist() {
         System.out.println("getArtist");
-        String artistName = "";
+        String artistName = "Kendrick Lamar";
         MusicDao instance = new MusicDao();
-        Artist expResult = null;
+        //Need to use instance twice due to the fact that the api changes, therefore having a solid string of json could become inaccurate 
+        Artist expResult = instance.getArtist(artistName);
         Artist result = instance.getArtist(artistName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -90,14 +89,13 @@ public class MusicDaoTest {
     @Test
     public void testGetAlbumTracks() {
         System.out.println("getAlbumTracks");
-        String albumName = "";
-        String artistName = "";
+        String albumName = "More Life";
+        String artistName = "Drake";
         MusicDao instance = new MusicDao();
-        ArrayList<Track> expResult = null;
+        ArrayList<Track> expResult = instance.getAlbumTracks(albumName, artistName);
         ArrayList<Track> result = instance.getAlbumTracks(albumName, artistName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -106,13 +104,12 @@ public class MusicDaoTest {
     @Test
     public void testSearchArtist() {
         System.out.println("searchArtist");
-        String artistName = "";
+        String artistName = "Drake";
         MusicDao instance = new MusicDao();
-        ArrayList<Artist> expResult = null;
+        ArrayList<Artist> expResult = instance.searchArtist(artistName);
         ArrayList<Artist> result = instance.searchArtist(artistName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -121,13 +118,12 @@ public class MusicDaoTest {
     @Test
     public void testSearchAlbum() {
         System.out.println("searchAlbum");
-        String albumName = "";
+        String albumName = "More Life";
         MusicDao instance = new MusicDao();
-        ArrayList<Album> expResult = null;
+        ArrayList<Album> expResult = instance.searchAlbum(albumName);
         ArrayList<Album> result = instance.searchAlbum(albumName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
     
 }

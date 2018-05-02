@@ -53,7 +53,7 @@
 
     <%
         if (loggedUser != null) {
-            if(loggedUser.isType() == false){
+           
     %>
     <section>
     <div id="leftColumn">
@@ -63,7 +63,7 @@
 
     <br/>
     <h2><%=new TextBundle("personalInfo").getText(lang)%></h2>
-    <table class="table table-bordered">
+    <table class="table table-bordered" >
         <tr>
             <th class="col"><%=new TextBundle("name").getText(lang)%>: </th>
             <td class="row"><%=loggedUser.getFirstName()%></td>
@@ -177,7 +177,7 @@
                 </div>
     </section>
                 <%
-} %>
+ %>
             
     
 </body>
