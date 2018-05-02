@@ -21,15 +21,17 @@ body{
 .dropdown-submenu .dropdown-menu {
     top: 0;
     left: 100%;
-    margin-top: -1px;   
+    margin-top: -1px;
+    width:5em;
 }
 .sTable{
+    text-align:center;
     background-color: #1e1e1e;
     margin: 0.5em;
     display: block;
     opacity:0.8;
     width:50%;
-    text-align:center;
+    
 }
 .sInfo{
     
@@ -57,5 +59,6 @@ main{
     background-color: #1e1e1e; opacity:0.9;
 }
 textarea{
-    resize:none;
+    
+    width: 2em;
 }

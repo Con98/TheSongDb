@@ -438,8 +438,8 @@ public class UserDao extends Dao implements UserDaoInterface {
         return allUsers;
     }
 
-    @Override
-    public boolean deleteUser(User u) {
+    @Override 
+    public boolean deleteUser(int userId) {
         Connection con = null;
         PreparedStatement ps = null;
         int rs = 0;
@@ -449,7 +449,7 @@ public class UserDao extends Dao implements UserDaoInterface {
 
             String query = "DELETE FROM users WHERE userId = ?";
             ps = con.prepareStatement(query);
-            ps.setInt(1, u.getUserId());
+            ps.setInt(1, userId);
 
             rs = ps.executeUpdate();
             if (rs == 1) {

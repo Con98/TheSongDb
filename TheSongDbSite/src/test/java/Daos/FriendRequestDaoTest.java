@@ -69,8 +69,7 @@ public class FriendRequestDaoTest {
         int expResult = 1;
         int result = instance.addFriendship(username1, username2);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -87,8 +86,7 @@ public class FriendRequestDaoTest {
         int expResult = 0;
         int result = instance.checkFriendRequest(username1, username2);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -105,8 +103,7 @@ public class FriendRequestDaoTest {
         boolean expResult = true;
         boolean result = instance.denyFriendship(username1, username2);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
     
 }

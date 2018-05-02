@@ -29,7 +29,8 @@ public class SendMessageCommand implements Command {
             MessageDao messageDao = new MessageDao("TheSongDb", "jdbc/TheSongDb");
             boolean sent = messageDao.sendMessage(fromId, toId, subjectLine, messageContent);
             if(sent){
-            forwardToJsp = "profile.jsp";
+                request.removeAttribute("friend");
+            response.setHeader("Refresh", request.getContextPath());
             }
             else{
                 forwardToJsp = "sendMessage.jsp";
